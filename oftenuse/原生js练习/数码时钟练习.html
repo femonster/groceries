@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>数码时钟练习</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body{background-color: #345;}
+		b{font-size: 28px;color: #999;}
+		.clock{
+			width: 300px;
+			height: 300px;
+			margin: 20px auto;
+		}
+	</style>
+</head>
+<body>
+<div class="clock" id="clock">
+	<img src="img/0.png">
+	<img src="img/0.png">
+	<b>:</b>
+	<img src="img/0.png">
+	<img src="img/0.png">
+	<b>:</b>
+	<img src="img/0.png">
+	<img src="img/0.png">
+</div>
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		setInterval(update,1000);
+		update();
+	}
+	function update(){
+		var mydate=new Date();
+		var str=""+double(mydate.getHours())+double(mydate.getMinutes())+double(mydate.getSeconds());
+		var img=document.getElementsByTagName('img');
+		
+		for (var i = 0; i < img.length; i++) {
+			img[i].src='img/'+str.charAt(i)+'.png';
+		}
+	}
+
+	function double(num){
+		if (num<10) {
+			num="0"+num;
+		}
+		return num;
+	}
+</script>
+</html>

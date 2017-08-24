@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>特殊的轮播图</title>
+	<style type="text/css">
+		.box{width: 100px;height: 100px;position: absolute;}
+		.box1{background-color: red;top: 55px;left: 20px;}
+		.box2{background-color: yellow;top: 40px;left: 140px;}
+		.box3{background-color: green;top: 55px;left: 260px;}
+	</style>
+</head>
+<body>
+	<button id="left">←</button>
+	<button id="right">→</button>
+	<div class="box box1">box1</div>
+	<div class="box box2">box2</div>
+	<div class="box box3">box3</div>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var ol = document.getElementById('left');
+		var or = document.getElementById('right');
+		var abox = document.getElementsByClassName('box'); //IE8以及以下不支持
+		var posArr=[];
+		for (var i = 0; i < abox.length; i++) {
+			posArr[i].push([parseInt(getStyle(abox[i],'top')),parseInt(getStyle(abox[i],'left'))]);
+		}
+		console.log(posArr);
+
+		or.onclick=function(){
+			posArr.push(posArr[0]);
+			posArr.shift(0);
+			for(var i=0;i<posArr.length;i++){
+				abox[i].style.top = posArr[i][0]+'px';
+				abox[i].style.left = posArr[i][1]+'px';
+			}
+		}
+		ol.onclick=function(){
+			posArr.unshift(posArr[posArr.length-1 ]);
+			posArr.pop(2);
+			for(var i=0;i<posArr.length;i++){
+				abox[i].style.top = posArr[i][0]+'px';
+				abox[i].style.left = posArr[i][1]+'px';
+			}
+		}
+
+		
+		function getStyle(obj,attr){
+			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj,false)[attr];
+		}
+
+	}
+</script>
+</html>

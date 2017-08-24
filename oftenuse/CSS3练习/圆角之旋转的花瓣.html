@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>圆角之旋转的花瓣</title>
+	<style>
+		.box{width: 500px;height: 500px;margin: 20px auto;transition: 5s linear;}
+		.box div{width: 220px;height: 220px;background-color: #e3456e; float: left;margin: 10px;}
+		.box div:nth-child(1){border-radius: 0 70%;}
+		.box div:nth-child(2){border-radius:70% 0;}
+		.box div:nth-child(3){border-radius:70% 0;}
+		.box div:nth-child(4){border-radius: 0 70%;}
+		.box:hover{transform: rotate(720deg);}
+	</style>				
+</head>
+<body>
+	<div class="box">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>鼠标跟随</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div{width: 10px;height: 10px;background-color: red;position: absolute;}
+	</style>
+	<script type="text/javascript">
+
+	window.onload=funciton(){
+		var aDiv=document.getElementsByTagName("div");
+		var i=0;
+		document.onmousemove=funciton(ev){
+			var oEvent=ev||event;
+			for (var i = aDiv.length - 1; i > 0; i--) {
+				aDiv[i].style.left=aDiv[i-1].style.left;
+				aDiv[i].style.top=aDiv[i-1].style.top;
+			}
+			aDiv[0].style.left=oEvent.clientX+"px";
+			aDiv[0].style.top=oEvent.clientY+"px";
+		};
+	};
+</script>
+</head>
+<body>
+<h2>他妈的看不出哪不对</h2>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+
+</body>
+
+</html>

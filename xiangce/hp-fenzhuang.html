@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>自定义滚动条-封装</title>
+<style type="text/css">
+body {
+	margin: 0;	
+}
+body,
+html {
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+header {
+	height: 40px;
+	font-size: 20px;
+	color: #fff;
+	text-align: center;
+	background: #000;
+	line-height: 40px;
+}
+footer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 40px;
+	color: #fff;
+	text-align: center;
+	background: #000;
+	line-height: 40px;
+}
+#wrap {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 40px;
+	bottom: 40px;
+}
+#list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	min-height: 100%;
+}
+#list li {
+	line-height: 30px;
+	text-indent: 20px;
+	font-size: 16px;
+	border-bottom: 1px solid #000;
+}
+</style>
+<script type="text/javascript">
+function createList(){
+	var list = document.querySelector('#list');
+	var inner = "";
+	for(var i = 0; i < 100; i++){
+		inner += "<li>这是第"+i+"个li</li>"
+	}	
+	list.innerHTML = inner;
+}
+document.addEventListener("touchstart",function(e){
+	e.preventDefault();
+})
+window.onload = function(){
+	createList();
+	var wrap = document.querySelector("#wrap");
+	mScroll({
+		el:wrap,
+		offBar:false //为true时没有滚动条
+	})
+
+};
+
+
+//自定义滚动条封装函数
+function mScroll(init){
+	if (!init.el) {return;}
+	var wrap = init.el;
+	var inner=init.el.children[0];
+	var scrollBar = document.createElement("div");
+	var startPoint=0;//手指摁下，手指坐标
+	var startEl=0;//s手指摁下，元素坐标
+	var lastY=0; //上一次元素所在坐标
+	var lastDis=0;//一次元素移动距离
+	var lastTime=0;//上一次移动的时间
+	var lastTimeDis=0;//上一次移动距离所用的时间差
+	var maxTranslate=wrap.clientHeight - inner.offsetHeight;//元素可滑动最大距离
+	var scale = wrap.clientHeight/inner.offsetHeight; //内容比例
+
+	inner.style.minHeight="100%";
+	
+	if (!init.offBar) {
+		scrollBar.style.cssText = "width:6px;background:rgba(0,0,0,0.5);position:absolute;right:0;top:0;border-radius:3px;height:100px;opacity:0;transition:0.3s;"
+		wrap.appendChild(scrollBar);
+
+	}
+
+	css(inner,"translateZ",0.01);//开启硬件加速
+
+	//原理：拖拽
+	inner.addEventListener("touchstart",function(e){
+		if (!init.offBar) {
+				if (maxTranslate>=0) {
+				scrollBar.style.display="none";
+			}else{
+				scrollBar.style.display="block";
+			}
+			scrollBar.style.height  = wrap.clientHeight*scale+"px";//滚动条高度
+		}
+		
+		startPoint = e.changedTouches[0].pageY;
+		startEl = css(inner,"translateY");
+		lastY = startEl;
+		lastTime = new Date().getTime();
+		lastDis = lastTimeDis = 0;
+		init.offBar||(scrollBar.style.opacity="1");
+	})
+
+	inner.addEventListener("touchmove",function(e){
+		var nowTime = new Date().getTime();
+		var nowPoint = e.changedTouches[0].pageY;
+		var dis = nowPoint - startPoint;
+		var translateY = startEl + dis;
+		css(inner,"translateY",translateY);
+		init.offBar||css(scrollBar,"translateY",-translateY*scale);
+		lastDis = translateY - lastY;
+		lastY = translateY;
+		lastTimeDis = nowTime - lastTime;
+		lastTime = nowTime;
+
+
+	})
+
+	inner.addEventListener("touchend",function(e){
+		// console.log(lastDis,lastTimeDis);
+		var type="easeOutStrong";
+		var speed = Math.round(lastDis / lastTimeDis*10);
+		//当手指摁下抬起，移动距离为0，lastTimeDis不能为0
+		speed = lastTimeDis<=0?0:speed;
+		var target = Math.round(speed*20+css(inner,"translateY"));//滑动时的缓冲距离
+		// console.log(target);
+		if (target>0) {
+			target=0;
+			type="backOut";
+		}else if(target<=maxTranslate){
+			type="backOut";
+			target = maxTranslate;
+		}
+		MTween({
+			el:inner,
+			target:{translateY:target},
+			time:Math.round(Math.abs(target - css(inner,"translateY"))*2),
+			type:type,
+			callBack:function(){
+				init.offBar||(scrollBar.style.opacity="0");
+			},
+			callIn:function(){
+				var translateY = css(inner,"translateY");
+				init.offBar||css(scrollBar,"translateY",-translateY*scale);
+			}
+
+		})
+	})
+}
+</script>
+</head>
+<body>
+<header id="header">自定义滚动条-封装</header>
+<section id="wrap">
+	<ul id="list">
+		
+	</ul>
+</section>
+<footer id="footer">前端大法好</footer>	
+</body>
+<script type="text/javascript" src="js/m.Tween.js"></script>
+</html>

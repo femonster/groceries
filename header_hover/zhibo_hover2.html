@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document2</title>
+    <link rel="stylesheet" type="text/css" href="header.css">
+    <link rel="stylesheet" href="reset.css">
+</head>
+<style type="text/css">
+.underline-from-left {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  position: relative;
+  overflow: hidden;
+}
+.underline-from-left:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: #ffd600;
+  height: 1px;
+  box-sizing: border-box;
+  transition: right 0.3s ease-out;
+  -webkit-transition: right 0.3s ease-out;
+}
+.underline-from-left:after {
+  content: attr(data-hover);
+  position: absolute;
+  z-index: -1;
+  left: 100%;
+  right: 0;
+  bottom: 3px;
+  height: 20px;
+  width: 50px;
+  background-color: #0a0d26;
+  box-sizing: border-box;
+  transition: left 0.3s ease-out;
+  -webkit-transition: left 0.3s ease-out;
+}
+.underline-from-left:hover:before, .underline-from-left:focus:before, .underline-from-left:active:before {
+  right: 0;
+}
+.underline-from-left:hover:after, .underline-from-left:focus:after, .underline-from-left:active:after {
+  left: 0;
+}
+</style>
+<body>
+    <div class="ver-header" style="display: block;">
+        <div class="header-logo">
+            <a href="http://zhibo.renren.com/">
+                <img src="http://a.xnimg.cn/wap/pcLive/src/apps/liveroom/img/logo-ver.png">
+            </a>
+        </div>
+        <div class="ver-header-user">
+            <div class="user-info">
+                <div class="user-img">
+                    <img src="http://head.xiaonei.com/photos/0/0/men_tiny.gif" class="head-img">
+                </div>
+                <p class="user-name">张耕恺</p>
+            </div>
+            <div class="user-sub" style="display: none;">
+                <div class="user-main">
+                    <div class="userImg">
+                        <img src="http://head.xiaonei.com/photos/0/0/men_tiny.gif" class="headImg" alt="张耕恺">
+                    </div>
+                    <div class="userInfo">
+                        <span class="userName">张耕恺</span><img class="isVip" src="http://a.xnimg.cn/wap/pcLive/dist/img/vip_icon_grey.png">
+                        <div class="userId">(577984877)</div>
+                        <span class="contr-value" style="background-image: url(&quot;http://a.xnimg.cn/wap/pcLive/dist/img/public/grade/star.png&quot;); background-color: rgb(254, 226, 51);">1</span><span class="charm-value" style="background-image: url(&quot;http://a.xnimg.cn/wap/pcLive/dist/img/public/charmgrade/1_25.png&quot;); background-color: rgb(253, 103, 162);">1</span>
+                    </div>
+                    <ul class="user-oper">
+                        <li><a href="http://zhibo.renren.com/anchor/577984877" class="anchor-home">直播空间</a></li>
+                        <!-- <li><a href="http://zhibo.renren.com/recharge#nav=1" class="user-center">个人中心</a></li> -->
+                        <li class="play-start" style="display: list-item;">我要开播</li>
+                        <li><a href="http://www.renren.com/Logout.do?origURL=http://zhibo.renren.com/liveroom/1386364" class="logout">退出</a></li>
+                    </ul>
+                    <a href="http://zhibo.renren.com/personcenter/index#nav=3" class="userTokens">人人果：<span class="token-num" style="color:#ffd600">0</span>
+                            <img src="http://a.xnimg.cn/wap/pcLive/dist/img/token.png" class="guo-img" alt="人人果">
+                        </a>
+                </div>
+                <ul class="userCenterBox">
+                    <li class="pensonCenter">
+                        <a href="http://zhibo.renren.com/personcenter/index#nav=1" target="_blank">
+                            <div class="pensonCenterIcon"></div>
+                            <div class="pensonCenterText">个人中心</div>
+                        </a>
+                    </li>
+                    <li class="myGiftCertificate">
+                        <a href="http://zhibo.renren.com/personcenter/index#nav=4" target="_blank">
+                            <div class="myGiftCertificateIcon"></div>
+                            <div class="myGiftCertificateText">我的礼券</div>
+                        </a>
+                    </li>
+                    <li class="myCar">
+                        <a href="http://zhibo.renren.com/car/home#nav=0">
+                            <div class="myCarIcon"></div>
+                            <div class="myCarText">我的座驾</div>
+                        </a>
+                    </li>
+                    <li class="myGuard">
+                        <a href="javascript:;">
+                            <div class="myGuardIcon"></div>
+                            <div class="myGuard">我的守护(即将上线)</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ul class="header-nav">
+            <li class="header-nav-item">
+                <a href="http://zhibo.renren.com/" class="live underline-from-left" data-hover="直播"></a>
+            </li>
+            <li class="header-nav-item">
+                <a href="http://www.renren.com/" class="home underline-from-left" target="_blank" data-hover="主站"></a>
+            </li>
+            <li class="header-nav-item">
+                <a href="http://zhibo.renren.com/car/home" class="shop underline-from-left" target="_blank" data-hover="商城"></a>
+            </li>
+            <li class="header-nav-item">
+                <a href="http://zhibo.renren.com/rank" class="rankList underline-from-left" target="_blank" data-hover="排行榜"></a>
+            </li>
+            <li class="header-nav-item">
+                <a href="http://zhibo.renren.com/banner" class="program underline-from-left" target="_blank" data-hover="栏目"></a>
+            </li>
+        </ul>
+        <div class="header-bottom">
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹性盒模型之基础</title>
+	<style>
+
+
+	/*
+	 IE不支持
+	  display:box 默认为横向排列 
+	 
+	 定义盒模型布局方向：
+	  box-orient:vertical; 垂直排列
+	  box-orient:horizontal 水平显示（默认）
+	  
+	  元素排列顺序：
+	  box-direction:reverse;反序
+	  box-direction:normal;正序
+	  box-ordinal-group 设置元素具体位置
+		
+	  弹性空间管理：
+	  box-flex
+	  如果有固定宽度的子元素，则将固定宽度减掉，剩下的按公式计算宽度
+	  子元素尺寸= 盒子尺寸*子元素的box-flex属性值/ 所有子元素的box-flex属性值的和 
+
+	  对富裕空间进行管理
+	  box-pack:start/end/center/justify;
+	  左侧显示/右侧/中间/平均分布
+
+	  在垂直方向上对元素位置的管理
+	  box-align:start/end/center;
+	  顶/底/居中
+
+	*/
+		.box{height: 300px;border: 10px solid #000;padding: 10px; display: -webkit-box;/*-webkit-box-direction:reverse;*/}
+		.box div{/*width: 100px;*/height: 100px;background-color: red;border: 1px solid #fff;font-size: 30px;color: #fff;}
+		/*.box div:nth-of-type(1){-webkit-box-ordinal-group:2;}
+		.box div:nth-of-type(2){-webkit-box-ordinal-group:4;}
+		.box div:nth-of-type(3){-webkit-box-ordinal-group:3;}
+		.box div:nth-of-type(4){-webkit-box-ordinal-group:5;}
+		.box div:nth-of-type(5){-webkit-box-ordinal-group:1;}*/
+		
+ {-webkit-box-flex:1;}
+		.box div:nth-of-type(2){-webkit-box-flex:2;}
+		.box div:nth-of-type(3){-webkit-box-flex:3;}
+		.box div:nth-of-type(4){-webkit-box-flex:4;}
+		.box div:nth-of-type(5){-webkit-box-flex:5;}
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+	</div>
+</body>
+</html>

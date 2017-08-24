@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>正则--屏蔽违规语</title>
+</head>
+<body>
+	请输入文字：
+	<textarea name="" id="" cols="30" rows="10"></textarea>
+	<button>发布</button>
+	<textarea name="" id="" cols="30" rows="10"></textarea>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var atxt = document.getElementsByTagName('textarea');
+		var re = /我操|我草|你麻痹|你妈比|傻逼|蠢货/g;
+		var obtn = document.getElementsByTagName('button')[0];
+		obtn.onclick=function() {
+			atxt[1].value = atxt[0].value.replace(re,"*你tm再说一遍*");
+			  // atxt[1].value = atxt[0].value.replace(re,function(str){
+			  // 		var result="";
+			  // 		for (var i = 0; i < str.length; i++) {
+			  			
+			  // 			result+="*";
+			  			
+			  // 		}
+			  // 		return result;
+			  // });
+		}
+		
+	}
+</script>
+</html>

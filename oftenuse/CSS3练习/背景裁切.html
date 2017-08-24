@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>背景裁切</title>
+	<style>
+		/*
+		background-origin ： border | padding | content 
+			border-box： 从border区域开始显示背景。 
+			padding-box： 从padding区域开始显示背景。 
+			content-box： 从content区域开始显示背景。
+		background-clip
+			border： 从border区域向外裁剪背景。 
+			padding： 从padding区域向外裁剪背景。 
+			content： 从content区域向外裁剪背景。 
+			no-clip： 从border区域向外裁剪背景。
+			text:     文字裁切; 只能在-webkit-内核浏览器中使用
+		*/
+	div{width: 300px;height: 300px;float: left;margin-left:30px;background: url(img/cssdemo.jpg);background-size: 300px 300px;}
+	.box1{
+		border: 30px solid rgba(0,0,0,0.5);
+		padding:20px;
+		background-origin: content-box;
+	}
+	.box2{
+		border: 30px solid rgba(0,0,0,0.5);
+		padding:20px;
+		background-clip: padding-box;
+	}
+	.box3{width:400px;
+		border: 30px solid rgba(0,0,0,0.5);
+		padding:20px;
+		-webkit-background-clip: text;
+		font: 60px/300px "宋体";
+		text-align: center;
+		color: rgba(0,0,0,0);
+		font-weight: bolder;
+		transition: 2s;
+	}
+	.box3:hover{background-position: -200px -200px;}
+	</style>				
+</head>
+<body>
+	<div class="box1"></div>
+	<div class="box2"></div>
+	<div class="box3">凡人皆有一死</div>
+
+</body>
+</html>

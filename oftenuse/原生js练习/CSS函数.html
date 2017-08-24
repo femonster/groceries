@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS函数</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#div1{width: 200px;height: 200px;background-color: red;}
+	</style>
+</head>
+<body>
+<input type="button" name="样式改变" id="btn1" value="改变">
+<div id="div1"></div>
+</body>
+<script type="text/javascript">
+	var oBtn=document.getElementById('btn1'),
+	    oDiv=document.getElementById('div1');
+	//--------------------------------------------
+	function css(obj,attr,value){
+		if (arguments.length==3) {
+			obj.style[attr]=value;
+		} else if(arguments.length==2){
+			return getStyle(obj,attr);
+		}
+	}
+	//只能取基本样式，不能取复合样式，如background
+	function getStyle(obj,attr){
+		if (obj.currentStyle) {
+			//IE
+			return obj.currentStyle[attr];
+		} else {
+			//FF
+			return getComputedStyle(obj,false)[attr];
+		}
+	}
+	//-----------------------------------------------------
+	window.onload=function(){
+		oBtn.onclick=function(){
+			css(oDiv,'background-color','green');
+			alert("Div的宽度为："+css(oDiv,'width'));
+		}
+	}
+</script>
+</html>

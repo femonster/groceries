@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件--拖拽虚框</title>
+	<style type="text/css">
+		#div1{width: 100px;height: 100px;background-color: red;position: absolute;}
+		.newdiv{position: absolute;border: 1px dashed #666;z-index: 3;}
+	</style>
+</head>
+<body>  
+sefwewe fwe rwe rqwe
+	<div id="div1">sdfd</div>
+<!-- 就是在鼠标按下的时候创建一个新DIV，鼠标抬起后移除 -->
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		drag('div1');
+
+	}
+	function drag(id) {
+		var oDiv=document.getElementById(id);
+		oDiv.onmousedown=function(event){
+			disx = event.clientX - oDiv.offsetLeft;
+			disy = event.clientY - oDiv.offsetTop;
+			//new dash div 
+			var oNewDiv = document.createElement('div');
+			oNewDiv.className='newdiv';
+			oNewDiv.style.width = oDiv.offsetWidth-2+'px';
+			oNewDiv.style.height = oDiv.offsetHeight-2+'px';
+			oNewDiv.style.left = oDiv.offsetLeft+'px';
+			oNewDiv.style.top = oDiv.offsetTop+'px';
+
+			document.body.appendChild(oNewDiv);
+
+			document.onmousemove=function(event){
+				var l = event.clientX - disx;
+				var t = event.clientY - disy;
+				//磁性吸附
+				if(l<30){l=0;}
+				if (l>document.documentElement.clientWidth - oDiv.offsetWidth-30) {
+					l=document.documentElement.clientWidth - oDiv.offsetWidth;
+				}
+				if (t<30) {t=0;}
+				if (t>document.documentElement.clientHeight - oDiv.offsetHeight-30) {
+					t=document.documentElement.clientHeight - oDiv.offsetHeight;
+				}
+				oNewDiv.style.left =l  + 'px';
+				oNewDiv.style.top = t + 'px';
+			}
+			document.onmouseup=function(){
+				oDiv.style.left=oNewDiv.style.left;
+				oDiv.style.top=oNewDiv.style.top;
+				document.body.removeChild(oNewDiv);
+				document.onmouseup=null;
+				document.onmousemove=null;
+			}
+			//组织默认事件，防止选中文字
+			return false;
+		}
+	}
+</script>
+</html>

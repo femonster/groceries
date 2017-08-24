@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	OOP之拖拽</title>
+	<!-- 火狐之下有BUG ，其他浏览器正常-->
+	<meta charset="utf-8">
+	<style type="text/css">
+		#div1{width: 100px;height: 100px;background-color: #e54;position: absolute;}
+		#div2{width: 100px;height: 100px;background-color: #666;position: absolute;left: 300px;}
+
+	</style>
+</head>
+<body>
+<!-- 
+onmousedown:鼠标摁下，存储距离
+onmousemove:鼠标移动，根据距离，计算DIV最新的位置
+onmouseup:鼠标抬起，停止拖拽
+clientWidth:可视区宽度
+clientHeight:可视区高度
+offsetWidth/Height:元素实际宽/高
+ -->
+<div id="div1"> </div>
+<div id="div2"> </div>
+
+
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var mydrag1 = new Drag('div1');
+	var mydrag2 = new Drag('div2');
+}
+//OOP好处之可以单独拎出来用
+function Drag(id){
+	var _this=this;
+	this.disx=0;
+	this.disy=0;
+	this.oDiv=document.getElementById(id);
+	this.oDiv.onmousedown=function(ev){
+ 		_this.fndowm(ev);
+	};
+	if (typeof fndowm != 'function') {
+		Drag.prototype.fndowm=function(ev) {
+		var _this=this;
+		var oEvent=ev||event;
+		this.disx=oEvent.clientX - this.oDiv.offsetLeft;
+		this.disy=oEvent.clientY - this.oDiv.offsetTop;
+		document.onmousemove=function(ev){
+			_this.fnmove(ev);
+		} ;
+		document.onmouseup=function(){
+			_this.fnstop();
+		} ;
+	};
+		Drag.prototype.fnmove=function(ev){
+			var oEvent=ev||event;
+			var l=oEvent.clientX - this.disx;
+			var t= oEvent.clientY - this.disy;
+			if (l<0) {l=0}
+			if (l>(document.documentElement.clientWidth-this.oDiv.offsetWidth)) {
+				l=document.documentElement.clientWidth-this.oDiv.offsetWidth;
+			}
+			if (t<0) {t=0}
+			if(t>(document.documentElement.clientHeight-this.oDiv.offsetHeight)){
+				t=document.documentElement.clientHeight-this.oDiv.offsetHeight;
+			}
+			this.oDiv.style.left=l+'px';
+			this.oDiv.style.top =t+'px';
+};
+		Drag.prototype.fnstop=function(){
+			document.onmouseup=null;
+			document.onmousemove=null;
+		};
+	}
+}
+
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简易留言板</title>
+</head>
+<body>
+	<input type="text" id="ly">
+	<button id="btn1">提交</button>
+	<ul id="ban">
+		
+	</ul>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var oly = document.getElementById('ly');
+		var obtn = document.getElementById('btn1');
+		var oul = document.getElementById('ban');
+
+		obtn.onclick = function(){
+			addEle();
+		}
+		oul.onclick=function(ev) {
+			var ev = ev || window.event;
+    		var target = ev.target || ev.srcElement;
+    		if (target.nodeName.toLowerCase()=='a') {
+    			oul.removeChild(target.parentNode);
+    		}
+		}
+		oly.onkeyup=function(ev) {
+			var ev = ev||window.event;
+			if (ev.keyCode==13) {
+				addEle();
+			}
+			
+		}
+		function addEle() {
+			var oli = document.createElement('li');
+			oli.innerHTML=oly.value+'<a href="javascript:;">删除</a>';
+			if (oul.children[0]) {
+				oul.insertBefore(oli,oul.children[0]);
+				if (oul.children.length>5) {
+					oul.removeChild(oul.lastChild);
+				}
+			}else{
+				oul.appendChild(oli);
+			}
+		}
+	}
+</script>
+</html>

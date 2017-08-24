@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>键盘控制DIV移动</title>
+</head>
+<style>
+	body{margin: 0;padding: 0;}
+	#my{width: 100px;height: 100px;background-color: red;position: absolute;}
+</style>
+<body>
+	<div id="my"></div>
+</body>
+<script>
+	window.onload=function() {
+		
+		var odiv=document.getElementById('my');
+		var timer=null;
+		var bTop = bDown = bLeft = bRight = false;
+		
+		document.onkeydown = function(ev) {
+			var ev = ev||window.event;
+			// 左上右下： 37 38 39 40
+			switch(ev.keyCode){
+				case 37:
+					bLeft=true;
+					break;
+				case 38:
+					bTop=true;
+					break;
+				case 39:
+					bRight=true;
+					break;
+				case 40:
+					bDown=true;
+					break;
+			}
+			
+		}
+		
+		document.onkeyup = function(ev) {
+			var ev = ev||window.event;
+			// 左上右下： 37 38 39 40
+			switch(ev.keyCode){
+				case 37:
+					bLeft=false;
+					break;
+				case 38:
+					bTop=false;
+					break;
+				case 39:
+					bRight=false;
+					break;
+				case 40:
+					bDown=false;
+					break;
+			}
+		}
+		
+		setInterval(function() {		
+			if (bLeft) {odiv.style.left = odiv.offsetLeft-30+'px';}
+			else if (bRight) {odiv.style.left = odiv.offsetLeft+30+'px';}
+			if (bTop) {odiv.style.top = odiv.offsetTop-30+'px';}
+			else if (bDown) {odiv.style.top = odiv.offsetTop+30+'px';}
+			limit();
+		},30)
+
+		function limit() {
+			var pageW = document.documentElement.clientWidth||document.body.clientWidth;
+			var pageH = document.documentElement.clientHeight||document.body.clientHeight;
+			if (odiv.offsetLeft<=0) {odiv.style.left=0;}
+			if (odiv.offsetTop<=0) {odiv.style.top=0;}
+			if (odiv.offsetTop>=pageH-odiv.offsetHeight)
+				{odiv.style.top=pageH-odiv.offsetHeight+'px';}
+			if (odiv.offsetLeft>=pageW-odiv.offsetWidth) 
+				{odiv.style.left=pageW-odiv.offsetWidth+'px';}
+		}
+		
+		// function limit()
+		// {
+		// var doc = [document.documentElement.clientWidth, document.documentElement.clientHeight]
+		// //防止左侧溢出
+		// odiv.offsetLeft <=0 && (odiv.style.left = 0);
+		// //防止顶部溢出
+		// odiv.offsetTop <=0 && (odiv.style.top = 0);
+		// //防止右侧溢出
+		// doc[0] - odiv.offsetLeft - odiv.offsetWidth <= 0 && (odiv.style.left = doc[0] - odiv.offsetWidth + "px");
+		// //防止底部溢出
+		// doc[1] - odiv.offsetTop - odiv.offsetHeight <= 0 && (odiv.style.top = doc[1] - odiv.offsetHeight + "px")
+		// }
+		
+	}
+</script>
+</html>

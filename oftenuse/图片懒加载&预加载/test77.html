@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>yu-img</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+// 预加载
+	var imgurls={
+		img1:"img/1.jpg",
+		img2:"img/2.jpg",
+		img3:"img/3.jpg",
+		img4:"img/4.jpg",
+		img5:"img/5.jpg",
+		img6:"img/6.jpg"
+	}
+	var imgs = Object.keys(imgurls);
+	var length=imgs.length;
+	var imageflag=0;
+	for(var item in imgurls){
+		var img1 = new Image();
+		img1.src=imgurls[item];
+		img1.onload=function() {
+			imageflag++;
+			console.log("加载第"+imageflag+"张");
+			if (imageflag==length) {
+				imgcomlete();
+			}
+		}
+	}
+
+	function imgcomlete() {
+		imgs.forEach(function (item) {
+			var newImg = document.createElement("img");
+			newImg.src=imgurls[item];
+			document.body.appendChild(newImg);
+		})
+	}
+</script>
+</html>

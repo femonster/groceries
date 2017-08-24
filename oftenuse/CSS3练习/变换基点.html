@@ -1,0 +1,58 @@
+ <!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>变换基点</title>
+<style>
+/*
+transform
+rotate()  旋转函数 取值度数
+deg  度数
+Transform-origin 旋转的基点 (top ,left , buttom ,right ,也可以组合，也可以是像素)
+*/
+.wrap{width: 300px;height: 400px;float: left;border: 1px solid #000;}
+.wrap div{width:100px;height:100px;background:red;transition:2s;margin:100px auto;}
+.box1{-webkit-transform-origin:left top;}
+.box2{-webkit-transform-origin:200px 200px;}
+.wrap:nth-child(1):hover .box1
+{
+-webkit-transform: rotate(360deg) scale(0.2);
+-ms-transform: rotate(360deg) scale(0.2);
+-o-transform: rotate(360deg) scale(0.2);
+transform: rotate(360deg) scale(0.2);
+}
+
+.wrap:nth-child(2):hover .box2{
+-webkit-transform: rotate(360deg);
+-ms-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+
+.wrap:nth-child(3):hover .box3{
+	-webkit-transform: translateX(100px) scale(0.5);
+}
+
+.wrap:nth-child(3):hover .box4{
+	-webkit-transform: scale(0.5) translateX(100px);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<p>按关键词</p>
+	<div class="box1">box1</div>
+</div>
+<div class="wrap">
+	<p>按像素</p>
+	<div class="box2">box2</div>
+</div>
+
+<div class="wrap">
+	<p>Transform 执行顺序问题 — 后写先执行</p>
+	<div class="box3">box3</div>
+	<div class="box4">box4</div>
+</div>
+
+</body>
+</html>

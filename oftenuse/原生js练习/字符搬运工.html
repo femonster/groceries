@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文字搬运工</title>
+	<style type="text/css">
+		body { margin: 0; padding: 0; font-family:微软雅黑; background-color: #e3e3e3;}
+		ul, textarea { margin: 0; padding: 0; }
+		ul li { list-style: none; }
+		#wrap { width: 950px; margin: 50px auto; border: 10px solid #a8a8a8; background-color: #fff; padding: 20px; overflow: hidden; position: relative; }
+
+		#left { width: 400px; height: 350px; border: 1px dashed #000; }
+		#left textarea { width: 360px; height: 310px; border: none; outline: none; overflow:hidden; resize:none; background-color: #fff9e1; font-size: 16px; line-height: 25px; padding: 20px; font-family:微软雅黑;}
+
+		#middle { width: 120px; height: 150px; position: absolute; left: 436px; top: 20px; }
+		#middle button { width: 120px; height: 40px; background-color: #fa8624; border: none; outline: none; color: #fff; font-size: 18px; font-family:微软雅黑; opacity: 1; cursor: pointer; }
+		#middle span { width: 120px; height: 30px; display: inline-block; text-align: center; line-height: 30px; margin-top: 5px;}
+		#middle ul { width: 120px; height: 12px; margin-top: 20px; opacity: 0;}
+		#middle ul li { width: 12px; height: 12px; float: left; margin-right: 3px; background-color: #f8ffa2; }
+		#middle .active { background-color: #ff8319; }
+
+		#right { width: 360px; height: 310px; border: 1px dashed #000; position: absolute; right: 19px; top: 20px; background-color: #f6d58b; padding: 20px; }
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="left">
+			<textarea>故事背景是在一间海边的餐厅，主角樱井美咲（桐谷美玲饰）是一位年轻的女甜点师，虽然她全心全意地投入工作，甚至还因而放弃许多恋爱机会，但最后却被解雇了。沮丧的她在找寻新头路时，巧遇上了高中初恋对象柴崎千秋（三浦翔平饰），后来就到他所经营的餐厅工作、并居住在他家中。对于千秋有所留恋的美咲，因为有这个机会而感到很高兴，然而却也意外和千秋的二弟柴崎夏向（山崎贤人饰）、三弟柴崎冬真（野村周平饰）有后续一连串趣味又复杂的发展…究竟美咲是如何和这三兄弟朝夕相处的呢？</textarea>
+		</div>
+		<div id="middle">
+			<button>把文字右移</button>
+			<span>0/0</span>
+			<ul>
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div id="right"></div>
+	</div>
+</body>
+<script type="text/javascript" src="js/move.js"></script>
+<script type="text/javascript">
+	var owrap=document.getElementById('wrap'),
+	    oleft=document.getElementById('left'),
+	    omiddle=document.getElementById('middle'),
+	    oright=document.getElementById('right'),
+	    otext=oleft.getElementsByTagName('textarea')[0],
+	    obtn=omiddle.getElementsByTagName('button')[0],
+	    ospan=omiddle.getElementsByTagName('span')[0],
+	    oul=omiddle.getElementsByTagName('ul')[0],
+	    ali=oul.getElementsByTagName('li'),
+	    
+	    timer=null,
+	    onOff=true,
+	    index=0,
+	    num=0;
+
+	obtn.onclick=function() {
+		//先清空右边文字框
+		 oright.innerHTML="";
+		//如果左边没有文字则不执行
+		if (!otext.value) {alert("右边没有文字");return;}
+		//如果转移没有完成则不执行		
+		if (!onOff) {return;}else{
+			startmove(obtn,{opacity:20});
+			startmove(oul,{opacity:80});
+			itextLen=otext.value.length;
+			onOff=false;
+			clearInterval(timer);
+			timer=setInterval(function() {
+				//将左边的字符串截取第一个字符加到右边
+				oright.innerHTML+=otext.value.substring(0,1);
+				//更新左边字符串
+				otext.value=otext.value.substring(1);
+				ospan.innerHTML=index+'/'+itextLen;
+				index++;
+				for (var i = 0; i < ali.length; i++) {
+					ali[i].className="";
+				}
+				ali[num].className="active";
+				num++;
+				num=num%ali.length;
+				if (index==itextLen) {
+					onOff=true;
+					clearInterval(timer);
+					startmove(obtn,{opacity:100});
+					startmove(oul,{opacity:0});
+					index=0;
+				}
+			},80);
+		}
+
+
+	}
+</script>
+</html>

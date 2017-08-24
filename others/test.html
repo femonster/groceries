@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<ul>
+      <li><a href="#/author">#/author</a></li>
+      <li><a href="#/books">#/books</a></li>
+      <li><a href="#/books/view/1">#/books/view/1</a></li>
+    </ul>
+</body>
+<script type="text/javascript"	src="js/director.min.js"></script>
+<script type="text/javascript">
+	var author = function () {
+		console.log("author");
+	}
+	var books = function(){
+		console.log("books");
+	}
+	var viewBook = function(bookId){
+		console.log("viewBook:bookId is"+bookId);
+	}
+	var routes={
+		'/author':author,
+		'/books':[books,function(){
+			console.log("An inline route handler");
+		}],
+		'/books/view/:bookId':viewBook
+	};
+	var router = Router(routes);
+	router.init();
+</script>
+</html>

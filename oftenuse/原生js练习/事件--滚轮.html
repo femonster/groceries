@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件--滚轮</title>
+	<style type="text/css">
+		#mydiv{width: 200px;height: 200px;background-color: red;}
+	</style>
+</head>
+<body  style="height: 2000px;">
+	<!-- 难点主要在浏览器上 -->
+	<div id="mydiv"></div>
+	<!-- 
+	IE     	 attachEvent  		 mousewheel       滚轮事件
+	FF		 addEventListener	 DOMMouseScroll		
+	Chrome   addEventListener	 mousewheel
+	FF,Chrome,ie11,eage 	阻止默认事件  event.preventDefault() 
+	IE10-  阻止默认事件  return false
+	 -->
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		var oDiv = document.getElementById('mydiv');
+		//ie chrome
+		myaddEvent(oDiv,'mousewheel',onmousewheel,false);
+		//FF 
+		myaddEvent(oDiv,'DOMMouseScroll',onmousewheel);
+		// FF下，使用事件绑定的不可以用return false 阻止默认行为
+	};
+	//自定义滑动事件
+	function onmousewheel(event){
+		var oDiv = document.getElementById('mydiv');
+		var iBeDown=true;
+		//向下滚还是向上滚
+		iBeDown=event.detail?event.detail<0:event.wheelDelta>0;
+			// if (event.detail) {
+			// 	if (event.detail>0) {
+			// 		iBeDown = true;
+			// 	} else {
+			// 		iBeDown = false;
+			// 	}
+			// } else {
+			// 	if (event.wheelDelta>0) {
+			// 		iBeDown = false;
+			// 	} else {
+			// 		iBeDown = true;
+			// 	}
+			// }
+		if (iBeDown) {
+			oDiv.style.height = oDiv.offsetHeight +10+'px';
+		} else {
+			oDiv.style.height = oDiv.offsetHeight-10+'px';
+		}
+		//阻止默认事件
+		if (event.preventDefault) {
+			event.preventDefault();
+		}else{
+			return false;
+		}
+		}
+	//绑定事件
+	function myaddEvent(obj,sEvent,fn) {
+		if (obj.attachEvent) {
+			obj.attachEvent('on'+sEvent,fn);  //ie8-
+		}else{
+			obj.addEventListener(sEvent,fn,false);  
+		}
+	}
+</script>
+</html>

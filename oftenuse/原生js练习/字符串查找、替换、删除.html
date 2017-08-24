@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>字符串查找、替换、删除</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+		*{box-sizing: border-box;}
+		.clearfix{content: ".";clear: both;}
+		.on{background-color:orange;}
+		.box{width: 500px;height: 400px;border: 5px solid #666;margin:30px auto 0;padding: 10px;line-height: 30px;}
+		.mybtn{position: absolute;top: 30px;width: 100px;height: 150px;right: 400px;}
+		.mybtn p,.mybtn li{width: 100px;height: 40px;background-color: #ccc;border: 2px solid #666;line-height: 40px;text-align: center;margin-bottom: 5px;cursor: pointer;}
+		.mybtn ul{display: none;}
+		.wrap{width: 500px;height: 200px;border: 5px solid #555;margin: 20px auto;}
+		.wrap ul li{width: 100px;height: 40px;line-height: 40px;text-align: center;float: left;cursor: pointer;}
+		input[type="text"]{width: 150px;height: 30px;line-height: 40px;}
+		button{width: 60px;height: 30px;}
+		.input-box{margin-top: 30px;}
+		.wrap,.update-box{display: none;}
+		span{background-color: yellow;}
+		
+	</style>
+</head>
+<body>
+	<div class="box" id="pbox">
+		据悉，汽车模块化生产平台这样的技术解决方案能让汽车制造商在全球范围内降低成本。鉴于大众最近努力降低成本，外界普遍认为保时捷和奥迪的新车型也将不得不共用部件。然而，大众集团领导已经决定听取这两个品牌要求使用不同平台的意见，而且高层管理人员已经向汽车新闻媒体Autocar透露了这一决定。
+		奥迪和保时捷的电动汽车会共用的唯一重要部件是一个能将电池安装在车辆地板下的平台。奥迪和保时捷将使用不同的电动机、以及不同配置的动力系统。不过，奥迪和保时捷也有可能共用其他部件，例如控制器、以及不拆解汽车就看不到的各种部件。目前，奥迪和保时捷共用3.0升V6柴油车以及大众集团内部共享的其他部件。
+	</div>
+	<div class="mybtn">
+		<p class="btn" id="btn">展开</p>
+		<ul id="ul1">
+			<li>查找</li>
+			<li>替换</li>
+		</ul>
+	</div>
+	<div class="wrap" id="wrap">
+		<ul id="ul2">
+			<li class="on">查找</li>
+			<li>替换</li>
+		</ul>
+		<div class="clearfix"></div>
+		<div class="input-box check-box">
+			<input type="text" id="check"/>
+			<button>查找</button>
+		</div>
+		<div class="input-box update-box">
+			<input type="text" id="updateCheck">
+			<strong>替换为</strong>
+			<input type="text" id="update"/>
+			<button>替换</button>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var obtn=document.getElementById('btn'),
+			opbox=document.getElementById('pbox'),
+			oul1=document.getElementById('ul1'),
+			ali1=oul1.getElementsByTagName('li'),
+			oul2=document.getElementById('ul2'),
+			ali2=oul2.getElementsByTagName('li'),
+			owrap=document.getElementById('wrap'),
+			ainputBox=document.getElementsByClassName('input-box'),
+			ocheck = document.getElementById('check'),
+			oupdateC=document.getElementById('updateCheck'),
+			oupdate=document.getElementById('update'),
+			amybtn=owrap.getElementsByTagName('button'),
+			str=opbox.innerHTML,
+			onOff=true;
+		//收缩，展开
+		obtn.onclick=function() {
+			if (onOff) {oul1.style.display="block";obtn.innerHTML="收缩";}
+			else{oul1.style.display="none";obtn.innerHTML="展开";}
+			onOff=!onOff;
+		}
+		//选项卡
+		for (var i = 0; i < ali1.length; i++) {
+			ali1[i].index=i;
+			ali1[i].onclick=function() {
+				owrap.style.display="block";
+				tab(this.index);
+			}
+		}
+
+		for (var i = 0; i < ali2.length; i++) {
+			ali2[i].index=i;
+			ali2[i].onclick=function() {			
+				tab(this.index);
+			}
+		}
+
+		function tab(Index) {
+				for (var i = 0; i < ali2.length; i++) {
+					ali2[i].className="";
+					ainputBox[i].style.display="none";
+				}
+				ali2[Index].className="on";
+				ainputBox[Index].style.display="block";
+		}
+
+		//查找
+		amybtn[0].onclick=function() {
+			if (!ocheck.value) {
+				alert("请输入文字");
+			}else if (opbox.innerHTML.indexOf(ocheck.value)==-1) {
+				alert('没有查找到');
+			}else{
+				opbox.innerHTML=str;
+				opbox.innerHTML=opbox.innerHTML.split(ocheck.value).join('<span>'+ocheck.value+'</span>');
+
+			}
+		}
+		//替换
+		amybtn[1].onclick=function() {
+			if (!oupdateC.value) {
+				alert("请输入文字");
+			}else if (opbox.innerHTML.indexOf(oupdateC.value)==-1) {
+				alert('没有查找到');
+			}else if(!oupdate.value){
+				confirm("是否删除?")?opbox.innerHTML=opbox.innerHTML.split(oupdateC.value):"";
+			}else{
+				opbox.innerHTML=opbox.innerHTML.split(oupdateC.value).join(oupdate.value);
+
+			}
+		}
+
+	}
+</script>
+</html>

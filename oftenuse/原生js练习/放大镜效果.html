@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>放大镜效果</title>
+	<style type="text/css">
+		#wrap{width: 200px; height: 200px; padding: 5px; border: 1px solid #ccc; position: relative; }
+		#wrap .small_pic { width: 200px; height: 200px; background: #eee; position: relative; }
+		#wrap .float_layer { width: 50px; height: 50px; border: 1px solid #000; background: #fff; filter: alpha(opacity: 30); opacity: 0.3; position: absolute; top: 0; left: 0; display:none;}
+		#wrap .mark {width:100%; height:100%; position:absolute; z-index:2; left:0px; top:0px; background:red; filter:alpha(opacity:0); opacity:0; cursor:crosshair;}
+		#wrap .big_pic { position: absolute; top: -1px; left: 215px; width:250px; height:250px; overflow:hidden; border:2px solid #CCC; display:none; }
+		#wrap .big_pic img { position:absolute; top: -30px; left: -80px; }
+	</style>
+</head>
+<body>
+<div id="wrap">
+    <div class="small_pic">
+		<span class="mark"></span>
+        <span class="float_layer"></span>
+        <img src="img/small.png" alt="妙味课堂 - 放大镜图片一"/>
+    </div>
+
+    <div class="big_pic">
+		<img src="img/big.png" alt="妙味课堂 - 放大镜图片二" longdesc="http://www.miaov.com" />
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		/**
+		 * 思路：先让鼠标移进去可显示放大镜和大图，再在mousemove事件上做文章，（按比例移动）
+		 */
+		var oWarp = document.getElementById('wrap');
+		var oSmallImg = getByClass(oWarp,"small_pic")[0];
+		var oMark = getByClass(oWarp,"mark")[0];
+		var oFloatLayer = getByClass(oWarp,"float_layer")[0];
+		var oBigImg = getByClass(oWarp,"big_pic")[0];
+		var oBigPic = oBigImg.getElementsByTagName('img')[0];
+		oMark.onmouseover = function(){
+			oFloatLayer.style.display="block";
+			oBigImg.style.display="block";
+		};
+		oMark.onmouseout = function(){
+			oFloatLayer.style.display="none";
+			oBigImg.style.display="none";
+		};
+		oMark.onmousemove = function(ev){
+
+			var oEvent = ev||event;
+			var l = oEvent.clientX - oWarp.offsetLeft - oSmallImg.offsetLeft- oFloatLayer.offsetWidth/2;
+			var t = oEvent.clientY - oWarp.offsetTop - oSmallImg.offsetTop- oFloatLayer.offsetHeight/2;
+			if (l<0) {l=0;}
+			if (t<0) {t=0;}
+			if (l>oMark.offsetWidth - oFloatLayer.offsetWidth) {l=oMark.offsetWidth - oFloatLayer.offsetWidth;}
+			if (t>oMark.offsetHeight - oFloatLayer.offsetHeight) {t=oMark.offsetHeight - oFloatLayer.offsetHeight;}
+			document.title = l+','+t;
+			oFloatLayer.style.left = l +'px';
+			oFloatLayer.style.top = t+'px';
+			//计算百分比
+			var oPercentX = l/(oMark.offsetWidth - oFloatLayer.offsetWidth);
+			var oPercentY = t/(oMark.offsetHeight - oFloatLayer.offsetHeight);
+
+			oBigPic.style.left = -oPercentX*(oBigPic.offsetWidth - oBigImg.offsetWidth)+'px';
+			oBigPic.style.top = -oPercentY*(oBigPic.offsetHeight - oBigImg.offsetHeight)+'px';
+		};
+	}
+
+	function getByClass(oParent,sClass) {
+		var tmp = [];
+		var aChild = oParent.getElementsByTagName('*');
+		for (var i = 0; i < aChild.length; i++) {
+			if (aChild[i].className == sClass) {
+				tmp.push(aChild[i]);
+			}
+		}
+		return tmp;
+	}
+</script>
+</html>

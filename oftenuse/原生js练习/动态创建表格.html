@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态创建表格</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	/**
+	* 
+ * caption: 表标题
+ * rows:一个表格中所有行的HTMLCollection
+ * cells: 保存着<tr>元素中单元格的HTMLCollection
+ * deleteRow(pos):删除指定的行
+ * createCaption:创建标题
+ *
+ */
+//创建table
+var table=document.createElement('table');
+table.border=1;
+table.width='100%';
+
+//创建tbody
+var tbody = document.createElement('tbody');
+table.appendChild(tbody);
+
+//创建第一行
+tbody.insertRow(0);  //在rows集合中的第一个位置插入一行
+tbody.rows[0].insertCell(0);  //创建第一行第一格
+tbody.rows[0].cells[0].appendChild(document.createTextNode('Cell 1,1')); //第一行第一格插入文字 
+tbody.rows[0].insertCell(1);
+tbody.rows[0].cells[1].appendChild(document.createTextNode('Cell 2,1'));
+
+//创建第二行
+tbody.insertRow(1);
+tbody.rows[1].insertCell(0);
+tbody.rows[1].cells[0].appendChild(document.createTextNode('Cell 1,2'));
+tbody.rows[1].insertCell(1);
+tbody.rows[1].cells[1].appendChild(document.createTextNode('Cell 2,2'));
+
+document.body.appendChild(table);
+
+</script>
+</html>

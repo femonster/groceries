@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OOP之Person</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	// function Person(name,age) {
+	// 	this.name=name;
+	// 	this.age=age;
+	// }
+	//--------第一种写法----------------------
+	// Person.prototype.showName = function() {
+	// 	alert('name is:'+this.name);
+	// };
+	// Person.prototype.showAge = function() {
+	// 	alert('age is:'+this.age);
+	// };
+	//-------第二种方法更具有封装性---------------
+	// Person.prototype={
+	// 	constructor:Person,
+	// 	showName:function(){
+	// 		alert('name is:'+this.name);
+	// 	},
+	// 	showAge:function(){
+	// 		alert('age is:'+this.age);
+	// 	}
+	// }
+	//-------第三种方法最具封装性（动态原型模式）建议用----
+	function Person(name,age) {
+		this.age=age;
+		this.name=name;
+		//只在showName方法不存在的情况下，才会添加到原型中，这段代码只会在初次调用才会执行
+		if (typeof this.showName != 'function') {
+			Person.prototype.showAge=function(){	
+				alert('age is:'+this.age);
+			};
+			Person.prototype.showName=function(){
+				alert('name is:'+this.name);
+			};
+			Person.prototype.show=function(){
+				alert(this.name+'是大傻逼');
+			};
+		}
+	}
+	var p1=new Person('leo',22);
+	var p2 =new Person('john',14);
+	p1.showName();
+	p1.showAge();
+	p2.showName();
+	p2.showAge();
+	p2.show();
+</script>
+</html>

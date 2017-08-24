@@ -1,0 +1,340 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,user-scalable=no">
+<meta charset="utf-8" />
+<title>wap-轮播</title>
+<script>
+document.getElementsByTagName("html")[0].style.fontSize=window.screen.width/10+"px";
+</script>
+</head>
+<body>
+<div class="slide">
+    <div class="slide-box">
+        <div class="sMain"><img src="img/1.jpg" alt=""/></div>
+        <div class="sMain"><img src="img/2.jpg" alt=""/></div>
+        <div class="sMain"><img src="img/3.jpg" alt=""/></div>
+        <div class="sMain"><img src="img/4.jpg" alt=""/></div>
+    </div>
+    <ul class="slide-item">
+        <li class="cur"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript" charset="utf-8">
+    var Slider = {
+    isScrolling: false, /*初始化动画是否进行中*/
+    newClass: function (obj) {
+        obj = obj || {};
+        if (this.isScrolling == false) {
+            this.init.prototype = Slider;
+            this.isScrolling = true;
+        }
+        return new this.init(obj);
+        /*实例化一个对象*/
+    },
+    init: function (options) {
+        var _this = this;
+        this.options = options;
+        this.newStyle();
+        this.bindTouch();
+        /*绑定触摸事件*/
+        if (this.options.switch == true) {
+            window.setInterval(
+                function () {
+                    clearInterval();
+                    if (_this.isScrolling) {
+                        return;
+                    }
+                    _this.nextPage()
+                }, _this.options.time);
+        }
+    },
+    newStyle: function () {
+        this.winWidth = window.innerWidth;
+        this.options.slideBox.style.width = this.winWidth * this.options.sMain.length + "px";
+        var slideHeight = this.winWidth / this.options.img[0].offsetWidth * this.options.img[0].offsetHeight;
+        this.options.slide.style.height = slideHeight + "px";
+        for (var i = 0; i < this.options.sMain.length; i++) {
+            this.options.sMain[i].style.width = this.winWidth + "px";
+        }
+    },
+    bindTouch: function () {
+        var _this = this;
+        var startPos = null;
+        window.onresize = function () {
+            _this.newStyle()
+        };
+        this.options.slide.addEventListener('touchstart', function (e) {
+            _this.isScrolling = true;
+            var startTouch = e.changedTouches[0];
+            startPos = {
+                x: startTouch.pageX,
+                y: startTouch.pageY,
+                time: +new Date()
+            }
+        }, false);
+
+        this.options.slide.addEventListener('touchmove', function (e) {
+            if (!_this.isScrolling) {
+                return;
+            }
+            e.preventDefault();
+            var moveTouch = e.changedTouches[0];
+            var movePos = {
+                x: moveTouch.pageX - startPos.x,
+                y: moveTouch.pageY - startPos.y
+            };
+
+            _this.isScrolling = Math.abs(movePos.x) > Math.abs(movePos.y);
+            if (_this.isScrolling) {
+                var moveOffset = movePos.x - _this.options.item * _this.winWidth;
+                _this.options.slideBox.style.webkitTransform = "translate3d(" + moveOffset + "px,0,0)";
+                _this.options.slideBox.style.webkitTransition = "all .6s ease-out";
+            }
+
+
+        }, false);
+
+        this.options.slide.addEventListener('touchend', function (e) {
+            if (!_this.isScrolling) {
+                return;
+            }
+            var duration = +new Date() - startPos.time;
+            var endTouch = e.changedTouches[0];
+            var endPos = {
+                x: endTouch.pageX - startPos.x,
+                y: endTouch.pageY - startPos.y
+            };
+
+            if (duration > 10) {  /*间隔事件*/
+                if (Math.abs(endPos.x) > 50) {  /*两次滑动的距离>10*/
+                    if (endPos.x > 0) {
+                        if (_this.options.item == 0) {
+                            _this.isScrolling = false;
+                            _this.objAnimation();
+                            /*回弹到第一张*/
+                        } else {
+                            _this.prevPage();
+                            /*往左*/
+                        }
+
+                    } else if (endPos.x < 0) {
+                        if (_this.options.item == _this.options.sMain.length - 1) {
+                            _this.isScrolling = false;
+                            _this.objAnimation();
+                            /*回调到最后一张*/
+                        } else {
+                            _this.nextPage();
+                            /*往右*/
+                        }
+
+                    } else {
+                        _this.isScrolling = false;
+                    }
+                }
+            }
+        }, false)
+    },
+    nextPage: function () {
+        if (this.isScrolling == false) {
+            return;
+        }
+        if (this.options.item == 3) {
+            this.options.item = -1;
+        }
+        if (this.options.item == this.options.sMain.length - 1) {
+            return;
+        }
+        this.options.item++;
+        this.objAnimation(this.options.item);
+        /*处理动画*/
+        this.curItem(this.options.item);
+        /*显示当前索引值*/
+    },
+    prevPage: function () {
+        if (this.options.item == 0) {
+            return;
+        }
+        this.options.item--;
+        this.objAnimation();
+        this.curItem();
+    },
+    curItem: function () {
+        for (var i = 0; i < this.options.sItem.length; i++) {
+            this.options.sItem[i].className = "";
+        }
+        this.options.sItem[this.options.item].className = "cur";
+    },
+    objAnimation: function () {
+        var setEq = -(this.options.item * this.winWidth) + "px";
+        this.options.slideBox.style.webkitTransition = "all .6s ease-out";
+        this.options.slideBox.style.webkitTransform = "translate3d(" + setEq + ",0,0)";
+        /*用3D变形来开启GPU加速*/
+    }
+};
+
+var obj = {
+    slide: document.querySelector(".slide"),
+    slideBox: document.querySelector('.slide-box'),
+    sMain: document.querySelectorAll('.sMain'),
+    sItem: document.querySelector('.slide-item').querySelectorAll('li'),
+    img: document.querySelector('.sMain').querySelectorAll("img"),
+    item: 0,
+    time: 5000,
+    switch: true
+};
+
+Slider.newClass(obj);
+</script>
+<style>
+    body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, textarea, form, select, fieldset, table, td, div, input {
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-family: 微软雅黑, Arail, sans-serif;
+    color: #333333;
+}
+
+body > div {
+    margin: 0 auto
+}
+
+div {
+    text-align: left
+}
+
+a img {
+    border: 0
+}
+
+i {
+    font-style: normal
+}
+
+body {
+    color: #333;
+    font: 14px 微软雅黑, Arail, sans-serif;
+}
+
+body.bg {
+    background: #f2f2f2;
+}
+
+ul, ol, li {
+    list-style-type: none;
+    vertical-align: 0
+}
+
+a {
+    outline-style: none;
+    color: #535353;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #D40000;
+    text-decoration: none
+}
+
+.clear {
+    clear: both
+}
+
+.text-right {
+    text-align: right;
+}
+
+p {
+    line-height: 1.5em;
+    color: #333333;
+    font-family: 微软雅黑, Arail, sans-serif;
+}
+
+span {
+    line-height: 1.5em;
+    color: #333333;
+    font-family: 微软雅黑, Arail, sans-serif;
+}
+
+button {
+    font-family: 微软雅黑, Arail, sans-serif;
+    outline: none;
+}
+
+input {
+    outline: none;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+
+.slide{
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.slide-box {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+
+.sMain {
+    float: left;
+    height: auto;
+}
+
+.sMain img {
+    width: 100%;
+    height: auto;
+}
+
+.slide-item {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+
+}
+
+.slide-item li{
+    width: 6px;
+    height: 6px;
+    line-height: 6px;
+    color: #000;
+    border-radius: 10px;
+    display: inline-block;
+    background: #fff;
+    opacity: 0.8;
+    text-indent: -99999px;
+}
+
+
+.slide-item li.cur{
+    background: #fcff00;
+    color: #fff;
+    opacity: 1;
+}
+
+
+</style>

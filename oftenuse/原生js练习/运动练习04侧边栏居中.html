@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>侧边栏居中</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	    body{margin: 0;padding: 0;height: 2000px;}
+		#mydiv{width: 100px;height: 100px;background-color: #454;position: absolute;right: 0;}
+	</style>
+</head>
+<body>
+<div id="mydiv"></div>
+</body>
+<script type="text/javascript">
+window.onscroll=function () {
+
+	var oDiv=document.getElementById('mydiv');
+	var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+	var t = scrollTop+(document.documentElement.clientHeight- oDiv.offsetHeight)/2;
+	startmove(parseInt(t));//取整，防止抖动
+}
+var timer=null;
+function startmove(iend){
+	var oDiv=document.getElementById('mydiv');
+		if(timer){clearInterval(timer);}
+	    timer=setInterval(function(){
+	    	var iSpeed=(iend - oDiv.offsetTop)/4;
+	    	iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);//向上取整，向下取整
+	    	if(oDiv.offsetLeft==iend){
+	    		clearInterval(timer);
+	    	}else{
+	    	oDiv.style.top=oDiv.offsetTop+iSpeed+'px';
+	        }
+	    },30);
+	 
+
+}
+</script>
+</html>

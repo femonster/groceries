@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件--拖拽变大小</title>
+	<style type="text/css">
+	#father{width: 200px;height: 200px;position: relative;background-color: green;}
+	#div1{width: 10px;height: 10px;background-color: red;position: absolute;bottom: 0;right: 0;}
+	</style>
+</head>
+<body>
+<div id="father"><div id="div1"></div></div>
+<!-- 
+变大小，只要使拖拽子div时不改变位置，而改成改变父div的大小即可
+ -->
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		drag('div1');
+
+	}
+	function drag(id) {
+		var ofather = document.getElementById('father');
+		var oDiv=document.getElementById(id);
+		oDiv.onmousedown=function(event){
+			disx = event.clientX - oDiv.offsetLeft;
+			disy = event.clientY - oDiv.offsetTop;
+			document.onmousemove=function(event){
+				var l = event.clientX - disx;
+				var t = event.clientY - disy;
+				//磁性吸附
+				if(l<30){l=0;}
+				if (l>document.documentElement.clientWidth - oDiv.offsetWidth-30) {
+					l=document.documentElement.clientWidth - oDiv.offsetWidth;
+				}
+				if (t<30) {t=0;}
+				if (t>document.documentElement.clientHeight - oDiv.offsetHeight-30) {
+					t=document.documentElement.clientHeight - oDiv.offsetHeight;
+				}
+				//改变父级宽高
+				ofather.style.width =l  + 'px';
+				ofather.style.height= t + 'px';
+			}
+			document.onmouseup=function(){
+				document.onmouseup=null;
+				document.onmousemove=null;
+			}
+			//组织默认事件，防止选中文字
+			return false;
+		}
+	}
+</script>
+</html>

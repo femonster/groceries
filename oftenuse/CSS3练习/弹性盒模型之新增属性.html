@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹性盒模型之新增属性</title>
+	<style>
+	/*box-shadow:[inset] x,y,r,[扩展r],color
+	insert 内投影 
+	盒模型阴影，可叠加
+	*/
+		.box{width: 200px;height: 200px;margin: 100px auto 0;background-color: red;box-shadow: 10px 10px 30px yellow;}
+	/*
+	box-reflect:above|below|left|right; 投影
+	距离
+	渐变（可选） linear-gradient：
+	没啥用，兼容不好，只有chrome与opera可用
+	
+	 */
+
+		img{display: block;width: 200px;height: 200px;margin: 50px 0 0 100px;
+			-webkit-box-reflect:below;}
+	
+	/*
+	resize 自由缩放
+	both 水平垂直都可以缩放
+	horizontal 只有水平方向可以缩放
+	vertical 只有垂直方向可以缩放
+	注意：一定要配合overflow:auto 一块使用只有水平方向可以缩放
+
+	IE不能用
+
+	 */
+		.box2{width: 200px;height: 200px;margin: 50px 0 0 200px;resize: both;overflow:auto;background: url(img/cssdemo.jpg);}
+	</style>				
+</head>
+<body>
+	<div class="box"></div>
+	<img src="img/cssdemo.jpg" alt="">
+	<div class="box2"></div>
+</body>
+</html>

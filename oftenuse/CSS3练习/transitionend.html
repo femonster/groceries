@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>过渡之基础</title>
+	<style>
+		/*
+		过渡完成事件 
+		Webkit内核： obj.addEventListener('webkitTransitionEnd',function(){},false);
+		firefox: obj.addEventListener('transitionend',function(){},false);
+
+		*/
+	div{width: 100px;height: 100px;background-color: red;}
+	.box{transition: 1s;}
+
+	</style>				
+</head>
+<body>
+
+<div class="box"></div>
+
+</body>
+<script>
+	window.onload=function(){
+		var obox = document.getElementsByTagName('div')[0];
+		obox.onclick=function() {
+
+			this.style.width = this.offsetWidth+100+'px';
+			addEnd(this,dosome);
+			
+		}
+		function dosome() {
+
+			alert('end');
+
+		}
+
+		function addEnd(obj,fn) {
+			obj.addEventListener('webkitTransitionEnd',fn,false);
+			obj.addEventListener('transitionend',fn,false);
+		}
+
+		function removeEnd(obj,fn) {
+			obj.removeEventListener('webkitTransitionEnd',fn,false);
+			obj.removeEventListener('transitionend',fn,false);
+		}
+	}
+</script>
+</html>

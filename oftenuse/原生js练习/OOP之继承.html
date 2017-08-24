@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OOP之继承</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	function Person(name,age) {
+		this.name=name;
+		this.age=age;
+	}
+	Person.prototype.showName = function() {
+		alert(this.name);
+	};
+	Person.prototype.showAge = function() {
+		alert(this.age);
+	};
+	// -------------------------------------------
+	function Worker(name,age,job){
+		//this->new出来的worker对象
+		//构造函数伪装  调用父级的构造函数--为了继承属性
+		Person.call(this,name,age);
+		this.job=job;
+	}
+	//-----------------第一种写法（推荐）---------------------------------------------------
+	//通过原型来继承父级方法
+	// Worker.prototype=Person.prototype;
+	//这段代码并不对，因为这是引用，在worker.prototype上做修改会影响Person.prototype，子类影响了父类，是不对的
+	
+	for(var i in Person.prototype){
+		Worker.prototype[i]=Person.prototype[i];
+	}
+	//------------------第二种写法（会重复创建实例属性）----------------------------------------
+	//for in 循环这段代码也可以写成下面这样,不过for in 循环更好理解
+	//将父类的实例赋给子类的原型，子类的实例还可以赋给孙类的原型，层层递进，实现继承（原型链）
+	// Worker.prototype=new Person();
+	// Worker.prototype.constructor=Person;
+
+	Worker.prototype.showJob = function() {
+		alert(this.job);
+	};
+ 	var pZgk= new Person('zgk',23);
+	var zgk = new Worker('zgk',23,'CTO');
+	pZgk.showName();
+	pZgk.showAge();
+
+	zgk.showName();
+	zgk.showJob();
+</script>
+</html>

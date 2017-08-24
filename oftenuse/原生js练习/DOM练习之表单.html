@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM练习之表单</title>
+</head>
+<body>
+<!--
+onsubmit事件  在提交之前
+
+onreset事件		点击reset时发生（表单重置时触发）
+
+oForm.onreset = function(){
+  return confirm('是否清空？');
+}
+
+onchange:当值改变时触发
+
+onkeyup , onblur 
+  -->
+  <form action="#" id="form1">
+  	<input type="text" name="text1">
+  	<!-- select也有value值,为选择的option的value值 -->
+  	<select name="city">
+  		<option value="">请选择城市</option>
+  		<option value="sh">上海</option>
+  		<option value="bj" selected="true">北京</option>
+  	</select>
+  </form>
+</body>
+<script type="text/javascript">
+	var oform = document.getElementById('form1');
+	// 获取form表单中元素可以用 oform.name 获取
+	// alert(oform.text1);
+	alert(oform.city.value);
+
+	// submit() 提交表单
+</script>
+</html>

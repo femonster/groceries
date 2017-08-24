@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>2D变换</title>
+<style>
+/*
+transform
+rotate()  旋转函数 取值度数
+deg  度数
+Transform-origin 旋转的基点
+skew() 倾斜函数 取值度数 
+skewX()
+skewY()
+scale() 缩放函数 取值 正数、负数和小数
+scaleX()
+scaleY()
+translate() 位移函数
+translateX()
+translateY()
+*/
+.wrap{width: 300px;height: 400px;float: left;border: 1px solid #000;}
+.wrap div{width:100px;height:100px;background:red;transition:2s;margin:100px auto;}
+
+.wrap:nth-child(1):hover .box1
+{-webkit-transform: rotate(360deg);
+-ms-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+transform: rotate(360deg);}
+/*其实是沿Z轴转*/
+
+.wrap:nth-child(2):hover .box2{
+	-webkit-transform: skew(15deg,30deg);
+	-ms-transform: skew(15deg,30deg);
+	-o-transform: skew(15deg,30deg);
+	transform: skew(15deg,30deg);
+}
+
+.wrap:nth-child(3):hover .box3{
+	-webkit-transform: scale(2);
+	-ms-transform: scale(2);
+	-o-transform: scale(2);
+	transform: scale(2);}
+
+.wrap:nth-child(4):hover .box4{
+	-webkit-transform: translateX(100px);
+	-ms-transform: translateX(100px);
+	-o-transform: translateX(100px);
+	transform: translateX(100px);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<p>旋转</p>
+	<div class="box1">box1</div>
+</div>
+<div class="wrap">
+	<p>倾斜</p>
+	<div class="box2">box2</div>
+</div>
+<div class="wrap">
+	<p>缩放</p>
+	<div class="box3">box3</div>
+</div>
+<div class="wrap">
+	<p>移动</p>
+	<div class="box4">box4</div>
+</div>
+
+</body>
+</html>

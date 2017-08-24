@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Untitled Document</title>
+    
+</head>
+<body>
+    <script type="text/javascript">   
+        /*
+         * param1 Array 
+         * param2 Array
+         * return true or false
+         */
+function arraysSimilar(arr1, arr2){
+function isarray(arr){return (arr instanceof Array);}
+    // 判断是否为数组
+    if(!isarray(arr1)||!isarray(arr2)){return false;}
+    // 判断是否长度一致
+    if(arr1.length!=arr2.length){return false;}
+    /*判断成员类型是否相同，因为顺序不同，可以将两个数组内        的成员类型放入两个空数组中，然后排序比较*/
+    function type_elements(ele){
+        if(ele===null){
+            return "null";
+        }else if(ele===window){
+            return "window";
+        }else if(ele instanceof Array){
+            return "array";
+        }else if(ele instanceof Date){
+            return "date";
+        }else{
+            return typeof(ele);
+        }
+    }
+    var typeofarr1=[];
+    var typeofarr2=[];
+    for(var i=0;i<arr1.length;i++){
+        typeofarr1.push(type_elements(arr1[i]));
+        typeofarr2.push(type_elements(arr2[i]));
+    }
+   var arr1_sort=typeofarr1.sort();
+   var arr2_sort= typeofarr2.sort();
+    for(var j=0;j<typeofarr1.length;j++){
+        if(arr1_sort[j]!=arr2_sort[j]){
+            return false;
+        }
+    }
+    return true;
+        }
+
+        var result=function(){
+    //以下为多组测试数据
+            var cases=[{
+                    arr1:[1,true,null],
+                    arr2:[null,false,100],
+                    expect:true
+                },{
+                    arr1:[function(){},100],
+                    arr2:[100,{}],
+                    expect:false
+                },{
+                    arr1:[null,999],
+                    arr2:[{},444],
+                    expect:false
+                },{
+                    arr1:[window,1,true,new Date(),"hahaha",(function(){}),undefined],
+                    arr2:[undefined,(function(){}),"okokok",new Date(),false,2,window],
+                    expect:true
+                },{
+                    arr1:[new Date()],
+                    arr2:[{}],
+                    expect:false
+                },{
+                    arr1:[window],
+                    arr2:[{}],
+                    expect:false
+                },{
+                    arr1:[undefined,1],
+                    arr2:[null,2],
+                    expect:false
+                },{
+                    arr1:[new Object,new Object,new Object],
+                    arr2:[{},{},null],
+                    expect:false
+                },{
+                    arr1:null,
+                    arr2:null,
+                    expect:false
+                },{
+                    arr1:[],
+                    arr2:undefined,
+                    expect:false
+                },{
+                    arr1:"abc",
+                    arr2:"cba",
+                    expect:false
+                }];
+            
+    //使用for循环, 通过arraysSimilar函数验证以上数据是否相似，如相似显示“通过”,否则"不通过",所以大家要完成arraysSimilar函数,具体要求，详见任务要求。    
+            for(var i=0;i<cases.length;i++){
+                if(arraysSimilar(cases[i].arr1,cases[i].arr2)!==cases[i].expect) {
+                    document.write("不通过！case"+(i+1)+"不正确！arr1="+JSON.stringify(cases[i].arr1)+", arr2="+JSON.stringify(cases[i].arr2)+" 的判断结果不是"+cases[i].expect);
+                    return false;
+                }                
+            }
+            return true;
+            
+        }();
+    document.write("判定结果:"+(result?"通过":"不通过"));
+    </script>
+
+</body>
+</html>

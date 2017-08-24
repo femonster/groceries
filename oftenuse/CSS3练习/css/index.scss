@@ -1,0 +1,25 @@
+
+$color:#ccc;
+
+body{
+	font-family:"微软雅黑"
+	
+}
+
+ul{
+	li{
+		a{
+			display:block;
+
+			&:hover{
+				color:$color;
+			}
+		}
+
+	}
+}
+
+div{
+	color:$color;
+}
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>事件demo</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#div1{width: 150px;height: 180px;background-color: #eee;display: none;}
+	</style>
+</head>
+<body>
+ <input type="button" name="btn" id="btn" value="显示">
+ <div id="div1"></div>
+
+</body>
+<script type="text/javascript">
+	// document.onclick=function (event) {
+ //       alert(event.clientX+','+event.clientY);
+	// }
+	window.onload=function(){
+		var btn=document.getElementById('btn');
+		var div1=document.getElementById('div1');
+		btn.onclick=function(event){
+			event.cancelBubble=true;
+			div1.style.display='block';
+		}
+		document.onclick=function(){
+			div1.style.display='none';
+		}
+	}
+</script>
+</html>
+<!---->

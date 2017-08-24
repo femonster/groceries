@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM练习之表格</title>
+	<style type="text/css">
+		table{
+			width: 500px;
+			margin: 10px auto;
+		}
+	</style>
+</head>
+<body>
+<!-- 
+表格特有的选择元素的方法
+
+tBodies[0] 
+
+rows  ...rows[1] 行
+
+cells   ...cells[2]  列
+
+
+ -->
+	<input type="text" name="" id="txt">
+	<input type="button" name="" value="添加" id="mybtn">
+	<input type="text" name="" id="search">
+	<input type="button" name="" value="搜索" id="sbtn">
+	<input type="button" name="" value="排序" id="sortbtn">
+	<table id="tabl" border="1px solid #666">
+		<thead>
+			<th>编号</th>
+			<th>姓名</th>
+			<th>操作</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>monster</td>
+				<td><a href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>john</td>
+				<td><a href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>mobi</td>
+				<td><a href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>waxiong</td>
+				<td><a href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>lala</td>
+				<td><a href="javascript:;">删除</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+
+	//---------------添加 ，删除------------------------
+	var mytable=new TableChange('tabl');
+	var otab=document.getElementById('tabl');
+	var oLink=otab.tBodies[0].getElementsByTagName('a');
+	for (var i = 0; i < oLink.length; i++) {
+		oLink[i].onclick=function(){
+			mytable.remove(this);
+		}
+	}
+	//-------------搜索---------------------------------
+	var osearchtxt = document.getElementById('search');
+	var osearchbtn = document.getElementById('sbtn');
+	var bIsFound = false;
+	osearchbtn.onclick=function(){
+		for (var i = 0; i <otab.tBodies[0].rows.length; i++) { 
+			var svalueIntab = otab.tBodies[0].rows[i].cells[1].innerHTML.toLowerCase();//变成小写
+			// alert(svalueIntab);
+			var svalueIntxt = osearchtxt.value.toLowerCase();
+			var arr = svalueIntxt.split(' ');
+			for (var j = 0; j < arr.length; j++) {
+				if (svalueIntab.search(arr[j])!=-1) {
+					bIsFound=true;
+				}
+			}
+			if (bIsFound) {
+				otab.tBodies[0].rows[i].style.backgroundColor = 'yellow';
+				bIsFound=false;
+			} else {
+				otab.tBodies[0].rows[i].style.backgroundColor = '';
+			}
+		}
+
+	};
+	//---------------------排序-------------------------------------------------
+	//1.变成数组  2.数组sort    3.重新插入
+
+	var oSortBtn = document.getElementById('sortbtn');
+	var iDown = true;
+	oSortBtn.onclick=function(){
+		var aSort = [];
+		for (var i = 0; i < otab.tBodies[0].rows.length; i++) {
+			aSort[i] = otab.tBodies[0].rows[i];
+		}
+		// iDown=!iDown;
+		if (iDown) {
+			aSort.sort(function(tr1,tr2){
+			return parseInt(tr2.cells[0].innerHTML)-parseInt(tr1.cells[0].innerHTML);
+			});
+			iDown=false;
+		} else {
+			aSort.sort(function(tr1,tr2){
+			return parseInt(tr1.cells[0].innerHTML)-parseInt(tr2.cells[0].innerHTML);
+			});
+			iDown=true;
+		}
+	
+		for (var i = 0; i < aSort.length; i++) {
+			otab.tBodies[0].appendChild(aSort[i]);
+		}
+	}	
+
+
+	// mytable.color();
+}
+function TableChange(id){	
+	//选择表格中的一个元素，可以用表格特有的选择放法
+	var _this=this;
+	this.oTab = document.getElementById(id);
+	this.oldBack=null;
+	//选择tbody中的第一行的第二列
+	//var seg = oTab.tBodies[0].rows[0].cells[1].innerHTML;
+	//alert(seg);
+	this.otxt = document.getElementById('txt');
+	this.obtn = document.getElementById('mybtn');
+	this.iNowid = this.oTab.tBodies[0].rows.length;
+	this.obtn.onclick=function(){
+		_this.add();
+	}
+}
+// TableChange.prototype.color= function(){
+// 		for (var i = 0; i < this.oTab.tBodies[0].rows.length; i++) {
+// 		this.oTab.tBodies[0].rows[i].style.backgroundColor=i%2?'#ccc':'';
+// 		this.oTab.tBodies[0].rows[i].onmouseover=function(){
+// 			oldBack = this.style.backgroundColor;
+// 			this.style.backgroundColor = '#556';
+// 			this.style.cursor='pointer';
+// 		}
+// 		this.oTab.tBodies[0].rows[i].onmouseout=function(){
+// 			this.style.backgroundColor = oldBack;
+// 		}
+// 	}
+// }
+TableChange.prototype.remove= function(removeA){
+			this.oTab.tBodies[0].removeChild(removeA.parentNode.parentNode);
+		};
+TableChange.prototype.add= function(){
+		var _this=this;
+		var otr=document.createElement('tr');
+		var otd1=document.createElement('td');
+		var otd2=document.createElement('td');
+		var otd3=document.createElement('td'); 
+		otd1.innerHTML=++this.iNowid;
+		otd2.innerHTML=this.otxt.value;
+		otd3.innerHTML='<a href="javascript:;">删除</a>';
+		otr.appendChild(otd1);
+		otr.appendChild(otd2);
+		otr.appendChild(otd3);
+		this.oTab.tBodies[0].appendChild(otr);
+		if (parseInt(otd1.innerHTML)%2) {}
+		otd3.getElementsByTagName('a')[0].onclick=function(){
+			_this.remove(this);
+		}
+
+	};
+</script>
+</html>

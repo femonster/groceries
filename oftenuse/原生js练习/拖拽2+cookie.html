@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>拖拽DIV+使用cookie记忆位置</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#div1{width: 100px;height: 100px;background-color: #e54;position: absolute;}
+	</style>
+</head>
+<body>
+<!-- 
+onmousedown:鼠标摁下，存储距离
+onmousemove:鼠标移动，根据距离，计算DIV最新的位置
+onmouseup:鼠标抬起，停止拖拽
+clientWidth:可视区宽度
+clientHeight:可视区高度
+offsetWidth/Height:元素实际宽/高
+ -->
+<div id="div1"> </div>
+</body>
+<script type="text/javascript">
+//设置cookie
+function setCookie(name,value,iday){
+var oDate=new Date();
+oDate.setDate(oDate.getDate()+iday);
+document.cookie=name+ '=' +value+ ';expires=' +oDate;
+}
+//获取cookie
+function getCookie(name){
+  var arr=document.cookie.split(';');
+  for(var i=0;i<arr.length;i++){
+   var arr2=arr[i].split('=');
+   if(arr2[0]==name){
+     return arr2[1];
+   }
+  }
+  return '';
+}
+//删除cookie
+function removeCookie(name){
+  setCookie(name,getCookie(name),-1);
+}
+
+
+
+window.onload=function(){
+	    var oDiv = document.getElementById('div1');
+	    var x = getCookie('x');
+		var y = getCookie('y');
+		if(x){
+		oDiv.style.left = x+'px';
+        oDiv.style.top = y+'px';//出不来y轴。明明没错啊。卧槽你大爷的
+	    }
+	oDiv.onmousedown=function(event) {
+
+		var disx=event.clientX - oDiv.offsetLeft;
+		var disy=event.clientY - oDiv.offsetTop;
+
+
+		document.onmousemove=function(event){
+			var l=event.clientX - disx;
+			var t= event.clientY - disy;
+			if (l<0) {l=0}
+			if (l>(document.documentElement.clientWidth-oDiv.offsetWidth)) {
+				l=document.documentElement.clientWidth-oDiv.offsetWidth;
+			}
+			if (t<0) {t=0}
+			if(t>(document.documentElement.clientHeight-oDiv.offsetHeight)){
+				t=document.documentElement.clientHeight-oDiv.offsetHeight;
+			}
+
+			oDiv.style.left=l+'px';
+			oDiv.style.top =t+'px';
+		}
+		document.onmouseup=function(){
+			document.onmouseup=null;
+			document.onmousemove=null;
+			setCookie('x',oDiv.offsetLeft,5);//利用cookie记录位置
+			setCookie('y',oDiv.offsetTop,5);
+		}
+	}
+}
+</script>
+</html>

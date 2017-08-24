@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包问题</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	function fn1() {
+		var result = [];
+		//i这个变量是保存在fn1这个作用域中
+		for (var i = 0; i < 10; i++) {
+			result[i] = function(){
+				return i;
+			};
+		}
+		return result;
+	}
+    //解决方法
+	// function fn1() {
+	// 	var result = [];
+	// 	//i
+	// 	for (var i = 0; i < 10; i++) {
+	// 		result[i] = function(num){
+	// 			return function(){
+	// 				return num;
+	// 			};
+	// 		}(i);
+	// 	}
+	// 	return result;
+	// }
+
+	var aRs = fn1();
+	//此时通过闭包来调用所有函数，当输出i的时候
+	//会去上一级的作用域链中查找
+	//这个时候i的值已经是10，所以连续输出了10个10
+	for (var i = 0; i < aRs.length; i++) {
+		document.write(aRs[i]()+"<br/>");
+	}
+</script>
+</html>

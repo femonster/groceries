@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流demo</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<script type="text/javascript" src="js/move.js"></script>
+	<style type="text/css">
+		.main{position: relative;}
+		.box{float: left;padding: 15px 0 0 15px;}
+		.box img{width: 200px;padding: 10px;border: 1px solid #ccc;box-shadow: 0 0 15px #ccc;}
+	</style>
+</head>
+<body>
+	<div class="main" id="mainbox">
+		<div class="box"><img src="img/PBImg/1.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/2.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/3.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/4.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/5.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/6.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/7.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/8.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/9.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/10.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/11.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/12.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/13.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/14.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/15.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/16.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/17.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/18.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/19.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/20.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/21.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/22.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/23.jpg" alt=""></div>
+		<div class="box"><img src="img/PBImg/24.jpg" alt=""></div>
+
+	</div>
+</body>
+<script type="text/javascript">
+
+window.onload = function(){
+		waterfall("mainbox","box");
+		//模拟滚动预加载
+		window.onscroll=function(){
+			//模拟数据 == "loading"
+			var dataInt={'data':[{'src':'13.jpg'},{'src':'14.jpg'},{'src':'15.jpg'},{'src':'26.jpg'},{'src':'25.jpg'},{'src':'7.jpg'},{'src':'8.jpg'},{'src':'9.jpg'},{'src':'10.jpg'},{'src':'11.jpg'},{'src':'12.jpg'}]};
+
+			for (var i = 0; i < dataInt.data.length; i++) {
+				if (checkscrollside("mainbox","box")) {
+				var oParent = document.getElementById("mainbox");
+				var oBox = document.createElement('div');
+				oBox.className='box';
+				var oimg = document.createElement('img');
+				oimg.src = "img/PBImg/"+dataInt.data[i].src;
+				oParent.appendChild(oBox);
+				oBox.appendChild(oimg);
+
+				}
+				waterfall("mainbox","box");
+			}
+			
+		}
+
+	}
+
+function getByClass(oParent,sClass) {
+	var AdomList=oParent.getElementsByTagName("*");
+	var Atest=[];
+	for (var i = 0; i < AdomList.length; i++) {
+		if (AdomList[i].className==sClass) {
+			Atest.push(AdomList[i]);
+		}
+	}
+	return Atest;
+}
+
+function getIndex(attr,array) {
+	for(i in array){
+		if (array[i]==attr) {
+			return i;
+		}
+	}
+}
+//瀑布流函数
+function waterfall(oParent,sClass) {
+	var oMain = document.getElementById(oParent);
+	var aBoxs = getByClass(oMain,sClass);
+	//整个屏幕的宽
+	var iWin = document.documentElement.clientWidth || document.body.clientWidth;
+	//每一张图的宽
+	var iPic = aBoxs[0].offsetWidth;
+	//每一行的列数
+	var iCols = Math.floor(iWin/iPic);
+	//定义容器的宽并居中·
+	oMain.style.cssText = "width:"+iPic*iCols+"px;margin:0 auto;"
+	//定义一个数组存储每一列的高度
+	var aEveryRow = [];
+	for (var i = 0; i < aBoxs.length; i++) {
+		if (i<iCols) {
+			aEveryRow.push(aBoxs[i].offsetHeight);
+		}else{
+			//一行中高度最小的列的高度
+			//apply的第一个参数传递作用域，第二个参数传递数组。
+			//Math.min.apply(null, [1, 2, 3]) 等价于 Math.min(1, 2, 3)
+			var iMin = Math.min.apply(null,aEveryRow);
+			//高度最小的列的索引值
+			var iMinIndex = getIndex(iMin,aEveryRow);
+			//高度最小列的left值
+			var iMleft = iMinIndex*iPic;
+			//将第二行的第一张图片放到第一行高度最低的列的下面
+			aBoxs[i].style.position = "absolute";
+			aBoxs[i].style.left = iMleft+'px';
+			aBoxs[i].style.top = iMin + 'px';
+			//更新此列的高度
+			aEveryRow[iMinIndex] += aBoxs[i].offsetHeight;
+		}
+					 
+	}
+}
+
+
+//判断是否具备加载条件
+function checkscrollside(oParent,sClass){
+    var oParent=document.getElementById(oParent);
+    var aPin=getByClass(oParent,sClass);
+//加载条件是：当最后一张图片相对于父元素的top加上自身高度 小于 scrolltop加上可视区的高度的时候
+	var iLastBoxH = aPin[aPin.length-1].offsetTop + Math.floor(aPin[aPin.length-1].offsetHeight/2);
+//可视区的高
+	var iBodyH = document.documentElement.clientHeight ||　document.body.clientHeight;
+//被卷去的高
+	var iScrollTop = document.documentElement.scrollTop ||　document.body.scrollTop;
+
+	var iIf = iBodyH+iScrollTop;
+
+	return (iLastBoxH<iIf)?true:false;
+}
+
+</script>
+</html>

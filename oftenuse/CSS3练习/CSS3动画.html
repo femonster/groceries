@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>CSS3动画</title>
+<style>
+/*
+关键帧——keyframes
+
+只需指明两个状态，之间的过程由计算机自动计算
+关键帧的时间单位
+
+数字：0%、25%、100%等
+字符：from(0%)、to(100%)
+格式1
+@keyframes 动画名称
+{
+	动画状态
+}
+
+格式2
+@keyframes  miaov_test
+{
+	from { background:red; }
+	to { background:green; }
+}
+可以只有to
+
+animation-play-state 播放状态（ running 播放 和paused 暂停 ）
+
+
+animation
+属性：
+时间，延迟时间 (animation-delay)，运动形式（animation-timing-function）,重复次数(animation-iteration-count)	
+播放前重置（animation-direction）
+animation-iteration-count ：infinite（无限次）
+animation-direction：alternate（动画直接从上一次停止的位置开始执行）
+
+*/
+@-webkit-keyframes move{
+	0%{top: 0;left: 0;}
+	25%{top: 0;left: 300px;}
+	50%{top: 300px;left:300px;}
+	75%{top:300px;left: 0; }
+}
+#wrap{width: 400px;height: 400px;border: 2px solid #000;margin: 20px auto;position: relative;}
+.box{width: 100px;height: 100px;background-color: red;position: absolute;top: 0;left: 0;-webkit-animation:2s move linear 3;-moz-animation:2s move linear 3;animation: 2s move linear 3;}
+
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div class="box"></div>
+</div>
+</body>
+</html>

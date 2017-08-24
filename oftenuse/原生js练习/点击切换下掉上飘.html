@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>点击切换下掉上飘</title>
+</head>
+<body>
+
+
+</body>
+<!-- <script type="text/javascript" src="js/move.js"></script> -->
+<script>
+window.onload=function() {
+	var str = '';
+	var len = 20;
+	var aDiv = document.getElementsByTagName('div');
+	// var timer = null;
+	var timer2= null;
+	var num = 0;
+	var finished = true;
+	var flag=true;
+	for (var i = 0; i < 20; i++) {
+		str+="<div style='width:50px;height:50px;background-color:red;position:absolute;left:"+i*60+"px;'></div>"
+	}
+	document.body.innerHTML=str;
+	document.onclick=function(){
+		upOrDown();
+		
+	}
+	
+	function upOrDown(){
+		if ( !finished ) { return; } //如果一点击，前一轮没有完成就直接退出
+		finished = false; //finished用于检测一轮是否完成，新一轮开始所以finished为false
+		clearInterval(timer2);
+		
+		timer2=setInterval(function(){
+			startmove(aDiv[num],'top',10,flag?500:8,num == len - 1 ? function(){
+					finished = true; //当且仅当最后一个aDiv落定的时候，finished才算完成，改为true
+					flag = !flag;
+					// alert("完成了一轮！");
+				} : null);
+			num++;
+			if (num===len) {
+				clearInterval(timer2);
+				num=0;
+			}
+		},100);
+	}
+	
+}   
+
+// 下：speed=10;    >=target=500 
+// 上：speed=-10；   <=target=10;
+
+	function startmove(obj,attr,speed,iTarget,fn) {
+			if (obj.timer) {clearInterval(obj.timer);}
+			var speed = (iTarget-parseInt(getStyle(obj,attr)))>0?speed:-speed; //判断往哪边走
+			obj.timer=setInterval(function(){
+				//先做判断
+				var iway = parseInt(getStyle(obj,attr))+speed;
+				if (iway>iTarget&&speed>0||iway<iTarget&&speed<0) {iway=iTarget;}
+				//再赋值
+				obj.style[attr]=iway+'px';
+				if (iway==iTarget) {clearInterval(obj.timer);fn&&fn();}
+				document.title=parseInt(getStyle(obj,attr));
+			},30);
+		}
+
+	function getStyle(obj,attr) {
+		if (obj.currentStyle) {
+			return obj.currentStyle[attr];
+		} else {
+			return getComputedStyle(obj,false)[attr];
+		}
+	}
+</script>
+</html>
+

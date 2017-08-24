@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>加载事件demo</title>
+	<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+function addLoadEvent(func){
+       	var oldonload = window.onload;
+       	if(typeof window.onload!='function'){
+       		window.onload=func;
+       	}else{
+       		window.onload=function(){
+       			oldonload();
+       			func();
+       		}
+       	}	
+}
+
+function alert1() {
+	alert(1);
+}
+function alert2() {
+	alert(2);
+}
+addLoadEvent(alert1);
+addLoadEvent(alert2);
+</script>
+</html>

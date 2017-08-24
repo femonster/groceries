@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo2</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<script type="text/javascript" src="js/move.js"></script>
+	<style type="text/css">	
+		.wrap{width: 660px;height: 330px;margin: 20px auto 0;background-color: #ee6;position: relative;}
+		.bigImg{position: relative;}
+		.bigImg li{width: 660px;height: 330px;position: absolute;top: 0;left: 0;}
+		.bigImg li:first-child{z-index: 2;}
+		.small-wrap{width: 660px;height: 90px;position: absolute;bottom: 0;z-index: 9999;}
+		.small-wrap #text_list h2{display: none;}
+		.small-wrap #text_list .show{display: block;width: 500px;height: 20px;position: absolute;left:40px;top: 10px;}
+		.small-wrap #text_list a{text-decoration: none;color: #fff;}
+		.iconbox{width:485px;height: 45px;position: absolute; bottom: 7px;left: 10px; z-index: 9999;overflow: hidden;}
+		.smallImg{position: absolute;left: 0;}
+		.smallImg .active{opacity: 1;}
+		.smallImg li:first-child{margin-left: 3px;}
+		.smallImg li{width: 65px;border: 4px solid #fff;float: left;margin-left: 8px;opacity: 0.5;}
+		.smallImg li img{width: 64px;height: 36px;}
+		.wrap .btn{width: 36px;height: 36px;background: url(img/QQbanner/btn.gif);position: absolute;bottom: 14px;z-index: 3;}
+		
+		.wrap #btn-prev{right: 72px;}
+		.wrap .btn{opacity: 0.5;}
+		.wrap .showbtn{opacity: 1;}
+		.wrap #btn-next{right: 32px;background-position: -38px 0;}
+	</style>
+	
+</head>
+<body>
+	<div class="wrap">
+		<ul id="big-img-ul" class="bigImg">
+			<li><img src="img/QQbanner/pic_1.jpg"></li>
+			<li><img src="img/QQbanner/pic_2.jpg"></li>
+			<li><img src="img/QQbanner/pic_3.jpg"></li>
+			<li><img src="img/QQbanner/pic_4.jpg"></li>
+			<li><img src="img/QQbanner/pic_5.jpg"></li>
+			<li><img src="img/QQbanner/pic_6.jpg"></li>
+			<li><img src="img/QQbanner/pic_7.jpg"></li>
+			<li><img src="img/QQbanner/pic_8.jpg"></li>
+			<li><img src="img/QQbanner/pic_9.jpg"></li>
+			<li><img src="img/QQbanner/pic_10.jpg"></li>
+			<li><img src="img/QQbanner/pic_11.jpg"></li>
+			<li><img src="img/QQbanner/pic_12.jpg"></li>
+			<li><img src="img/QQbanner/pic_13.jpg"></li>
+			<li><img src="img/QQbanner/pic_14.jpg"></li>
+		</ul>
+		<div class="small-wrap">
+			<ul id="text_list">
+				<li><h2 class="show"><a href="#">《武则天秘史》[至22集]姐姐与皇上偷情，媚娘抓奸在床...</a></h2></li>
+				<li><h2><a href="#">《无底洞》金钱、美女、权利、复仇等欲望让人不可自拔...</a></h2></li>
+				<li><h2><a href="#">《巴黎宝贝》邓超巴黎当奶爸，上演基情、卖萌、跨国恋..</a></h2></li>
+				<li><h2><a href="#">《我的女儿是花儿》[至3集]“富二代”冰王子恋上贫家女..</a></h2></li>
+				<li><h2><a href="#">《法证先锋3》[至26集]写字楼惊现“女僵尸”尸体！</a></h2></li>
+				<li><h2><a href="#">《非常了得》孟非郭德纲大曝台下私生活，内地Hold姐来挑战</a></h2></li>
+				<li><h2><a href="#">第二届九分钟电影11月20日独家首映 视觉盛宴恭迎各位看官</a></h2></li>
+				<li><h2><a href="#">《快女微电影》 洪辰脸伤痊愈 快女微电影收官作复拍</a></h2></li>
+				<li><h2><a href="#">《称心如意》京城第一“育婴男”Hold住全场 萝莉热舞走光</a></h2></li>
+				<li><h2><a href="#">《男人帮》[全30集]悲喜双响炮，一个完美结局</a></h2></li>
+				<li><h2><a href="#">《辛亥革命》成龙、赵文瑄、李冰冰、胡歌演绎革命腥风血雨</a></h2></li>
+				<li><h2><a href="#">《李献计历险记》房祖名患差时症为寻女友开启超时空冒险</a></h2></li>
+				<li><h2><a href="#">Justin bieber女友动感热单全球首发。</a></h2></li>
+				<li><h2><a href="#">第八届中国（重庆）国际园林博览会</a></h2></li>
+			</ul>
+			<div class="iconbox">
+				<ul id="small-img-ul" class="smallImg">
+					<li class="active"><img src="img/QQbanner/ico_1.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_2.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_3.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_4.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_5.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_6.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_7.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_8.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_9.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_10.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_11.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_12.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_13.jpg" alt=""></li>
+					<li><img src="img/QQbanner/ico_14.jpg" alt=""></li>
+				</ul>
+			</div>
+			<a href="javascript:;" id="btn-prev" class="btn"></a>
+			<a href="javascript:;" id="btn-next" class="btn showbtn"></a>
+		</div>
+	</div>
+</body>
+
+
+<script type="text/javascript">
+/**
+ *	首先布好局后，实现点击切换icon的UL的移动。使用一个iNowLeft计数（第几次移动）
+ * 	再实现点击小图换大图（选项卡，循环将className清除，再将点击的单独加上类名），使用一个iNow计数，移动到第几个小图上
+ * 	再实现自动切换，注意iNow和iNowLeft之间的关系
+ *  
+ */
+	window.onload=function(){
+		picturn();
+	}
+
+	function picturn(){
+		var aBigLi = document.getElementById('big-img-ul').getElementsByTagName('li');
+		var oSmallUl = document.getElementById('small-img-ul');
+		var aSamllLi = oSmallUl.getElementsByTagName('li');
+		var aTextLi = document.getElementById('text_list').getElementsByTagName('li');
+		var oBtnprev = document.getElementById('btn-prev');
+		var oBtnnext = document.getElementById('btn-next');
+		var iMinZindex = 2;
+		var iNow = 0;
+		var iNowUlLeft = 0;
+		//icon图的宽度
+		var iDis = aSamllLi[0].offsetWidth + parseInt(getStyle(aSamllLi[1],"marginLeft"));
+		//icon图的总宽
+		oSmallUl.style.width =iDis* aSamllLi.length + 'px' ;
+		oSmallUl.style.left = 0+'px';
+		//点击小图换大图
+		for (var i = 0; i < aSamllLi.length; i++) {
+			aSamllLi[i].index = i;
+			aSamllLi[i].onclick=function(){
+				if (iNow == this.index) {return;} //防止点击同一个小图片大图出现闪烁
+				iNow = this.index;
+				tab();
+				
+			};
+		}
+		//自动切换图片
+		timer = setInterval(autoplay,3000);
+		//停止自动播放
+		for (var i = 0; i < aBigLi.length; i++) {
+			aBigLi[i].onmouseover = function(){
+				clearInterval(timer);
+			};
+			aBigLi[i].onmouseout = function(){
+				timer = setInterval(autoplay,3000);
+			}
+		}
+		oBtnprev.onmouseover = oBtnnext.onmouseover = function(){
+			clearInterval(timer);
+		}
+		oBtnprev.onmouseout = oBtnnext.onmouseout = function(){
+			timer = setInterval(autoplay,3000);
+		}
+
+
+
+		//两个播放函数
+		function autoplay(){
+			iNow++;
+			if (iNow>=aSamllLi.length) {iNow=0;}
+			if (iNow<iNowUlLeft) {iNowUlLeft = iNow;}
+			else if(iNow-iNowUlLeft>=5) {iNowUlLeft= iNow-5;}
+					
+			oBtnprev.className=iNowUlLeft==0?"btn":"btn showbtn";
+			oBtnnext.className=iNowUlLeft==aSamllLi.length-6?"btn":"btn showbtn";	
+			startmove(oSmallUl,{left:-iDis*iNowUlLeft});
+			tab();
+		}
+
+		function tab(){
+				aBigLi[iNow].style.opacity="0";
+				for (var j = 0; j < aSamllLi.length; j++) {
+				aSamllLi[j].className="";
+				aTextLi[j].getElementsByTagName('h2')[0].className="";
+				}
+				aSamllLi[iNow].className = "active";
+				startmove(aBigLi[iNow],{opacity:100});
+				aTextLi[iNow].getElementsByTagName('h2')[0].className="show";
+				aBigLi[iNow].style.zIndex = iMinZindex++;
+				document.title = iNow+","+iNowUlLeft;
+		}
+
+
+
+		//点击左右切换按钮
+		oBtnprev.onclick = function(){  //left+;	
+				
+				if (iNowUlLeft > 0) {
+					iNowUlLeft--;
+					oBtnprev.className=iNowUlLeft==0?"btn":"btn showbtn";
+					oBtnnext.className=iNowUlLeft==aSamllLi.length-6?"btn":"btn showbtn";
+					startmove(oSmallUl,{left:-iDis*iNowUlLeft});							
+				}
+				
+			}
+		oBtnnext.onclick = function(){	//left-;		
+				
+				if (iNowUlLeft<aSamllLi.length-6) {
+					iNowUlLeft++;
+					oBtnprev.className=iNowUlLeft==0?"btn":"btn showbtn";
+					oBtnnext.className=iNowUlLeft==aSamllLi.length-6?"btn":"btn showbtn";
+					startmove(oSmallUl,{left:-iDis*iNowUlLeft});
+					
+				}
+				
+			}
+
+			
+
+	}
+
+</script>
+</html> 
+
+	}
+</script>
+</html>

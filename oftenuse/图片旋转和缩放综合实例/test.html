@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>Document</title>
+<script type="text/javascript">
+(function(){
+	setRem();
+	window.addEventListener('orientation' in window?"deviceorientation":"resize",setRem);
+	function setRem(){
+		var html = document.documentElement;
+		var width = html.clientWidth;
+		html.style.fontSize = width/16 + "px";
+	}
+})();
+</script>
+<link rel="stylesheet" href="test.css">
+</head>
+<body>
+<header>相册实例操作</header>
+<div id="box">
+	<ul id="list">
+		<li>
+			<img src="pics/1.jpg" />
+		</li>
+		<li>
+			<img src="pics/2.jpg" />
+		</li>
+		<li>
+			<img src="pics/3.jpg" />
+		</li>
+		<li>
+			<img src="pics/4.jpg" />
+		</li>
+		<li>
+			<img src="pics/5.jpg" />
+		</li>
+		<li>
+			<img src="pics/5.jpg" />
+		</li>
+		<li>
+			<img src="pics/5.jpg" />
+		</li>
+		<li>
+			<img src="pics/5.jpg" />
+		</li>
+		<li>
+			<img src="pics/5.jpg" />
+		</li>
+		<li>
+			<img src="pics/5.jpg" />
+		</li>
+	</ul>
+</div>
+<section id="imgPage">
+	<header>大图预览<a href="javascript:;" id="backBtn"><</a></header>
+	<div class="imgWrap">
+		<img src="pics/1.jpg" id="bigImg" />
+		<nav id="imgNavs">
+			<a href="javascript:;">向左旋转90</a>
+			<a href="javascript:;">向右旋转90</a>
+			<a href="javascript:;">放大</a>
+			<a href="javascript:;">缩小</a>
+		</nav>
+	</div>
+</section>
+<script type="text/javascript" src="m.Tween.js"></script>
+<script type="text/javascript">
+document.addEventListener("touchstart",function(e) {
+	e.preventDefault();
+});
+
+(function() {
+	setScroll();
+	function setScroll() {
+		var box = document.querySelector("#box");
+		mScroll({
+			el:box
+		})
+	}
+})();
+
+function mScroll(init) {
+	if (!init.el) {
+		return;
+	}
+	var wrap = init.el;//要滑动的元素
+	var inner= init.el.children[0]; //滑动元素div中的子元素ul
+	var scrollBar=document.createElement("div");//自定义滚动条
+	var startPoint = 0;
+	var lastY = 0;
+	var lastDis=0;
+	var lastTimeDis=0;
+	var maxTranslate=wrap.clientHeight - inner.offsetHeight;
+
+	//如果没有滚动条则创建
+	if (!init.offBar) {	
+		var scale = wrap.clientHeight/inner.offsetHeight;
+		inner.style.minHeight = "100%";
+		scrollBar.style.cssText = "width:4px;background:rgba(0,0,0,0.5);position:absolute;right:0;top:0;border-radius:2px;opacity:0;transition:0.3s opacity;"
+	}
+}
+</script>
+</body>
+</html>

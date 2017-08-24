@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>碰撞运动之小球</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+		#ball{width: 100px;height: 100px;border-radius: 50px;background-color: red;position: absolute;top: 30px;left: 10px;}
+	</style>
+</head>
+<body>
+<input type="button" value="start" id="btn1">
+<div id="ball"></div>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var oball=document.getElementById('ball');
+	var obtn=document.getElementById('btn1');
+	var iLend=document.documentElement.clientWidth-oball.offsetWidth;
+	var iTend=document.documentElement.clientHeight-oball.offsetHeight;
+	obtn.onclick=function(){
+		startmove(oball,iLend,iTend);
+	}
+}
+var iSpeedx=50;
+var iSpeedy=6;
+	function startmove(obj,iendx,iendy) {
+		if (obj.timer) {clearInterval(obj.timer);}
+		obj.timer=setInterval(function(){
+			//模拟重力，Y轴速度不断变大
+			iSpeedy+=3;
+			var l=obj.offsetLeft+iSpeedx;
+			var t=obj.offsetTop+iSpeedy;
+			//每弹一次，速度反向并变小
+			if (l>iendx) {
+				iSpeedx*=-0.8;
+				l=iendx;
+			}
+			if (l<0) {
+				iSpeedx*=-0.8;
+				l=0;
+			}
+			if (t>iendy) {
+				iSpeedy*=-0.8;
+				iSpeedx*=0.8;
+				t=iendy;
+			}
+			if (t<0) {
+				iSpeedy*=-0.8;
+				iSpeedx*=0.8;
+				t=0;
+			}
+			if (Math.abs(iSpeedy)<1) {
+				iSpeedy=0;
+			}
+			if(Math.abs(iSpeedx)<1){
+				iSpeedx=0;
+			}
+			//停止定时器
+			if(iSpeedy==0 && iSpeedx==0 && t==document.documentElement.clientHeight-obj.offsetHeight){
+				clearInterval(obj.timer);
+				alert('stop');
+			}else{
+				obj.style.left=l+'px';
+				obj.style.top=t+'px';
+			}
+		},30);
+	}
+</script>
+</html>

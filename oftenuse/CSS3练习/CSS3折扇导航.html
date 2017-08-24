@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>折扇导航</title>
+	<style>
+		body{margin: 0;padding: 0;background-color: #666;}
+		#box{
+			width: 1200px;
+			height: 700px;
+			background: url(img/bg.png) no-repeat;
+			position: relative;
+			margin: 100px auto;
+		}
+		#box div{
+			width: 260px;
+			height: 70px;
+			position: absolute;
+			left: 555px;
+			top: 440px;
+			transform-origin: 35px 50px;
+			transition: 2s;
+			font: 20px/100px Arial;
+			padding-right: 30px;
+			color: #fff;
+			text-align: right;
+			border-radius: 3px;
+			transition: 1s;
+		}
+		#box div:nth-of-type(1){
+			background-color: #417191;
+		}
+		#box div:nth-of-type(2){
+			background-color: #ce8298;
+		}
+		#box div:nth-of-type(3){
+			background-color: #f78992;
+		}
+		#box div:nth-of-type(4){
+			background-color: #fbc0a5;
+		}
+		#box div:nth-of-type(5){
+			background-color: #f8988f;
+		}
+		#box div:nth-of-type(6){
+			background-color: #f16273;
+		}
+		#box div:nth-of-type(7){
+			background-color: #9c9fcd;
+		}
+		#box div:nth-of-type(8){
+			background-color: #bae2d3;
+		}
+		#box div:nth-of-type(9){
+			background-color: #43bab8;
+		}
+		#box div:nth-of-type(10){
+			background-color: #678d95;
+		}
+		#box img{
+			    position: absolute;
+    top: -9px;
+    right: 13px;
+    width: 65px;
+    transform: rotateZ(90deg);
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1009367876/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1009367876/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1009703124/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1007085362/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1009280451/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1009367876/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1005771049/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1004872580/90" alt=""></div>
+		<div><img src="http://qidian.qpic.cn/qdbimg/349573/1007073412/90" alt=""></div>
+		<div>言情·霸道总裁</div>
+	</div>
+	<script>
+		window.onload=function() {
+			var obox = document.getElementById('box');
+			var aDiv = obox.getElementsByTagName('div');
+			var flag=true;
+			
+			spread();
+			//点击封面展开合起
+			aDiv[9].onclick=function() {
+				flag?close():spread();
+				flag=!flag;
+			}
+			
+			// 点击每一块进行展示（这里的旋转度数不是很懂）
+			for (var i = 0; i < aDiv.length-1; i++) {
+				(function(i) {
+					aDiv[i].onclick=function() {
+						for (var j = 0; j < aDiv.length; j++) {
+							if (j<i) {
+								aDiv[j].style.transform = "rotate("+(350-(j*14)+ i*17-80-10)+"deg)";
+							}
+							if (j>i) {
+								aDiv[j].style.transform = "rotate("+(350-(j*14)+ i*17-80-23)+"deg)";
+							}
+						}
+						aDiv[i].style.transform = "rotate("+(350-(i*17)+ i*17-80 )+"deg)";
+					}
+				})(i);
+			}
+
+			//展开
+			function spread() {
+				for (var i = 0; i <aDiv.length ; i++) {
+					aDiv[i].style.transform="rotate("+(350-(i*17))+"deg)";
+				}
+			}
+			// 合起
+			function close() {
+				for (var i = 0; i < aDiv.length; i++) {
+					aDiv[i].style.transform="rotate(0deg)";
+				}
+			}
+		}
+	</script>
+</body>
+</html>

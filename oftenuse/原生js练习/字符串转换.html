@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>字符串转换</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	var abc = "aa|bb|ccc";
+	var aString = [];
+	aString = abc.split("\|");
+	alert(aString);         
+	aString[2] = aString[2].toUpperCase();
+	abc = aString[2]+"||"+aString[1]+"||"+aString[0];
+	alert(abc);
+</script>
+</html>

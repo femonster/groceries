@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>坚果手机官网特效(没做完)</title>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<style type="text/css">
+		*{margin:0;padding:0;}
+		li{list-style: none;}
+		#tphone{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			bottom: -20px;
+			left: 0;
+			overflow: hidden;
+		}
+		#tphoneUl{
+			width: 100%;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			overflow: hidden;
+		}
+		#tphoneUl li{
+			float: left;
+			/*width: 13.8%;*/
+			position: relative;
+
+		}
+		#tphoneUl li img{
+			width: 100%;
+			position: relative;
+			cursor: pointer;
+			transition: 0.4s;
+
+		}
+		#tphoneUl li:nth-of-type(1) img{
+			transform: translateY(63%);
+		}
+		#tphoneUl li:nth-of-type(2) img{
+			transform: translateY(47%);
+		}
+		#tphoneUl li:nth-of-type(3) img{
+			transform: translateY(67%);
+		}
+		#tphoneUl li:nth-of-type(4) img{
+			transform: translateY(47%);
+		}
+		#tphoneUl li:nth-of-type(5) img{
+			transform: translateY(27%);
+		}
+		#tphoneUl li:nth-of-type(6) img{
+			transform: translateY(47%);
+		}
+		#tphoneUl li:nth-of-type(7) img{
+			transform: translateY(61%);
+		}
+	</style>
+</head>
+<body>
+	<div id="tphone">
+			<ul id="tphoneUl">
+				<li>
+					<img src="img/Tphone/1-1.png">
+				</li>
+				<li>
+					<img src="img/Tphone/2-2.png">
+				</li>
+				<li>
+					<img src="img/Tphone/3-3.png">
+				</li>
+				<li>
+					<img src="img/Tphone/4-4.png">
+				</li>
+				<li>
+					<img src="img/Tphone/5-5.png">
+				</li>
+				<li>
+					<img src="img/Tphone/6-6.png">
+				</li>
+				<li>
+					<img src="img/Tphone/7-7.png">
+				</li>
+			</ul>
+		</div>
+</body>
+<script type="text/javascript">
+
+	$(function() {
+		//每个li所占宽度
+		var iWLi = $(window).width()/7/$(window).width()*100;
+		$('#tphoneUl li').css('width', iWLi+'%');
+
+		//受影响的图片的宽度（5张）
+		var iWimg = $('#tphoneUl').width()/7*5;
+
+		//划过手机图的动画效果
+		function animation(clientX) {
+				var  aimg = $('#tphoneUl li img');
+				
+				aimg.each(function(index) {
+					
+					//每张图片中心点到左边的距离
+					var iMiddle = aimg.eq(index).offset().left + aimg.eq(index).width()/2;
+					
+					//鼠标到每张图片中心点的距离
+					var disX = Math.abs(clientX - iMiddle);
+					
+					if (disX>iWimg) {disX=iWimg;}
+					
+					//得到一个比例
+					var scale = Math.abs(disX/iWimg)*60;
+
+					aimg.eq(index).css('transform', 'translateY('+scale+'%)');
+					//为什么需要取消掉transititon
+					aimg.eq(index).css('transition', 'none');
+				});
+
+		}
+
+			
+		$('#tphoneUl').mousemove(function(e) {
+			animation(e.pageX);
+		});
+	});
+</script>
+</html>
+
+<!-- getBoundingClientRect() -->

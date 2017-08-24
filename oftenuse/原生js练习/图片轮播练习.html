@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>图片轮播</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{margin: 0;padding: 0;list-style: none;text-decoration:none;}
+		.wrap{
+			margin: 40px auto;
+			position: relative;
+			width: 838px;
+			height: 570px;
+			overflow: hidden;
+		}
+		.wrap-ul{position: relative;display: block;height: 838px;}
+		.wrap-ul li{
+			float: left;
+			width: 838px;
+		}
+		.wrap-ul li img{width: 838px;height: 570px;}
+		.num-div{
+			width: 838px;
+			height: 70px;
+			position: absolute;
+			left: 0px;
+			bottom: 2px;
+			opacity: 0.7;
+			background-color: #666666;
+		}
+		.num-div li{
+			float: right;
+			width: 40px;
+			height: 40px;
+			margin:20px 20px 0 10px;
+			text-align: center;
+			line-height: 40px;
+			border: 1px solid red;
+			cursor: pointer;
+		}
+		.num-div #on{
+			background-color: black;
+			color: #fff;
+		}
+	</style>
+	<script type="text/javascript" src="js/move.js"></script>
+</head>
+<body>
+<div id="wrap" class="wrap">
+	<ul class="wrap-ul" id="wrap-ul">
+		<li id="img-li-one"><img src="img/img1.jpg"></li>
+		<li id="img-li-two"><img src="img/img2.png"></li>
+		<li id="img-li-three"><img src="img/img3.png"></li>
+	</ul>
+	<div id="num-div" class="num-div">
+		<ul>
+			<li id="on">1</li>
+			<li>2</li>
+			<li>3</li>
+		</ul>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+    var timer=null;
+    var index=0;
+window.onload=function mouseEvent() {
+
+		var aImgUl = document.getElementById('wrap-ul');
+		//ul宽
+		var aImgli = aImgUl.getElementsByTagName('li');
+		aImgUl.style.width = aImgli[0].offsetWidth*aImgli.length+'px';
+
+
+		var numDiv=document.getElementById('num-div');
+		var numLi = numDiv.getElementsByTagName('li');
+	   
+	    for (var i = 0; i < numLi.length; i++) {
+	    	numLi[i].index=i;
+	    	numLi[i].onclick=function(event){
+	    		// var _this=this.index;
+	    		var _this=event.target.index;
+	    		play(_this);
+	    	}
+	    }
+
+		}
+	function play(MyIndex){
+		var wrapUl=document.getElementById("wrap-ul");	
+		var imgLi=wrapUl.getElementsByTagName("li");
+		startmove(wrapUl,{left:-imgLi[0].offsetWidth*MyIndex});    
+	}
+	
+	// function startmove(element,finalx){
+	// 	var speed=Math.ceil((finalx-element.offsetLeft)/5);
+	// 	if(timer){clearInterval(timer);}
+		
+	// 	timer=setInterval(function(){
+	// 		if(element.offsetLeft==finalx){
+	// 			clearInterval(timer);
+	// 		}else{
+	// 	   element.style.left=element.offsetLeft+speed+'px';	
+	// 	}
+	// 	},50);
+	// }
+</script>
+</html>

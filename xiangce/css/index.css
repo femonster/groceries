@@ -1,0 +1,123 @@
+    body,
+    html {
+        margin: 0;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    header {
+        height: 2rem;
+        background: #000;
+        line-height: 2rem;
+        color: #fff;
+        font-size: .8rem;
+        text-align: center;
+        position: relative;
+    }
+    
+    #box,
+    .imgWrap {
+        position: absolute;
+        top: 2rem;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    #list {
+        overflow: hidden;
+    }
+    
+    #list li {
+        width: 7rem;
+        height: 7rem;
+        margin: .5rem;
+        float: left;
+        background: url(../img/loadingImg.gif) center center no-repeat;
+    }
+    
+    #list img {
+        display: block;
+        width: 100%;
+        opacity: 0;
+        transition: 2s;
+    }
+    
+    #imgPage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        background: #ccc;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    
+    #bigImg {
+        position: absolute;
+        left: 3rem;
+        top: 50%;
+        margin-top: -5rem;
+        width: 10rem;
+        height: 10rem;
+    }
+    
+    #imgNavs {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 2rem;
+        background: #fff;
+    }
+    
+    #imgNavs a {
+        float: left;
+        width: 4rem;
+        font-size: .6rem;
+        text-decoration: none;
+        color: #000;
+        text-align: center;
+        line-height: 2rem;
+        border: 1px solid #666;
+        box-sizing: border-box;
+    }
+    
+    #backBtn {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2rem;
+        height: 2rem;
+        color: #fff;
+        font-size: 1.6rem;
+        line-height: 2rem;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    #inner {
+        position: relative;
+    }
+    
+    #inner footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2rem;
+        height: 2rem;
+        line-height: 2rem;
+        text-align: center;
+        font-size: .8rem;
+        opacity: 0;
+    }

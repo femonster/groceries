@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹性盒模型之怪异模式</title>
+	<style>
+	/*
+	box-sizing属性可以为三个值之一：content-box（default），border-box，padding-box。
+
+	content-box，border和padding不计算入width之内
+
+	padding-box，padding计算入width内
+
+	border-box，border和padding计算入width之内，其实就是怪异模式了~
+
+	ie8+浏览器支持content-box和border-box；
+
+	ff则支持全部三个值。
+	*/
+	div{width: 200px;height: 200px;margin: 10px auto;padding: 20px;border: 10px solid black;color: black;background-color: red;}
+	div:nth-of-type(1){box-sizing: content-box;}/*默认的*/
+	div:nth-of-type(2){box-sizing: padding-box;}
+	div:nth-of-type(3){box-sizing: border-box;}
+	</style>				
+</head>
+<body>
+	<div>content-box</div>
+	<div>padding-box</div>
+	<div>border-box</div>
+</body>
+</html>

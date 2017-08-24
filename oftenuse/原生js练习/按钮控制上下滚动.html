@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>按钮控制上下滚动</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+		*{box-sizing: border-box;}
+		.warp{width: 300px;height: 600px;border: 1px solid #666;margin: 10px auto;}
+		.list{width: 300px;height: 520px;overflow:hidden;position: absolute;}
+		.list ul{position: absolute;display: block;}
+		.list li{width: 300px;height: 300px;border: 1px solid red;background-color: #ff3;}
+		button{width: 300px;height: 40px;}
+		.down{margin-top: 520px;}
+	</style>
+</head>
+<body>
+	<div class="warp" id="warp">
+		<button class="up">向上翻</button>
+		<div class="list">
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+				<li>7</li>
+				<li>8</li>
+				<li>9</li>
+				<li>10</li>
+			</ul>
+		</div>
+		<button class="down">向下翻</button>
+	</div>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var owarp = document.getElementById('warp');
+		var abtn = owarp.getElementsByTagName('button');
+		var olist=owarp.getElementsByTagName('ul')[0];
+		var ali = olist.getElementsByTagName('li');
+		olist.timer=null;
+		
+		olist.style.height=ali[0].offsetHeight*ali.length+'px;'
+		abtn[0].onmousedown=function() {startmove(olist,"top",11,520-olist.offsetHeight);}
+		abtn[0].onmouseup=function() {clearInterval(olist.timer);}
+		abtn[1].onmousedown=function() {startmove(olist,"top",11,0);}
+		abtn[1].onmouseup=function() {clearInterval(olist.timer);}
+// 做函数封装的时候，把不同的挑出来，将不同的元素/数字信息当做参数，将不能当做参数在函数里做判断	
+	}
+	function startmove(obj,attr,speed,iTarget) {
+			if (obj.timer) {clearInterval(obj.timer);}
+			var speed = (iTarget-parseInt(getStyle(obj,attr)))>0?speed:-speed; //判断往哪边走
+			obj.timer=setInterval(function(){
+				var iway = parseInt(getStyle(obj,attr))+speed;
+				if (iway>iTarget&&speed>0||iway<iTarget&&speed<0) {iway=iTarget;}  //  -1000 0 9
+				//if (iway<iTarget&&speed<0) {iway=iTarget;}  //  -1000 -2480 -9
+				obj.style[attr]=iway+'px';
+				if (iway==iTarget) {clearInterval(obj.timer);}
+				document.title=parseInt(getStyle(obj,attr));
+			},30);
+		}
+
+	function getStyle(obj,attr) {
+		if (obj.currentStyle) {
+			return obj.currentStyle[attr];
+		} else {
+			return getComputedStyle(obj,false)[attr];
+		}
+	}
+</script>
+</html>

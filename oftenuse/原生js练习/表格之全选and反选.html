@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>表格之全选and反选</title>
+		<style>
+			table{
+				margin: 10px auto;
+				border-collapse: collapse;
+			}
+			td,th{
+				border:1px solid lightgray;
+				padding:10px
+			}
+		</style>
+		<script type="text/javascript" src="js/EventUtil.js"></script>
+	</head>
+	<body>
+	<!-- 
+	思路：双击事件：dbclick
+		  双击后变为输入框，将表格中的值放到输入框里
+		  单击其他地方确认修改（document）
+
+	 -->
+	<table id="myTbl">、
+		<thead>
+			<tr>
+				<th>选择</th>
+				<th>内容</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>张</td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>dd</td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>ww</td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>dff </td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>ggh</td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>二蛋</td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>狗剩</td>
+				<td><a href="#">删除</a></td>
+			</tr>
+			
+		</tbody>
+			<tr>
+				<td><button id="allc">全选</button></td>
+				<td><button id="notc">反选</button></td>
+				<td><button id="delc">删除选中</button></td>
+			</tr>
+
+	</table>
+	<script type="text/javascript">
+		window.onload=function() {
+			var oTab=document.getElementById('myTbl');
+			var allcheck = document.getElementById('allc'),
+				notcheck =document.getElementById('notc'),
+				delc = document.getElementById('delc');	
+			var rowcolor = ["#fff","#ccc"];
+			var achecks=document.getElementsByTagName('input');
+			for (var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+				var myrow =oTab.tBodies[0].rows;
+				myrow[i].index=i;
+				// 模运算可以轻松的实现斑马线效果
+			 	myrow[i].style.backgroundColor=rowcolor[i%rowcolor.length];
+			 	myrow[i].onmouseover=function(){
+			 		this.style.backgroundColor="#456";
+			 	}
+			 	myrow[i].onmouseout=function(){
+			 		this.style.backgroundColor=rowcolor[this.index%rowcolor.length];
+			 	}
+			} 
+			notcheck.onclick=function(){				
+				for (var i = 0; i < achecks.length; i++) {
+					//选择与之相反的就行。可以用！取反运算轻松实现反选
+					achecks[i].checked=!achecks[i].checked;
+				}
+			}
+			allcheck.onclick=function(){
+				for (var i = 0; i < achecks.length; i++) {
+					achecks[i].checked=true;
+				}
+			}
+			delc.onclick=function(){
+				for (var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+					if (oTab.tBodies[0].rows[i].getElementsByTagName('input')[0].checked) {
+						oTab.tBodies[0].rows[i].parentNode.removeChild(oTab.tBodies[0].rows[i]);
+						i--;
+					}
+				}
+			}
+		}
+	</script>
+	</body>
+</html>

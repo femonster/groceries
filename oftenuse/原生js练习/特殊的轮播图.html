@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>特殊的轮播图</title>
+	<script type="text/javascript" src="js/move.js"></script>
+	<style type="text/css">
+		.prev,.next{width: 100px;height: 100px;position: absolute;}
+		.prev{top:322px;left: 420px;z-index: 999;}
+		.next{top: 322px;left: 980px;z-index: 999;}
+		.box{width: 680px;height: 344px;position: absolute;overflow: hidden;}
+		.box1{top: 242px;left: 200px;z-index: 5;height: 254px;opacity: 0;}
+		.box2{top: 242px;left: 200px;z-index: 6;height: 254px;opacity: 0.4;}
+		.box3{top: 222px;left: 300px;z-index: 7;height: 300px;opacity: 0.6;}
+		.box4{top: 200px;left: 400px;z-index: 8;opacity: 1;}
+		.box5{top: 222px;left: 500px;z-index: 7;height: 300px;opacity: 0.6;}
+		.box6{top: 242px;left: 600px;z-index: 6;height: 254px;opacity: 0.4;}
+		.box7{top: 242px;left: 600px;z-index: 5;height: 254px;opacity: 0;}
+		
+	</style>
+</head>
+<body>
+	<a href="#" class="prev"><img src="img/zIndexBanner/prev.png" alt=""></a>
+	<a href="#" class="next"><img src="img/zIndexBanner/next.png" alt=""></a>
+	
+	<!-- <div class="box box1"><img src="img/zIndexBanner/1.jpg" alt=""></div> -->
+	<div class="box box2"><img src="img/zIndexBanner/2.jpg" alt=""></div>
+	<div class="box box3"><img src="img/zIndexBanner/3.jpg" alt=""></div>
+	<div class="box box4"><img src="img/zIndexBanner/4.jpg" alt=""></div>
+	<div class="box box5"><img src="img/zIndexBanner/5.jpg" alt=""></div>
+	<div class="box box6"><img src="img/zIndexBanner/6.jpg" alt=""></div>
+	<!-- <div class="box box7"><img src="img/zIndexBanner/7.jpg" alt=""></div> -->
+	
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var oprev = document.getElementsByClassName('prev')[0];
+		var onext = document.getElementsByClassName('next')[0];
+		var abox = document.getElementsByClassName('box');
+		var posArr=[];
+		for(var i=0;i<abox.length;i++){
+			posArr.push([parseInt(getStyle(abox[i],'top')),parseInt(getStyle(abox[i],'left')),parseInt(getStyle(abox[i],'height')),parseInt(getStyle(abox[i],'zIndex')),parseInt(getStyle(abox[i],'opacity')*100)]);
+		}
+		console.log(posArr);
+		onext.onclick=function(){
+			posArr.push(posArr[0]);
+			posArr.shift(0);
+			lunb();
+
+		}
+		oprev.onclick=function(){
+			posArr.unshift(posArr[posArr.length-1]);
+			posArr.pop();
+			lunb();
+		}
+
+		function getStyle(obj,attr){
+			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj,false)[attr];
+		}
+
+		function lunb(){
+			for(var i=0;i<posArr.length;i++){
+				 abox[i].style.zIndex=posArr[i][3];
+				startmove(abox[i],{"top":posArr[i][0],"left":posArr[i][1],"height":posArr[i][2],"opacity":posArr[i][4]});
+				// abox[i].style.top = posArr[i][0];
+				// abox[i].style.left = posArr[i][1];
+				// abox[i].style.height=posArr[i][2];
+				// abox[i].style.zIndex=posArr[i][3];
+				// abox[i].style.opacity=posArr[i][4];
+			}
+		}
+
+
+	}
+</script>
+</html>

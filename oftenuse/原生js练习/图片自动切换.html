@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片自动切换</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+<style type="text/css">	
+	.box{width: 410px;height: 310px;position: relative;}
+	.box img{width: 400px;height: 300px;}
+	.box ul{position: absolute;}
+	.box .ul-img li{width: 400px;height: 300px;float:left;}
+	.box{width: 400px;height: 300px;border: 5px solid #666;margin: 100px auto;overflow: hidden;}
+	.box .ul-p{width: 400px;height:100px;background-color: #000;opacity: 0.4;z-index: 10;position: absolute;bottom: 0px;}
+	.box .ul-p li{width: 400px;height: 100px;float:left;color: #fff;}
+</style>
+</head>
+<body>
+<div class="box" id="box">
+	<ul class="ul-img">
+		<li>
+			<img src="img/banner1.jpg" alt="">			
+		</li>
+		<li>
+			<img src="img/banner2.jpg" alt="">			
+		</li>
+		<li>
+			<img src="img/banner3.jpg" alt="">
+		</li>
+		<li>
+			<img src="img/banner4.jpg" alt="">			
+		</li>
+		<li>
+			<img src="img/banner5.jpg" alt="">			
+		</li>
+	<ul class="ul-p">
+		<li>第1季，我是1个大帅哥</li>
+		<li>第2季，我是2个大帅哥</li>
+		<li>第3季，我是3个大帅哥</li>
+		<li>第4季，我是4个大帅哥</li>
+		<li>第5季，我是5个大帅哥</li>
+	</ul>
+	</ul>
+
+</div>
+</body>
+<script type="text/javascript" src="js/move.js"></script>
+<script type="text/javascript">
+	window.onload=function() {
+		var obox = document.getElementById('box');
+		var oul = obox.getElementsByTagName('ul')[0];
+		var oulP =obox.getElementsByTagName("ul")[1];
+		var aliP = oulP.getElementsByTagName('li');
+		var ali = oul.getElementsByTagName('li');
+		var ap =oul.getElementsByTagName('p');
+		var timer2 =null;
+		var num=0;
+		oul.style.width = ali[0].offsetWidth*ali.length+'px';
+		oulP.style.width=aliP[0].offsetWidth*aliP.length+'px';
+		timer2=setInterval(function(){
+			startmove(oul,{left:-ali[0].offsetWidth*num},function(){	
+				startmove(oulP,{bottom:'0'});
+				setTimeout(function(){
+					startmove(oulP,{bottom:'-100'});
+				},1500);			
+			});
+			num++;
+			if(num==aliP.length){num=0;}
+			document.title=num;
+		},3000);
+	}
+</script>
+</html>

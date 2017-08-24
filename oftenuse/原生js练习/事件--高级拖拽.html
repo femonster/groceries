@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件--高级拖拽</title>
+	<style type="text/css">
+		#div1{width: 100px;height: 100px;background-color: red;position: absolute;}
+	</style>
+</head>
+<body>
+sefwewe fwe rwe rqwe
+	<div id="div1">sdfd</div>
+	sdfsdfwe 
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		drag('div1');
+
+	}
+	function drag(id) {
+		var oDiv=document.getElementById(id);
+		oDiv.onmousedown=function(ev){
+			var ev = ev || event;
+			disx = ev.clientX - oDiv.offsetLeft;
+			disy = ev.clientY - oDiv.offsetTop;
+
+			if (oDiv.setCapture) {
+				oDiv.setCapture();
+			} //ie8以下兼容，全局捕获 
+
+			document.onmousemove=function(ev){
+				var ev = ev || event;
+				var l = ev.clientX - disx;
+				var t = ev.clientY - disy;
+				//磁性吸附
+				if(l<30){l=0;}
+				if (l>document.documentElement.clientWidth - oDiv.offsetWidth-30) {
+					l=document.documentElement.clientWidth - oDiv.offsetWidth;
+				}
+				if (t<30) {t=0;}
+				if (t>document.documentElement.clientHeight - oDiv.offsetHeight-30) {
+					t=document.documentElement.clientHeight - oDiv.offsetHeight;
+				}
+				oDiv.style.left =l  + 'px';
+				oDiv.style.top = t + 'px';
+			}
+			document.onmouseup=function(){
+				document.onmouseup=null;
+				document.onmousemove=null;
+
+				if (oDiv.releaseCapture) {
+				oDiv.releaseCapture();
+				} //ie8以下兼容，全局捕获释放 
+
+			}
+			//当选中文字的时候，会触发浏览器默认拖拽文字的效果
+			//组织默认事件，防止选中文字
+			return false;
+		}
+	}
+</script>
+</html>
+<!-- obj.setCapture() //  设置全局捕获，当我们给元素设置全局捕获以后，那么这个元素就会监听后续发生的所有事情，当有事情发生的时候，就会被当前设置了全局捕获的元素所触发 
+ie:能行
+ff：不报错，没效果
+chrome：没有，报错
+-->

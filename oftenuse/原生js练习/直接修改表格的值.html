@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>直接修改表格的值</title>
+		<style>
+			table{
+				margin: 10px auto;
+				border-collapse: collapse;
+			}
+			td{
+				border:1px solid lightgray;
+				padding:10px
+			}
+		</style>
+		<script type="text/javascript" src="js/EventUtil.js"></script>
+	</head>
+	<body>
+	<!-- 
+	思路：双击事件：dbclick
+		  双击后变为输入框，将表格中的值放到输入框里
+		  单击其他地方确认修改（document）
+
+	 -->
+	<table id="myTbl">
+		<tbody>
+			<tr>
+				<td>1-1</td>
+				<td>1-2</td>
+				<td>1-3</td>
+				<td>1-4</td>
+				<td>1-5</td>
+			</tr>
+			<tr>
+				<td>2-1</td>
+				<td>2-2</td>
+				<td>2-3</td>
+				<td>2-4</td>
+				<td>2-5</td>
+			</tr>
+			<tr>
+				<td>3-1</td>
+				<td>3-2</td>
+				<td>3-3</td>
+				<td>3-4</td>
+				<td>3-5</td>
+			</tr>
+		</tbody>
+	</table>
+		<script>
+		window.onload=function() {
+			var oTab =document.getElementById('myTbl');
+			var atd	=oTab.tBodies[0].getElementsByTagName('td');
+			var input = document.createElement('input');	
+			var updateingtd=null; //正在修改的td
+			var oldstr="";		//存放原来文字的变量
+
+			for (var i = 0; i < atd.length; i++) {		
+				atd[i].ondblclick=function(e){
+					var event=EventUtil.getEvent(e);
+					var target =EventUtil.getTarget(event);
+					oldstr = target.innerHTML;
+					target.innerHTML="";
+					input.value=oldstr;
+					target.appendChild(input);
+					updateingtd =target;
+					input.focus();
+					EventUtil.addHandler(input, "blur", completeEdit);
+
+				}	
+			}
+
+			function completeEdit(e){
+				var event = EventUtil.getEvent(e);
+				var txt = EventUtil.getTarget(event);
+				var keyCode = EventUtil.getCharCode(event);
+				var td = txt.parentElement;
+				td.innerHTML = txt.value;
+				// updateingtd=null;
+				}
+			
+
+		}
+		</script>
+	</body>
+</html>

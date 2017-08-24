@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>仿Flash的图片展示</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+/*	.clearfix:after{content: ".";display: block;height: 0;visibility: hidden;clear: both;}
+	.clearfix{*zoom:1;}*/
+	@font-face {font-family: 'iconfont';
+    src: url('font/jiantou/iconfont.eot'); /* IE9*/
+    src: url('font/jiantou/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('font/jiantou/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('font/jiantou/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('font/jiantou/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+	.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+	font-size: 50px;
+	text-decoration: none;
+	color: #fff;
+	}
+	.play { width: 400px; height: 430px; margin: 50px auto 0; background: #999;}
+	.big-pic { width: 400px; height: 320px; overflow:hidden; border-bottom: 1px solid #ccc; background: #222; position: relative; }
+	.big-pic li { width: 400px; height: 320px; overflow:hidden; position: absolute; top: 0; left: 0; z-index: 0; background: url(img/loading.gif) no-repeat center center; }
+	#mark-left { width: 180px; height: 320px; position: absolute; left: 0; top: 0;filter: alpha(opacity:0); opacity: 0; z-index:3000;line-height: 320px;padding-left: 20px;}
+	#mark-right { width: 180px; height: 320px; position: absolute; left: 200px; top: 0; filter: alpha(opacity:0); opacity: 0; z-index:3000; line-height: 320px;text-align:right;padding-right: 20px;}
+	.big-pic .text { position: absolute; left: 10px; top: 302px; z-index: 3000; color: #ccc;font-size: 13px; }
+	.big-pic .length { position: absolute; right: 10px; bottom: 4px; z-index: 3000; color: #ccc; font-size: 13px;}
+	.big-pic .bg { width: 400px; height: 25px; background: #000; filter: alpha(opacity=60); opacity: 0.6; position: absolute; z-index: 2999; bottom: 0; left: 0; }
+	.small-pic { width: 390px; height: 94px; position: relative; top: 7px; left: 10px; overflow: hidden; }
+	.small-pic ul { height: 94px; position: absolute; top: 0; left: 0; }
+	.small-pic li { width: 120px; height: 94px; float: left; padding-right: 10px; background: url(img/loading.gif) no-repeat center center; cursor: pointer; filter: alpha(opacity=60); opacity: 0.6; }
+	.small-pic img { width: 120px; height: 94px; }
+
+
+	</style>
+	<script type="text/javascript" src="js/easymove.js"></script>
+</head>
+<body>
+<div id="playimages" class="play">
+<ul class="big-pic">
+
+	<div class="text" id="text"></div>
+	<div class="length" id="length"></div>
+
+	<a class="iconfont" id="mark-left" href="javascript:;">&#xe632;</a>
+	<a class="iconfont"  id="mark-right" href="javascript:;">&#xe626;</a>
+	<div class="bg"></div>
+
+	<li style="z-index:1;"><img src="img/banner1.jpg" alt=""></li>
+    <li><img src="img/banner2.jpg" alt=""></li>
+    <li><img src="img/banner3.jpg" alt=""></li>
+    <li><img src="img/banner4.jpg" alt=""></li>
+    <li><img src="img/banner5.jpg" alt=""></li>   
+    <li><img src="img/banner6.jpg" alt=""></li>    
+</ul>
+<div class="small-pic">
+<ul>
+	<li><img src="img/banner1.jpg" alt="吊椅子"></li>
+    <li><img src="img/banner2.jpg" alt="屌高楼"></li>
+    <li><img src="img/banner3.jpg" alt="街舞dancer"></li>
+    <li><img src="img/banner4.jpg" alt="屌汽车"></li>
+    <li><img src="img/banner5.jpg" alt="大胸妹"></li>
+    <li><img src="img/banner6.jpg" alt="乱七八糟的线"></li>      
+</ul>
+</div>
+</div>
+</body>
+<script>
+	window.onload=function(){
+		var oParent=document.getElementById('playimages');
+		var markLeft=document.getElementById('mark-left');
+		var markRight=document.getElementById('mark-right');
+
+		var oSmallul=getClass(oParent,'small-pic')[0].getElementsByTagName('ul')[0];
+		var aSmallImg=oSmallul.getElementsByTagName('li');
+
+		var oBigul=getClass(oParent,'big-pic')[0];
+		var aBigImg=oBigul.getElementsByTagName('li');
+
+		var iNow=0;
+		var iMinzindex=1;
+
+		var oSmalltext=document.getElementById('text');
+		oSmalltext.innerHTML=aSmallImg[iNow].getElementsByTagName('img')[0].getAttribute('alt');
+		var oSmallnum=document.getElementById('length');
+		//动态计算小图集的宽度
+		oSmallul.style.width=aSmallImg[0].offsetWidth*aSmallImg.length+'px';
+		aSmallImg[0].style.opacity=1;
+		oSmallnum.innerHTML=(iNow+1)+'/'+aSmallImg.length;
+
+
+
+        //箭头
+		markLeft.onmouseover=function(){
+			startmove(markLeft,'opacity',100);
+			clearInterval(timer);
+		}
+		markLeft.onmouseout=function(){
+			startmove(markLeft,'opacity',0);
+			timer=setInterval(function(){
+			iNow++;
+			if (iNow==aSmallImg.length) {
+				iNow=0;
+			}
+			tab();
+		},3000);
+		}
+		markRight.onmouseover=function(){
+			startmove(markRight,'opacity',100);
+			clearInterval(timer);
+		}
+		markRight.onmouseout=function(){
+			startmove(markRight,'opacity',0);
+			timer=setInterval(function(){
+			iNow++;
+			if (iNow==aSmallImg.length) {
+				iNow=0;
+			}
+			tab();
+		},3000);
+		}
+        //小图的透明度效果
+		for (var i = 0; i < aSmallImg.length; i++) {
+			aSmallImg[i].index=i;
+			aSmallImg[i].onmouseover=function(){
+				startmove(this,'opacity',100);
+
+			}
+			aSmallImg[i].onmouseout=function(){
+				if(this.index!=iNow){
+				startmove(this,'opacity',60);
+			}
+			}
+		//点击小图换大图
+			aSmallImg[i].onclick=function(){
+				if (iNow==this.index) {return ;}
+				iNow=this.index;
+				tab();
+				
+			}
+		}
+		//左右图片点击换图
+		markLeft.onclick=function(){
+			iNow--;
+			if (iNow==-1) {
+				iNow=aSmallImg.length-1;
+			}
+			tab();
+		}
+		markRight.onclick=function(){
+			iNow++;
+			if (iNow==aSmallImg.length) {
+				iNow=0;
+			}
+			tab();
+		}
+		//自动轮播
+		timer=setInterval(function(){
+			iNow++;
+			if (iNow==aSmallImg.length) {
+				iNow=0;
+			}
+			tab();
+		},3000);
+
+        //换图函数
+		function tab(){
+			for (var j = 0; j < aSmallImg.length; j++) {
+					startmove(aSmallImg[j],'opacity',60);
+				}
+				startmove(aSmallImg[iNow],'opacity',100);
+				//改变选中大图层级
+				aBigImg[iNow].style.zIndex=iMinzindex++;
+				//使选中大图高变成0，便于做出下拉效果
+				aBigImg[iNow].style.height=0;
+				startmove(aBigImg[iNow],'height',oBigul.offsetHeight);
+				if (iNow==0) {
+					startmove(oSmallul,'left',0);
+				}else if(iNow==aSmallImg.length-1){
+					startmove(oSmallul,'left',-(iNow-2)*aSmallImg[0].offsetWidth);
+				} 
+				else {
+					startmove(oSmallul,'left',-(iNow-1)*aSmallImg[0].offsetWidth);
+				}
+				oSmalltext.innerHTML="";
+				oSmalltext.innerHTML=aSmallImg[iNow].getElementsByTagName('img')[0].getAttribute('alt');
+				oSmallnum.innerHTML=(iNow+1)+'/'+aSmallImg.length;
+		}
+
+	}
+</script>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>打分效果练习</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<style type="text/css">
+	body{font-size: 13px;}
+		.star{width: 600px;margin: 20px auto;}
+		.star ul{display: block;width: 150px;float: left;}
+		.star ul li{display: inline-block;width:10px;height: 12px;padding:5px;background: url(img/star.png) no-repeat;cursor: pointer;}
+		.star ul .on{background: url(img/star.png) 0 -28px;}
+		.star .fen{color: red;font-weight: 600;padding-bottom:10px;display: block;width: 30px;height:12px;float: left;}
+		.star p{}
+		.star .ping{position:absolute;top:43px;left: 0; width:159px;height:60px;display:none;background:url(img/icon.gif) no-repeat;padding:7px 10px 0;}
+		.star em{color:red;display: block;margin-bottom: 4px;}
+
+	</style>
+</head>
+<body>
+<div id="star" class="star">
+    <ul>
+    <!-- 为了使 lnline-block 中间没有缝隙 防止闪烁-->
+        <li   ></li><li></li><li></li><li></li><li></li>
+    </ul>
+    <span class="fen">0分</span>
+    <p>(暂无评分)</p>
+    <div class="ping" id="ping"></div>
+</div>
+</body>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+	var aMsg = [
+        "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+        "不满意|部分有破损，与卖家描述的不符，不满意",
+        "一般|质量一般，没有卖家描述的那么好",
+        "满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+        "非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+        ];
+    var oStar = document.getElementById('star');
+    var oul = oStar.getElementsByTagName('ul')[0];
+    var ali = oul.getElementsByTagName('li');
+    var ofen = oStar.getElementsByTagName('span')[0];
+    var oftxt = oStar.getElementsByTagName('p')[0];
+    var oping = document.getElementById('ping');
+   	//记录星星
+    var istar= 0;
+    //记录分数
+    var iScore=0;
+
+    for (var i = 0; i < ali.length; i++) {
+    	ali[i].index=i; 
+
+    	ali[i].onmouseover=function(){
+    			//传递星星数，显示星星
+    			jiLufen(this.index+1);
+    			//显示浮动层
+    			oping.style.display="block";
+    			//浮动层left
+    			oping.style.left=oul.offsetLeft+(this.index+1)*this.offsetWidth -100 +'px';
+    			//浮动层文字
+    			oping.innerHTML="<em><b>" + (parseInt(this.index)+1) + "</b> 分 " + aMsg[this.index].match(/(.+)\|/)[1] + "</em>" + aMsg[this.index].match(/\|(.+)/)[1];
+    	};
+    	//移出恢复上一次的星星
+    	ali[i].onmouseout=function(){
+    			jiLufen();
+    			//隐藏浮动层
+    			oping.style.display="none";
+    	};
+    	//当点击时记录点击后的星星数
+    	ali[i].onclick=function(){
+    		istar=this.index+1;
+    		for (var i = 0; i <=this.index; i++) {
+    			ali[i].className="on";
+    			ofen.innerHTML = (this.index+1)+'分';
+    			oftxt.innerHTML = "(" + aMsg[this.index ].match(/\|(.+)/)[1] + ")";
+    			}
+    			oping.style.display="none";
+    	};
+    }
+
+  //记录成绩(*)
+    function jiLufen(iArg) {
+    	iScore = iArg || istar;
+    	for (var i = 0; i < ali.length; i++) {
+    		if(i<iScore){ali[i].className="on";}else{ali[i].className="";}
+    	}
+    }
+}
+</script>
+</html>

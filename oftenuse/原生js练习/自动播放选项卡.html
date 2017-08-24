@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自动播放选项卡</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<style type="text/css">
+		*{box-sizing: border-box;}
+		.clearfix{clear: both;}
+		.box{width: 600px;height:300px;border: 1px solid #666;margin:20px auto;}
+		.title{width: 150px;height: 50px;border:1px solid red;float: left;text-align: center;line-height: 60px;margin-right: 10px;cursor: pointer;}
+		.content{width: 600px;height: 250px;border: 1px solid green;position: relative;display: none;}
+		img{width: 400px;height: 250px;position: absolute;top: 0;}
+		.box .list{position: absolute;left: 400px;}
+		.box .list li{width: 200px;height: 83.33px;border: 1px solid #555;text-align: center;line-height: 83px;}
+		.on{background-color: red;}
+		.show{display: block;}
+
+	</style>
+</head>
+<body>
+<!-- 将他们写在一个定时器中，看做一个整体进行处理 ，翻页时判断 -->
+	<div class="box" id="box">
+			<div class="title on">菜单一</div>
+			<div class="title">菜单二</div>
+			<div class="clearfix"></div>
+		<div class="content show">
+			<img src="img/banner1.jpg" alt="">
+			<ul class="list">
+				<li>图片1</li>
+				<li>图片2</li>
+				<li>图片3</li>
+			</ul>
+		</div>
+		<div class="content">
+		<img src="img/banner4.jpg" alt="">
+			<ul class="list">
+				<li>图片4</li>
+				<li>图片5</li>
+				<li>图片6</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/tools.js"></script>
+<script type="text/javascript">
+	window.onload=function() {
+		var obox = document.getElementById('box');
+		var aTit = document.getElementsByClassName('title');
+		var aul  = obox.getElementsByTagName('ul');
+		var aimg = obox.getElementsByTagName('img');
+		var acontent=document.getElementsByClassName('content');
+		var aImg = ["img/banner1.jpg","img/banner2.jpg","img/banner3.jpg","img/banner4.jpg","img/banner5.jpg","img/banner6.jpg"];
+		var flag=0; //是否翻页
+		var num =0; //记录走到第几张图片
+		var arrLi = [];
+
+		//将所有li放在arrLi中
+		for (var i = 0; i < aul.length; i++) {
+			var ali = aul[i].getElementsByTagName('li');
+			for (var j = 0; j < ali.length; j++) {
+				arrLi.push(ali[j]);
+			}
+		}
+			console.log(arrLi);
+		function clearAll() {
+			for (var i = 0; i < arrLi.length; i++) {
+				arrLi[i].style.backgroundColor="#fff";
+			}
+			for (var i = 0; i < aTit.length; i++) {
+				aTit[i].className="title";
+				acontent[i].className="content";
+			}
+		}
+
+		function autoplay() {
+			clearAll();
+			
+			if (flag==0) {
+				arrLi[num].style.backgroundColor="#556";
+				acontent[0].className="content show";
+				aTit[0].className="title on";
+				aimg[0].src=aImg[num];
+				num++;
+				if (num==3) {flag=1;}
+				}else{
+					arrLi[num].style.backgroundColor="#556";
+					aTit[1].className="title on";
+					acontent[1].className="content show"
+					aimg[1].src=aImg[num];
+					num++;
+					if (num==6) {flag=0;num=0;}
+				}
+			}
+		
+			setInterval(autoplay,1000);
+		}
+		
+</script>
+</html>

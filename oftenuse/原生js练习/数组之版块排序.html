@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>版块排序</title>
+	<style type="text/css">
+		.btn{height: 70px;text-align: center;}
+		.btn button{width: 80px;height: 50px;color: #Fff;background-color: #456;text-align: center;line-height: 50px;}
+		.box{display: flex;flex-flow: row wrap;justify-content: center;}
+		.box div{width: 260px;height: 250px;border: 5px solid #eee;text-align: center;}
+		.box div:hover{border-color: orange;}
+		.box img{width: 250px;height: 200px;}
+		.box p{width: 250px;height: 40px;border:1px solid #eee;margin: 0 auto;}
+	</style>
+</head>
+<body>
+<div id="btn" class="btn">
+	<button>从大到小</button>
+	<button>打乱排序</button>
+</div>
+<div class="box" id="box">
+	<div><img src="img/banner1.jpg" alt="复古椅子"><p>1.复古椅子</p></div>
+	<div><img src="img/banner2.jpg" alt="高楼大厦"><p>2.高楼大厦</p></div>
+	<div><img src="img/banner3.jpg" alt="灵魂舞者"><p>3.灵魂舞者</p></div>
+	<div><img src="img/banner4.jpg" alt="高级跑车"><p>4.高级跑车</p></div>
+	<div><img src="img/banner5.jpg" alt="灵动美女"><p>5.灵动美女</p></div>
+	<div><img src="img/banner6.jpg" alt="炫彩光线"><p>6.炫彩光线</p></div>
+	<div><img src="img/img1.jpg" alt="美丽景色"><p>7.美丽景色</p></div>
+	<div><img src="img/img2.png" alt="欧式古建"><p>8.欧式古建</p></div>
+	<div><img src="img/img3.png" alt="西装美腿"><p>9.西装美腿</p></div>
+	<div><img src="img/big.png" alt="妙味课堂"><p>10.妙味课堂</p></div>
+</div>
+	
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var obtnDiv=document.getElementById('btn');
+		var abtn=obtnDiv.getElementsByTagName('button');
+		var obox=document.getElementById('box');
+		var aDiv=obox.getElementsByTagName('div');
+		var aimg=obox.getElementsByTagName('img');
+		var arr=[];
+		var flag=false;
+
+		for (var i = 0; i < aDiv.length; i++) {
+			arr.push(aDiv[i]);
+		}
+		console.log(arr);
+		//顺序排序
+		abtn[0].onclick=function() {
+				arr.reverse(); //反序
+				var str="";
+				for (var i = 0; i < arr.length; i++) {
+					str+="<div>"+arr[i].innerHTML+"</div>";
+				}
+				obox.innerHTML=str;
+				flag=!flag;
+			this.innerHTML=flag?"从小到大":"从大到小";			
+		}
+		//随机排序
+		abtn[1].onclick=function() {
+			// var arrR=arr; 这种事数组的引用，修改arrR还是会影响arr
+			var arrR=[];
+			for (var i = 0; i < arr.length; i++) {
+				arrR.push(arr[i]);
+			}
+			arrR.sort(function(a,b){
+   				 return Math.random()-0.5;
+			});
+				var str="";
+				for (var i = 0; i < arrR.length; i++) {
+					str+="<div>"+arrR[i].innerHTML+"</div>";
+				}
+				obox.innerHTML=str;
+		}
+	}
+</script>
+</html>

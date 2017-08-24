@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>碰撞运动之小球</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+		#ball{width: 100px;height: 100px;border-radius: 50px;background-color: red;position: absolute;top: 30px;left: 10px;}
+	</style>
+</head>
+<body>
+
+<div id="ball"></div>
+</body>
+<script type="text/javascript">
+	var oball=document.getElementById('ball');
+	var obtn=document.getElementById('btn1');
+	var iLend=document.documentElement.clientWidth-oball.offsetWidth;
+	var iTend=document.documentElement.clientHeight-oball.offsetHeight;
+	var iSpeedx=0;
+	var iSpeedy=0;
+	//记录拖拽后上一个点的x，y
+	var lastx=0;
+	var lasty=0;
+	oball.onmousedown=function(event){
+		var disX=event.clientX-oball.offsetLeft; //鼠标横坐标离物体左边框距离
+		var disY=event.clientY-oball.offsetTop;
+		clearInterval(oball.timer);
+
+		document.onmousemove=function(event){//拖拽的移动其实是拖拽点的移动
+		var lmove=event.clientX-disX;
+		var tmove=event.clientY-disY;
+
+
+
+		if (lmove<0) {l=0;}
+		if (lmove>iLend) {l=iLend;}
+		if (tmove<0) {tmove=0;}
+		if (tmove>iTend) {tmove=iTend;}
+
+		oball.style.left=lmove+'px';
+		oball.style.top=tmove+'px';
+
+		iSpeedx=lmove-lastx;
+		iSpeedy=tmove-lasty;
+		lastx=lmove;
+		lasty=tmove;
+	}
+	document.onmouseup=function(){
+		document.onmousemove=null;
+		document.onmousedown=null;
+		startmove(oball,iLend,iTend);
+	}
+
+
+	}
+
+
+	function startmove(obj,iendx,iendy) {
+		if (obj.timer) {clearInterval(obj.timer);}
+		obj.timer=setInterval(function(){
+			iSpeedy+=3;
+			var l=obj.offsetLeft+iSpeedx;
+			var t=obj.offsetTop+iSpeedy;
+			if (l>iendx) {
+				iSpeedx*=-0.8;
+				l=iendx;
+			}
+			if (l<0) {
+				iSpeedx*=-0.8;
+				l=0;
+			}
+			if (t>iendy) {
+				iSpeedy*=-0.8;
+				iSpeedx*=0.8;
+				t=iendy;
+			}
+			if (t<0) {
+				iSpeedy*=-0.8;
+				iSpeedx*=0.8;
+				t=0;
+			}
+			//此时停止并不是关闭了定时器，仅仅是因为速度为零，定时器还开着
+			if (Math.abs(iSpeedy)<1) {
+				iSpeedy=0;
+			}
+			if(Math.abs(iSpeedx)<1){
+				iSpeedx=0;
+			}
+			//停止定时器
+			if(iSpeedy==0 && iSpeedx==0 && t==document.documentElement.clientHeight-obj.offsetHeight){
+				clearInterval(obj.timer);
+				alert('stop');
+			}else{
+				obj.style.left=l+'px';
+				obj.style.top=t+'px';
+			}
+
+		},30);
+	}
+</script>
+</html>

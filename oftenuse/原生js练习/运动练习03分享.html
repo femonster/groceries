@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>分享动画练习</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+			.mydiv{
+				width: 100px;
+				height: 200px;
+				position: relative;
+				top: 200px;
+				left: -100px;
+				background-color: #DF4345;
+				cursor: pointer;
+				border-bottom-right-radius: 4px;
+				
+			}
+			#fx{
+				display: block;
+				width: 20px;
+				height: 50px;
+				position: absolute;
+				right: -20px;
+				background-color: #E97305;
+				color: #FFFFFF;
+				border-top-right-radius: 4px;
+				border-bottom-right-radius: 4px;
+			}
+	</style>
+</head>
+<body>
+	<div class="mydiv" id="mydiv"><span id="fx">分享</span></div>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+		var oDiv=document.getElementById('mydiv');
+		oDiv.onmouseover=function(){
+			startmove(0);
+		}
+		oDiv.onmouseout=function(){
+			startmove(-100);
+		}
+	}
+	var timer=null;
+	function startmove(iend){
+		var oDiv=document.getElementById('mydiv');
+		var iSpeed=(iend-oDiv.offsetLeft)/10;
+		if(timer){clearInterval(timer);}
+		timer=setInterval(function(){
+			if (oDiv.offsetLeft==iend) {
+				clearInterval(timer);
+			} else {
+				oDiv.style.left=oDiv.offsetLeft+iSpeed+'px';
+			}
+
+		},30);
+
+	}
+</script>
+</html>

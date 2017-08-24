@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>手机查看图片动画</title>
+	<style type="text/css">
+		* { padding: 0; margin: 0; }
+		li { list-style: none; }
+		body { background: #333; }
+		#iphone { width: 900px; height: 600px; background: url(img/ipbg.png); position: absolute; top: 50%; left: 50%; margin: -300px 0 0 -450px; }
+		#wrap { width: 238px; height: 360px; position: absolute; top: 121px; left: 326px; overflow:hidden; }
+		#iphone ul { width: 960px; height: 361px; cursor: pointer; position: absolute; top: 0px; left: 0px; }
+		#iphone li { float: left; width:240px; height:360px; overflow:hidden;}
+	</style>
+</head>
+<body>
+<div id="iphone" >
+	<div id="wrap">
+		<ul id="ul1">
+			<li style="background:url(img/pic1.png);" title="妙味课堂"></li>
+			<li style="background:url(img/pic2.png);" title="妙味课堂"></li>
+			<li style="background:url(img/pic3.png);" title="妙味课堂"></li>
+			<li style="background:url(img/pic4.png);" title="妙味课堂"></li>
+		</ul>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	window.onload=function() {
+			var oUl = document.getElementById('ul1');
+			var aLi = oUl.getElementsByTagName('li');
+			
+			var disX = 0;
+			var downX = 0;
+			var iNow = 0;
+			var timer = null;
+			var speed = 0;
+		oUl.onmousedown=function(ev) {
+			
+			var ev = ev || window.event;
+			
+			disX = ev.clientX - oUl.offsetLeft;
+			
+			downX = ev.clientX;
+			
+			document.onmousemove=function(ev) {
+				
+				if (timer) {clearInterval(timer);}
+				
+				var ev = ev || window.event;
+				
+				var l = ev.clientX - disX;
+				
+				oUl.style.left=l+'px';
+
+			}
+
+			document.onmouseup=function(ev) {
+				
+				var ev = ev || window.event;
+				
+				document.onmousemove=null;
+				document.onmouseup=null;
+				
+				if (downX > ev.clientX) {
+					//左
+					if( iNow != aLi.length-1 ){iNow++;}
+					
+					 startmove(-iNow*aLi[0].offsetWidth);
+				}else{
+					//右
+					 if( iNow != 0 ){iNow--;}
+					 
+					 startmove(-iNow*aLi[0].offsetWidth);
+				}
+			}
+
+			return false;
+		}
+
+		//弹性运动
+		function startmove(target) {
+				
+				clearInterval(timer);
+				
+				timer=setInterval(function() {
+					
+						speed += (target - oUl.offsetLeft)/6;
+					
+						speed*=0.75;
+
+					if (Math.abs(speed) <=1 && Math.abs(target - oUl.offsetLeft)<=1) {
+					
+						clearInterval(timer);
+						
+						speed = 0;
+						
+						oUl.style.left = target + 'px';
+					}else{
+					
+						oUl.style.left = oUl.offsetLeft + speed + 'px';
+					}
+				},30);
+			
+			
+		}
+
+	}
+</script>
+</html>

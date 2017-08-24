@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>焦点图片轮播</title>
+    <style>
+  *{margin:0;padding:0;list-style:none;}
+  .wrap{height:170px;
+        width:490px;
+        overflow: hidden;
+        position: relative;
+        margin:100px auto;
+       }
+  .wrap ul{position:absolute;} 
+  .wrap ul li{height:170px;cursor: pointer;}
+  .wrap ol{position:absolute;
+           right:5px;
+           bottom:10px;}
+  .wrap ol li{height:20px; 
+              width: 20px;
+              background:#ccc;
+              border:solid 1px #666;
+              margin-left:5px;
+              color:#000;
+              float:left;
+              line-height:20px;
+              text-align:center;
+              cursor:pointer;}
+  .wrap ol .on{background:#E97305;
+               color:#fff;}
+
+  </style>
+
+</head>
+<body>
+  <div class="wrap" id="wrap">
+    <ul id="pic">
+      <li><img src="img/54111cd9000174cd04900170.jpg" alt=""></li>
+      <li><img src="img/54111dac000118af04900170.jpg" alt=""></li>
+      <li><img src="img/54111d9c0001998204900170.jpg" alt=""></li>
+      <li><img src="img/54111d8a0001f41704900170.jpg" alt=""></li>
+      <li><img src="img/54111d7d00018ba604900170.jpg" alt=""></li>    
+    </ul>
+    <ol id="list">
+
+      <li class="on">1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+    </ol>
+  </div>
+</body>
+  <script type="text/javascript">
+if(document.readyState=="complete") {
+  document.write('<strong>文档加载完毕~</strong>');
+} 
+     var wrap=document.getElementById("wrap"),
+         pic=document.getElementById("pic"),
+         picLi=pic.getElementsByTagName('li'),
+         list=document.getElementById("list"),
+         numLi=list.getElementsByTagName("li"),
+         timer=null,
+         index=0;
+
+     // window.onload函数
+    function addEventLoad(func){
+       var oldonload=window.onload;
+       if(typeof window.onload!='function'){
+       	   window.onload=func;
+       }else{
+       	   window.onload=function(){
+       	   	oldonload();
+       	   	func();
+       	   }
+       }
+    }
+    //鼠标移入函数
+   function mouseEvent() {
+        for(var i=0;i<numLi.length;i++){
+        	numLi[i].index=i;
+        	numLi[i].onmouseover=function(){
+        		clearInterval(timer);
+        		startplay(this.index);
+        	}
+        	numLi[i].onmouseout=function(){
+        		timer=setInterval(autoplay,2000);
+        	}
+        	picLi[i].onmouseover=function(){
+        		clearInterval(timer);
+        	}
+        	picLi[i].onmouseout=function(){
+        		timer=setInterval(autoplay,2000);
+        	}
+        }
+    }
+
+    //
+    function startplay(MyIndex){
+       for(var j=0;j<picLi.length;j++){
+       	  picLi[j].style.display="none";
+       	  numLi[j].className="";
+       }
+       numLi[MyIndex].className="on";
+       picLi[MyIndex].style.display="block";
+       index=MyIndex;
+    }
+
+    function autoplay(){
+    	index++;
+    	if(index>numLi.length-1){
+    		index=0;
+    	}
+    	startplay(index);
+    }
+
+    timer=setInterval(autoplay,2000);
+    addEventLoad(mouseEvent);
+
+  </script>	
+</html>

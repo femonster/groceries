@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>商品的加减与统计</title>
+</head>
+<body>
+<ul id="list">
+	<li>
+  	<input type="button" value="-" />
+    <strong>0</strong>
+  	<input type="button" value="+" />
+    单价：<em>12.5元</em>
+    小计：<span>0元</span>
+  </li>
+	<li>
+  	<input type="button" value="-" />
+    <strong>0</strong>
+  	<input type="button" value="+" />
+    单价：<em>10.5元</em>
+    小计：<span>0元</span>
+  </li>
+	<li>
+  	<input type="button" value="-" />
+    <strong>0</strong>
+  	<input type="button" value="+" />
+    单价：<em>8.5元</em>
+    小计：<span>0元</span>
+  </li>
+	<li>
+  	<input type="button" value="-" />
+    <strong>0</strong>
+  	<input type="button" value="+" />
+    单价：<em>8元</em>
+    小计：<span>0元</span>
+  </li>
+	<li>
+  	<input type="button" value="-" />
+    <strong>0</strong>
+  	<input type="button" value="+" />
+    单价：<em>14.5元</em>
+    小计：<span>0元</span>
+  </li>
+</ul>
+
+<p id="all">
+商品合计共：<em>0</em>件，共花费了：<em>0</em>元<br />
+其中最贵的商品单价是：<em>0</em>元
+</p>
+
+</body>
+<script type="text/javascript">
+/**
+ * 注意！！！！。每点击一次就更新一次数据，所以更新数据的代码应该是在点击事件中添加！！！！
+ * 
+ * 
+ */
+	window.onload=function() {
+		var oList = document.getElementById('list');	
+		var aLi = oList.getElementsByTagName('li');
+		var oAll = document.getElementById('all');
+		var aEm = oAll.getElementsByTagName('em');
+		var ialln=0,fallmoney=0,max=0;
+
+		for (var i = 0; i < aLi.length; i++) {
+			jsPrice(aLi[i]);
+		}
+
+
+   //计算价格
+		function jsPrice(li) {
+			//+，- 按钮
+			var oreduceBtn = li.getElementsByTagName('input')[0];
+			var oaddBtn = li.getElementsByTagName('input')[1];
+			//商品个数的元素
+			var oNum = li.getElementsByTagName('strong')[0];
+			//商品价格的元素
+			var oPrice = li.getElementsByTagName('em')[0];
+			//单个商品总价的元素
+			var oallP = li.getElementsByTagName('span')[0];
+			//商品个数
+			var inum = parseInt(oNum.innerHTML);
+			//商品价格
+			var fpri = parseFloat(oPrice.innerHTML);
+			//单个商品总价
+
+
+
+			oaddBtn.onclick=function(){
+				inum++;
+				oNum.innerHTML=inum;
+				oallP.innerHTML=inum*fpri+'元';
+				ialln++;
+				fallmoney =fallmoney+fpri;
+				aEm[0].innerHTML=ialln;
+				aEm[1].innerHTML=fallmoney;
+				sortMax();
+
+				
+			}
+			oreduceBtn.onclick=function(){
+				if (inum>0) {
+				inum--;
+				oNum.innerHTML=inum;
+				oallP.innerHTML=inum*fpri+'元';
+				ialln--;
+				fallmoney =fallmoney-fpri;
+				aEm[0].innerHTML=ialln;
+				aEm[1].innerHTML=fallmoney;
+				sortMax();
+				}
+				
+			}
+
+		}
+
+		function sortMax() {
+			max=0;
+			for (var i = 0; i < aLi.length; i++) {
+			var aNumber = aLi[i].getElementsByTagName('strong');
+			var aDanjia = aLi[i].getElementsByTagName('em');
+				if(aNumber[0].innerHTML>0){
+					if (max<parseFloat(aDanjia[0].innerHTML)) {
+						max=parseFloat(aDanjia[0].innerHTML);
+					}
+				}
+			}
+			aEm[2].innerHTML=max;
+		}
+
+
+
+	};
+</script>
+</html>

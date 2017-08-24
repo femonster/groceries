@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>延时菜单效果demo</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+	    *{box-sizing: border-box;}
+		.nav{width: 600px;height: 50px;border:1px solid red;margin:10px auto;}
+		.nav ul li{float: left;border:1px solid #666;width: 149px;height: 50px;text-align: center;line-height: 50px;cursor: pointer;}
+		.nav .two-nav{width: 300px;height: 50px;background-color: #445;position: absolute;top: 70px;border: 1px solid red;display: none;}
+		.sanjiao{width: 0;height: 0;border-right: 10px solid transparent;border-left: 10px solid transparent;border-bottom: 15px solid #666;position: absolute;top: -14px;left: 50%;}
+	</style>
+</head>
+<body>
+	<div class="nav" id="nav">
+		<ul>
+			<li>首页</li>
+			<li>哇啦哇啦</li>
+			<li>呵呵嘿嘿</li>
+			<li>咯咯嘻嘻</li>
+		</ul>
+		<div class="two-nav">
+			<div class="sanjiao"></div> 
+		</div>
+		<div class="two-nav">
+			<div class="sanjiao"></div> 
+		</div>
+		<div class="two-nav">
+			<div class="sanjiao"></div> 
+		</div>
+		<div class="two-nav">
+			<div class="sanjiao"></div> 
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript" src="js/tools.js"></script>
+<script type="text/javascript">
+	window.onload=function() {
+		var onav = document.getElementById('nav');
+		var oul = onav.getElementsByTagName('ul')[0];
+		var ali = oul.getElementsByTagName('li');
+		var atwo =	getByClass(onav,'two-nav');
+		var timer=null;
+		
+		for (var i = 0; i < ali.length; i++) {
+			//计算二级菜单的left
+			atwo[i].style.left=oul.offsetLeft+i*ali[0].offsetWidth- ali[0].offsetWidth/2+'px';
+			
+			ali[i].index=i;
+
+			ali[i].onmouseover=function(){
+				for (var i = 0; i < ali.length; i++) {
+					hide(atwo[i]);
+				}
+				show(atwo[this.index]);
+			};
+
+			ali[i].onmouseout=function(){
+				var _this=this;
+				timer = setTimeout(function() {
+					hide(atwo[_this.index]);
+				}, 200);	
+			};
+
+			atwo[i].onmouseover=function(){show(this);}
+			atwo[i].onmouseout=function(){hide(this);}
+		}
+
+		function show(obj) {
+			clearTimeout(timer);
+			obj.style.display="block";
+		}
+		function hide(obj) {
+			obj.style.display="none";
+		}
+	}
+</script>
+</html>

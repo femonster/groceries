@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽--自定义滚动条</title>
+	<script type="text/javascript" src="js/move.js"></script>
+	<style type="text/css">
+		#parent{width: 20px;height: 400px;background-color: #666;position:relative;margin: 30px auto;}
+		#scroll{width: 24px;height: 20px;background-color: red;position: absolute;left: -2px;}
+		#wrap{width: 400px;height: 300px;position: relative;left: 30px;border: 1px solid #666;float: left;overflow: hidden;}
+		#context{width: 400px;position: absolute;}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="context">
+			<p>你是大傻逼1</p>
+			<p>你是大傻逼2</p>
+			<p>你是大傻逼3</p>
+			<p>你是大傻逼4</p>
+			<p>你是大傻逼5</p>
+			<p>你是大傻逼6</p>
+			<p>你是大傻逼7</p>
+			<p>你是大傻逼8</p>
+			<p>你是大傻逼9</p>
+			<p>你是大傻逼10</p>
+			<p>你是大傻逼11</p>
+			<p>你是大傻逼12</p>
+			<p>你是大傻逼13</p>
+			<p>你是大傻逼14</p>
+			<p>你是大傻逼15</p>
+			<p>你是大傻逼16</p>
+			<p>你是大傻逼17</p>
+			<p>你是大傻逼18</p>
+			<p>你是大傻逼19</p>
+			<p>你是大傻逼20</p>
+			<p>你是大傻逼21</p>
+			<p>你是大傻逼22</p>
+			<p>你是大傻逼23</p>
+			<p>你是大傻逼24</p>
+			<p>你是大傻逼25</p>
+			<p>你是大傻逼26</p>
+			<p>你是大傻逼27</p>
+			<p>你是大傻逼28</p>
+			<p>你是大傻逼29</p>
+			<p>你是大傻逼30</p>
+			<p>你是大傻逼31</p>
+			<p>你是大傻逼32</p>
+			<p>你是大傻逼33</p>
+			<p>你是大傻逼34</p>
+			<p>你是大傻逼35</p>
+			<p>你是大傻逼36</p>
+			<p>你是大傻逼37</p>
+			<p>你是大傻逼38</p>
+			<p>你是大傻逼39</p>
+			<p>你是大傻逼40</p>
+			<p>你是大傻逼41</p>
+			<p>你是大傻逼42</p>
+			<p>你是大傻逼43</p>
+			<p>你是大傻逼44</p>
+			<p>你是大傻逼45</p>
+			<p>你是大傻逼46</p>
+			<p>你是大傻逼47</p>
+			<p>你是大傻逼48</p>
+			<p>你是大傻逼49</p>
+			<p>你是大傻逼50</p>
+		</div>
+	</div>
+	<div id="parent">
+		<div id="scroll"></div>
+	</div>
+
+</body>
+<script type="text/javascript">
+
+	window.onload=function() {
+		var oDiv=document.getElementById('scroll');
+		var oparent = document.getElementById('parent');
+		var ocontext = document.getElementById('context');
+		var owrap = document.getElementById('wrap');
+		oDiv.onmousedown=function(event){
+			disx = event.clientX - oDiv.offsetLeft;
+			disy = event.clientY - oDiv.offsetTop;
+			document.onmousemove=function(event){
+				// var l = event.clientX - disx;
+				var t = event.clientY - disy;
+				// if(l<30){l=0;}
+				// if (l>document.documentElement.clientWidth - oDiv.offsetWidth-30) {
+					// l=document.documentElement.clientWidth - oDiv.offsetWidth;
+				// }
+
+				if (t<0) {t=0;}
+				if (t>oparent.offsetHeight - oDiv.offsetHeight) {
+					t=oparent.offsetHeight - oDiv.offsetHeight;
+				}
+				//滚动条百分比
+				var scole = t/(oparent.offsetHeight - oDiv.offsetHeight);
+				//oDiv.style.left =l  + 'px';
+				oDiv.style.top = t + 'px';
+				document.title =scole;
+				//文字内容向上滑动的最大高度是文字内容高度-容器高度
+
+				//可加入运动框架，缓冲效果
+				startmove(ocontext,{top:-Math.ceil((ocontext.offsetHeight-owrap.offsetHeight)*scole)});
+				// ocontext.style.top =-(ocontext.offsetHeight-owrap.offsetHeight)*scole+'px';
+			}
+			document.onmouseup=function(){
+				document.onmouseup=null;
+				document.onmousemove=null;
+			}
+			//组织默认事件，防止选中文字
+			return false;
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件绑定</title>
+</head>
+<body>
+	<!-- 
+	IE：对象.attachEvent(事件名,函数)
+	Firefox/chrome :
+	对象.addEventListener(事件名,函数,false);
+	 -->
+	 <input type="button" name="" id="mybtn" value="alert">
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var obtn = document.getElementById('mybtn');
+	//I
+	myAddEvent(obtn,'click',function(){
+		alert(this);
+	});
+}
+	function myAddEvent(obj,sEvent,fn) {
+		if (obj.addEventListener) {
+			obj.addEventListener(sEvent,fn,false);
+			//removeEventListener
+		} else {
+			obj.attachEvent('on'+sEvent,fn);
+			//detachEvent
+		}
+	}
+	//绑定匿名函数，无法删除
+</script>
+</html>

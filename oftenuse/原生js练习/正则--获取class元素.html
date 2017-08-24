@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>正则--获取class元素</title>
+</head>
+<body>
+	<ul>
+		<li class="box box1">111</li>
+		<li class="boxbox1">1111</li>
+		<li>1111</li>
+		<li class="box box2">111</li>
+		<li>111</li>
+		<li class="box box3">111</li>
+		<li>111</li>
+	</ul>
+</body>
+<script type="text/javascript">
+	
+	window.onload=function() {
+		
+		function getByClass(oParent,sClass){
+			var aElem = oParent.getElementsByTagName('*');
+			var arr=[];
+			var re = new RegExp('\\b'+sClass+'\\b'); //  \b 判断是否是独立部分（是否是开头，结尾或空格）
+			for (var i = 0; i < aElem.length; i++) {
+				
+				if(re.test(aElem[i].className)){
+					arr.push(aElem[i]);
+				}
+			}
+			return arr;
+		}
+		var oul = document.getElementsByTagName('ul')[0]
+		var abox = getByClass(oul,'box');
+		alert(abox);
+		for (var i = 0; i < abox.length; i++) {
+			abox[i].style.backgroundColor="red";
+		}
+	}
+</script>
+</html>

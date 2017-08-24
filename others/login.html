@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="scss/login.css">
+</head>
+<body>
+  <p class="tip">zgk问卷管理系统</p>
+<div class="cont">
+  <div class="form sign-in">
+    <h2>欢迎登陆</h2>
+    <label>
+      <span>用户名</span>
+      <input type="email" />
+    </label>
+    <label>
+      <span>密码</span>
+      <input type="password" />
+    </label>
+    <a href="#"><p class="forgot-pass">Forgot password?</p></a>
+    <button type="button" class="submit">登陆</button>
+  </div>
+  <div class="sub-cont">
+    <div class="img">
+      <div class="img__text m--up">
+        <h2>新来的?</h2>
+        <p>注册用户名建立你的第一份问卷！</p>
+      </div>
+      <div class="img__text m--in">
+        <h2>老用户?</h2>
+        <p>如果你已经有账号了，快来登陆吧!</p>
+      </div>
+      <div class="img__btn">
+        <span class="m--up">注册</span>
+        <span class="m--in">登陆</span>
+      </div>
+    </div>
+    <div class="form sign-up">
+      <h2>用户注册</h2>
+      <label>
+        <span>用户名</span>
+        <input type="text" />
+      </label>
+      <label>
+        <span>密码</span>
+        <input type="password" />
+      </label>
+      <label>
+        <span>确认密码</span>
+        <input type="password" />
+      </label>
+      <button type="button" class="submit">注册</button>
+
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+  document.querySelector('.img__btn').addEventListener('click', function() {
+  document.querySelector('.cont').classList.toggle('s--signup');
+});
+</script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>lazy-img</title>
+</head>
+<body>
+  <img class="imgcls" id="img1" src='img/loading.png' data-imgurl='img/1.jpg' alt="">
+  <img class="imgcls" id="img2" src='img/loading.png' data-imgurl='img/2.jpg' alt="">
+  <img class="imgcls" id="img3" src='img/loading.png' data-imgurl='img/3.jpg' alt="">
+  <img class="imgcls" id="img4" src='img/loading.png' data-imgurl='img/4.jpg' alt="">
+  <img class="imgcls" id="img5" src='img/loading.png' data-imgurl='img/5.jpg' alt="">
+  <img class="imgcls" id="img6" src='img/loading.png' data-imgurl='img/6.jpg' alt="">
+</body>
+
+<!-- 图片懒加载 -->
+<script type="text/javascript">
+	//获取元素 到 页面顶部的距离
+	window.getY = function(e) {
+		var y = 0;
+		while(e){
+			y+=e.offsetTop;
+			e=e.offsetParent;
+		}
+		return y;
+	};
+
+	//图片惰性加载
+	var lazyLoad = {
+		init:function(){
+			var op = {
+				extend_height:0,
+				selectorName:".imgcls",
+				realSrcAtr:"data-imgurl"
+			}
+			this.img.init(op);
+		},
+		img:{
+    		init:function(n){
+    			var selectorName = n.selectorName,
+    				realSrcAtr = n.realSrcAtr;
+
+    			//要加载的图片是不是在指定窗口内
+    			function inViewport(el) {
+    				//当前页面被卷去的高
+    				var top = window.scrollY;
+    				//页面底部 （被卷去的高+可视区的高）
+    				var btm = window.scrollY + window.innerHeight;
+    				//元素离页面的距离
+    				var elTop = window.getY(el);
+    				//判断元素是否在当前窗口
+    				return elTop >= top && elTop-n.extend_height <= btm;
+    			}
+    			//滚动事件中判断是否加载图片
+    			window.addEventListener("scroll",function () {
+    				var imgs = document.querySelectorAll(selectorName);
+    				//类数组对象不能用for in 遍历
+    				for (var i = 0; i < imgs.length; i++) {
+    					var imgitem = imgs[i];
+    					if (!imgitem.getAttribute(realSrcAtr)|| !inViewport(imgitem)) {
+    						continue;
+    					}
+    					act(imgitem);
+    				}
+
+    				function act(_self) {
+    					// 若已加载过，则中断后续代码
+    					if (_self.getAttribute('lazyImgLoaded')) {return;}
+    					var img = new Image(),
+    					original = _self.getAttribute(realSrcAtr);
+    					//图片请求完成后的事件，把data-img指定的图片，放到src里面，浏览器显示
+    					img.onload = function() {
+    						_self.setAttribute("src",original);
+    					};
+    					//判断语句
+    					original && (img.src = original);
+    					_self.setAttribute("lazyImgLoaded",true);
+    				}
+    			});
+    			//手动触发滚动事件
+    			var e = document.createEvent("MouseEvents");
+    			e.initEvent("scroll",true,true);
+    			window.dispatchEvent(e);
+    		}								
+		}
+	}
+	lazyLoad.init();
+</script>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>“抖”函数</title>
+	<style type="text/css">
+		img{position: absolute;top: 200px;left: 400px;width: 200px;height: 200px;}
+	</style>
+</head>
+<body>
+	<img src="img/banner1.jpg" alt="" id="dou">
+</body>
+<!-- 将抖函数放在了move.js中 -->
+<script type="text/javascript" src="js/move.js"></script> 
+<script type="text/javascript">
+window.onload=function(){
+	var odou = document.getElementById('dou');
+	odou.onmouseover=function(){shake(odou,'top',20);}
+}
+</script>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js简易日历</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css">
+	.wrap{
+		width: 300px;
+		height: 502px;
+		margin: 10px auto;
+	}
+	.rili{
+		display: block;
+		width: 300px;
+		height: 350px;
+		border:1px solid #000;
+        /*margin: 10px auto;*/
+	}
+	.rili li{
+		background-color: #666;
+		color: #fff;
+		display: inline-block;
+		width: 60px;
+		height: 45px;
+		text-align: center;
+		cursor: pointer;
+		padding-top: 15px;
+		margin-top: 14px;
+		margin-bottom: 10px;
+		margin-left: 25px;
+		border: 1px solid #ccc;
+	}
+	.rili .on{
+		color: red;
+		background-color: #ccc;
+	}
+	.text{
+		width: 300px;
+		height: 150px;
+		border: 1px solid #666;
+	}
+	</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+<ul class="rili" id="rili">
+	<li class="month"><h1>1</h1><p>JAN</p></li>
+	<li class="month"><h1>2</h1><p>FER</p></li>
+	<li class="month"><h1>3</h1><p>MAR</p></li>
+	<li class="month"><h1>4</h1><p>APR</p></li>
+	<li class="month"><h1>5</h1><p>MAY</p></li>
+	<li class="month"><h1>6</h1><p>JUN</p></li>
+	<li class="month"><h1>7</h1><p>JUL</p></li>
+	<li class="month"><h1>8</h1><p>AUG</p></li>
+	<li class="month"><h1>9</h1><p>SEP</p></li>
+	<li class="month"><h1>10</h1><p>OCT</p></li>
+	<li class="month"><h1>11</h1><p>NOV</p></li>
+	<li class="month"><h1>12</h1><p>DEC</p></li>
+</ul>
+<div class="text" id="text">
+	
+</div>
+</div>
+<script type="text/javascript">
+    var data=['月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥','月干点啥',];
+	window.onload=function() {
+		var wrap=document.getElementById('wrap'),
+		    myli=wrap.getElementsByTagName('li'),
+		    mytext=wrap.getElementsByTagName('div')[0];
+		for (var i = 0; i < myli.length; i++) {
+			myli[i].index=i;
+			myli[i].onmouseover=function(){
+				for (var i = 0; i < myli.length; i++) {
+					myli[i].className='month';
+				}
+				    this.className='month on';
+				    mytext.innerHTML='<h2>第'+(this.index+1)+'月活动：</h2>'+(this.index+1)+data[this.index];
+			}
+		}
+	}
+</script>
+</body>
+</html>

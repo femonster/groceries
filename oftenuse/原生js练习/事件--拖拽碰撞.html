@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件--高级拖拽</title>
+	<style type="text/css">
+		#div1{width: 100px;height: 100px;background-color: red;position: absolute;left:500px;top: 300px;}
+		#div2{width: 100px;height: 100px;background-color: yellow;position: absolute;left: 200px;top: 200px;}
+	</style>
+</head>
+<body>
+sefwewe fwe rwe rqwe
+	<div id="div1">1</div>
+		<div id="div2">2</div>
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		var oDiv=document.getElementById('div1');
+		var oDiv2 = document.getElementById('div2');
+		oDiv.onmousedown=function(event){
+			disx = event.clientX - oDiv.offsetLeft;
+			disy = event.clientY - oDiv.offsetTop;
+			document.onmousemove=function(event){
+				var l = event.clientX - disx;
+				var t = event.clientY - disy;
+
+				var l1 = oDiv.offsetLeft;
+				var r1 = oDiv.offsetLeft+oDiv.offsetWidth;
+				var t1 = oDiv.offsetTop;
+				var d1 = oDiv.offsetTop+oDiv.offsetHeight;
+
+				var l2 = oDiv2.offsetLeft;
+				var r2 = oDiv2.offsetLeft+oDiv2.offsetWidth;
+				var t2 = oDiv2.offsetTop;
+				var d2 = oDiv2.offsetTop+oDiv2.offsetHeight;
+
+				if (l1>r2 || t1>d2 || r1<l2 ||d1<t2) {
+					//没碰上
+					oDiv2.style.backgroundColor = 'yellow';
+				}else{
+					//碰上了
+					oDiv2.style.backgroundColor = 'green';
+				}
+
+				//磁性吸附
+				if(l<30){l=0;}
+				if (l>document.documentElement.clientWidth - oDiv.offsetWidth-30) {
+					l=document.documentElement.clientWidth - oDiv.offsetWidth;
+				}
+				if (t<30) {t=0;}
+				if (t>document.documentElement.clientHeight - oDiv.offsetHeight-30) {
+					t=document.documentElement.clientHeight - oDiv.offsetHeight;
+				}
+				oDiv.style.left =l  + 'px';
+				oDiv.style.top = t + 'px';
+			}
+			document.onmouseup=function(){
+				document.onmouseup=null;
+				document.onmousemove=null;
+			}
+			//组织默认事件，防止选中文字
+			return false;
+		}
+	}
+	
+</script>
+</html>

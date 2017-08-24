@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文字处理</title>
+	<style>
+		 p{width: 100%;text-align: center;font-size:100px;font-weight:bold;}
+		.p1{color:red; 
+			text-shadow:2px 2px 0px white, 4px 4px 0px red;}/*模糊值为0*/
+		
+		.p2{color:white;
+			text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;}
+		
+		.p3{color:white; 
+			text-shadow: 0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e; }
+
+		.p4{color:white;text-shadow: 0 0 0 rgba(0,0,0,1); border:1px solid #000;transition:0.5s;}
+		.p4:hover{color:rgba(0,0,0,0);text-shadow: 0 0 50px rgba(0,0,0,.5);}
+
+		.p5{color:red;-webkit-text-stroke:3px black;}
+	</style>
+</head>
+<body>
+	<p class="p1">文字层叠</p>
+	<p class="p2">文字光晕</p>
+	<p class="p3">火 焰 文 字</p>
+	<p class="p4">文字模糊</p>
+	<p class="p5">文字描边</p>
+</body>
+</html>

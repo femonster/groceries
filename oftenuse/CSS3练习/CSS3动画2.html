@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>CSS3动画2</title>
+<style>
+/*
+动画放完的时候，将重新返回到自己的位置
+将动画部分放在单独的一个class，重新固定自己的位置、
+
+动画结束事件：
+obj.addEventListener('webkitAnimationEnd', function (){}, false);
+
+*/
+@-webkit-keyframes move{
+	0%{width: 100px;}
+	100%{width: 500px;}
+}
+.wrap{height: 200px;border: 2px solid #000;margin: 20px auto;position: relative;}
+.box{width: 100px;height: 100px;background-color: red;position: absolute;top: 0;left: 0;-webkit-animation:2s move linear;-moz-animation:2s move linear;animation: 2s move linear;}
+.box2{width: 100px;height: 100px;background-color: red;position: absolute;top: 0;left: 0;}
+.move{-webkit-animation:2s move linear;-moz-animation:2s move linear;animation: 2s move linear;width: 500px;}
+
+.box3{width: 100px;height: 100px;background-color: red;position: absolute;top: 0;left: 0;}
+.move2{-webkit-animation:2s move linear;-moz-animation:2s move linear;animation: 2s move linear;width: 500px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="box">box</div>
+</div>
+<div class="wrap">
+	<div class="box2 move">box2</div>
+</div>
+<div class="wrap">
+
+	<div class="box3 move2" id="box3">box3</div>
+</div>
+</body>
+<script type="text/javascript">
+	function addEnd(obj,fn)
+{
+	obj.addEventListener('webkitAnimationEnd',fn, false);
+	obj.addEventListener('animationend',fn, false);
+}
+var obox3 = document.getElementById('box3');
+	addEnd(obox3,fn);
+
+function fn(){alert('box3 end');}
+</script>
+</html>

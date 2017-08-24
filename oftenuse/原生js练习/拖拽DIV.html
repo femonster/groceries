@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>拖拽DIV</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#div1{width: 100px;height: 100px;background-color: #e54;position: absolute;}
+	</style>
+</head>
+<body>
+<!-- 
+onmousedown:鼠标摁下，存储距离
+onmousemove:鼠标移动，根据距离，计算DIV最新的位置
+onmouseup:鼠标抬起，停止拖拽
+clientWidth:可视区宽度
+clientHeight:可视区高度
+offsetWidth/Height:元素实际宽/高
+ -->
+<div id="div1"> </div>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var oDiv=document.getElementById('div1');
+	oDiv.onmousedown=function(event) {
+		var disx=event.clientX - oDiv.offsetLeft;
+		var disy=event.clientY - oDiv.offsetTop;
+		document.onmousemove=function(event){
+			var l=event.clientX - disx;
+			var t= event.clientY - disy;
+			if (l<0) {l=0}
+			if (l>(document.documentElement.clientWidth-oDiv.offsetWidth)) {
+				l=document.documentElement.clientWidth-oDiv.offsetWidth;
+			}
+			if (t<0) {t=0}
+			if(t>(document.documentElement.clientHeight-oDiv.offsetHeight)){
+				t=document.documentElement.clientHeight-oDiv.offsetHeight;
+			}
+
+			oDiv.style.left=l+'px';
+			oDiv.style.top =t+'px';
+		}
+		document.onmouseup=function(){
+			document.onmouseup=null;
+			document.onmousemove=null;
+		}
+	}
+}
+</script>
+</html>

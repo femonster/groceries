@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>游戏：你的鼠标有多快？</title>
+<style>
+body { background:#f1f1f1; font-family:微软雅黑; font-size:16px; user-select: none; }
+#box { width:800px; height:450px; border:1px solid #066; background:#FFF; margin:20px auto 0; position:relative; top:0; left:0;}
+#fraction { width:130px; border:1px solid #066; position:relative; left: -151px; background:#FFC; padding:10px; }
+#fraction p { margin:0; font-family:微软雅黑; font-size:16px; line-height:30px; }
+#alert { text-align:center; }
+#qq {position: absolute;top: 0;left: 0;width: 800px;height: 450px;}
+</style>
+</head>
+
+<body>
+
+<div id="alert">
+	<h2>你的鼠标有多快？</h2>
+  <p>游戏说明：点击“开始游戏”，随机掉下QQ表情，划中它，千万别让它掉下去！！5条命，划中25次算赢</p>
+  <input type="button" value="开始游戏" id="btn" />
+</div>
+<div id="box">
+	<div id="fraction">
+	  	<p>得分：0 分</p>
+	  	<p>失分：0 分</p>
+  	</div>
+  	<div id="qq"></div>
+</div>
+</body>
+<script type="text/javascript" src="js/move.js"></script>
+<script type="text/javascript">
+	window.onload=function(){
+		var igetScore = ilostScore = 0;
+		var obox = document.getElementById('box');
+		var obtn=document.getElementById('btn');
+		var oqq=document.getElementById('qq');
+		var ofs=document.getElementById('fraction');
+		var ap =ofs.getElementsByTagName('p');
+		var aIcon = ['img/QQGame/1.png','img/QQGame/2.png','img/QQGame/3.png','img/QQGame/4.png','img/QQGame/5.png','img/QQGame/6.png','img/QQGame/7.png','img/QQGame/8.png','img/QQGame/9.png','img/QQGame/10.png','img/QQGame/11.png'];
+		var speed=1;
+		var oimg=null;
+		//点击开始游戏
+		obtn.onclick=function() {
+			this.value="游戏进行中~~";
+			this.disabled=true;
+			
+			createImg();
+			
+			qqDrop();
+			//事件委托
+		oqq.onmouseover=function(ev) {
+				 var ev = ev || window.event;
+    			 var target = ev.target || ev.srcElement;
+				clearInterval(target.timer2);
+				if(target.nodeName.toLowerCase() == "img"){
+   					target.src="img/QQGame/qq.png";
+   					shake(target,'left',12,function() {
+						oqq.innerHTML='';
+						speed+=0.7;
+						igetScore++;
+						if (checkScore()) {return;}
+						ap[0].innerHTML="得分："+igetScore+"分";
+						qqDrop();
+
+				});
+    		}		
+		}
+	}
+		//下坠函数
+		function qqDrop() {
+			createImg();
+			oimg=oqq.getElementsByTagName('img')[0];
+			doMove(oimg,'top',speed,450,function() {
+				shake(obox,'top',14,function(){
+					speed+=0.7;
+					ilostScore++;
+					ap[1].innerHTML="失分："+ilostScore+"分";
+					console.log(speed);
+					if(checkScore()){return;}
+					qqDrop();
+				});				
+			});			
+		}
+		
+		//检查分数
+		function checkScore(){
+	        if(igetScore == 25) {
+	          alert('真厉害！你已经通过了考验！');
+	          init();
+	          return true;
+	        }
+	        if(ilostScore == 5) {
+	          alert('真遗憾……你的鼠标太慢啦！');
+	          init();
+	          return true;
+	        }
+        }
+
+      //创造图片
+		function createImg(){
+			oqq.innerHTML='<img style = "position: absolute; top: 0; left: ' + Math.round(Math.random() * 776) + 'px" src = "' + aIcon[Math.round(Math.random() * (aIcon.length - 1))]+ ' "/>';
+		}
+
+	//初始化数据
+      function init(){
+        obtn.value = '开始游戏';
+        obtn.disabled = '';
+        oqq.innerHTML = '';
+        ap[0].innerHTML = '得分：0 分';
+        ap[1].innerHTML = '失分：0 分';
+        speed = 1;
+        igetScore = ilostScore = 0;
+      }
+
+
+
+}
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>任意值变幻</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div{display: inline-block; width: 100px;height: 50px;background-color: #e67;margin-top: 10px;border:2px solid #000;font-size: 12px;}
+	</style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div>3333333</div>
+<div></div>
+</body>
+<script type="text/javascript">
+window.onload=function(){
+	var aDivs=document.getElementsByTagName('div');
+		for (var i = 0; i<aDivs.length;i++) {
+			aDivs[i].timer=null;
+		}
+		aDivs[0].onmouseover=function(){
+				startmove(this,'width',200);
+			}
+			aDivs[1].onmouseover=function(){
+				startmove(this,'height',200);
+			}
+			aDivs[2].onmouseover=function(){
+				startmove(this,'fontSize',49);
+			}
+			aDivs[3].onmouseover=function(){
+				startmove(this,'opacity',30);
+			}
+
+}
+//获取样式：用这个不会有加上边框后的bug
+	function getStyle(obj,attr) {
+		if (obj.currentStyle) {
+			return obj.currentStyle[attr];
+		} else {
+			return getComputedStyle(obj,false)[attr];
+		}
+	}
+
+	function startmove(obj,attr,iend){
+
+	if(obj.timer){clearInterval(obj.timer);}
+	obj.timer=setInterval(function(){
+		if (attr=='opacity') {
+			var iCur=parseInt(parseFloat(getStyle(obj,attr))*100);
+		} else {
+			var iCur=parseInt(getStyle(obj,attr));
+		}
+		var iSpeed=(iend- iCur)/8;
+		iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+		if (iCur==iend) {
+			clearInterval(obj.timer);
+		} else {
+			if (attr=='opacity') {
+				obj.style[attr]=(iCur+iSpeed)/100;
+			} else {
+				obj.style[attr]=iCur+iSpeed+'px';
+			}
+
+		}
+
+	},30);
+}
+</script>
+</html>

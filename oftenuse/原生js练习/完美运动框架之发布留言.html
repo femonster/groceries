@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>完美运动框架之发布留言</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<script type="text/javascript" src="js/move.js"></script>
+	<style type="text/css">
+		#mydiv{width: 400px;height: 300px;border: 1px solid #666;margin: 10px auto;overflow: scroll;}
+		#mydiv div{font-size: 13px;padding: 8px;border-bottom: 1px dashed #e6f;overflow: hidden;opacity: 0;}
+	</style>
+</head>
+<body>
+<textarea id="mytext" cols="20" rows="10"></textarea>
+<input type="button" name="btn" id="btn" value="发布">
+<div id="mydiv">
+</div>
+</body> 
+<script type="text/javascript">
+ window.onload=function(){
+ 	var otext=document.getElementById('mytext');
+	var obtn=document.getElementById('btn');
+	var odiv=document.getElementById('mydiv');
+
+	obtn.onclick=function(){
+		var oNewdiv=document.createElement('div');
+		var aolddiv=odiv.getElementsByTagName('div');
+		oNewdiv.innerHTML=otext.value;
+		otext.value='';
+		if(!oNewdiv.innerHTML){
+			alert('请说点什么！');
+			return;
+		}
+
+		if (aolddiv.length) {
+			odiv.insertBefore(oNewdiv,aolddiv[0]);
+
+		}else{
+			odiv.appendChild(oNewdiv);
+
+		}
+
+		var iHeight=oNewdiv.offsetHeight;
+		oNewdiv.style.height=0;
+		startmove(oNewdiv,{height:iHeight},function(){
+			startmove(oNewdiv,{opacity:100});
+		});
+	}
+}
+</script>
+</html>
