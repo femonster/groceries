@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>background-position</title>
+	<style>
+		.box{
+			width: 500px;
+			height: 500px;
+			border:5px solid green;
+			margin: 10px auto;
+			background-image: url("bg2.jpg");
+			background-repeat: no-repeat;
+			background-position: 100% 100%;
+			/*padding:100px;
+			background-origin: content-box;*/
+		}
+	</style>
+</head>
+<!-- 
+语法： 
+background-position : length || length 
+background-position : position || position 
+取值： 
+length  : 百分数 | 由浮点数字和单位标识符组成的长度值。请参阅 长度单位  
+position  : top | center | bottom | left | center | right 
+
+默认值为： 0% 0% ,如果只指定了一个值，该值将用于横坐标。纵坐标将默认为 50% 。如果指定了两个值，第二个值将用于纵坐标。
+
+
+
+		 (500px-360px)*50%;	
+positionX = (容器的宽度-图片的宽度) * percentX;
+positionY = (容器的高度-图片的高度) * percentY;
+
+所以50% 50% 是和 center center 是一样的
+ -->
+<body>
+	<div class="box"></div>
+</body>
+</html>
