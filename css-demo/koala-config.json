@@ -2,10 +2,10 @@
 {
 	// The mappings of source directory and output directory
 	"mappings": [
-		// {	
-		// 	"src": "path/to/source",
-		// 	"dest": "path/to/output"
-		// }
+		{	
+			"src": "./scss",
+			"dest": "./css"
+		}
 	],
 
 	// Add the ignore rules that Koala will not search them.

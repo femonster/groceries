@@ -1,0 +1,38 @@
+.hot {
+  width: 300px;
+  height: 150px;
+}
+.hot a {
+  text-decoration: none;
+}
+.hot .hot-things {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 20px;
+  background-color: #00DAFE;
+  /* background: -webkit-linear-gradient(left, #00dafe, #3381ff); */
+  background: linear-gradient(left, #00dafe, #3381ff);
+}
+.hot .hot-things:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  display: block;
+  background-color: #00DAFE;
+  /* background: -webkit-linear-gradient(left, #3381ff, #00dafe); */
+  background: linear-gradient(left, #3381ff, #00dafe);
+  -webkit-transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -ms-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
+  z-index: 2;
+}
+.hot .hot-things:hover:after {
+  opacity: 1;
+}

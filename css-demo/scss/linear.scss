@@ -1,0 +1,68 @@
+ @mixin prefix($nam,$val){
+    -webkit-#{$nam}: $val;
+    -moz-#{$nam}: $val;
+    -ms-#{$nam}: $val;
+    -o-#{$nam}: $val;
+    #{$nam}: $val;
+ }
+
+.hot{
+	width:300px;
+	height: 150px;
+	a{
+		text-decoration: none;
+	}
+	.hot-things{
+		width: 100%;
+		height: 100%;
+		position: relative;
+		margin:20px;
+		background-color: #00DAFE; 
+		background: -webkit-linear-gradient(left, #00dafe, #3381ff);
+		background: linear-gradient(left, #00dafe, #3381ff);
+		&:after{
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			top: 0;
+			left: 0;
+			display: block;
+			background-color: #00DAFE; 
+			background: -webkit-linear-gradient(left, #3381ff, #00dafe);
+			background: linear-gradient(left, #3381ff, #00dafe);
+			@include prefix(transition,opacity 0.5s ease-out);
+			z-index: 2;
+		}
+		&:hover:after{
+			opacity: 1;
+		}
+	}
+}
+
+//error demo
+
+// .hot{
+// 	width:300px;
+// 	height: 150px;
+// 	a{
+// 		text-decoration: none;
+// 	}
+// 	.hot-things{
+// 		width: 100%;
+// 		height: 100%;
+// 		position: relative;
+// 		background-color: #00DAFE; 
+// 		background: -webkit-linear-gradient(left, #00dafe, #3381ff);
+// 		background: linear-gradient(left, #00dafe, #3381ff);
+// 		@include prefix(transition,all 0.5s ease-out);
+		
+// 		&:hover{
+// 			background-color: #00DAFE; 
+// 			background: -webkit-linear-gradient(left, #3381ff, #00dafe);
+// 			background: linear-gradient(left, #3381ff, #00dafe);
+// 		}
+
+// 	}
+// }

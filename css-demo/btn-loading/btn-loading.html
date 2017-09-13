@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- 关键帧动画和伪元素的妙用 -->
+	<title>btn-loading</title>
+	<style>
+		i{
+			display: inline-block;
+			height: 1em;
+			line-height: 1;
+			text-align: left;
+			vertical-align: -0.25em;
+			overflow: hidden;
+		}
+		i:before{
+			display: block;
+			/* \A 是换行符 */
+			content: '...\A..\A.';
+			white-space: pre-wrap;
+			animation: dot 3s infinite step-start;
+		}
+		@keyframes dot{
+			33%{transform: translateY(-2em);}
+			66%{transform: translateY(-1em);}
+		}
+
+		.div1{
+			width: 100px;
+			height: 100px;
+			border: 1px solid #000;
+			animation: bgc 3s infinite steps(3,start);
+		}
+		
+		.div2{
+			width: 100px;
+			height: 100px;
+			border: 1px solid #000;
+			animation: bgc 3s infinite step-start;
+		}
+		@-webkit-keyframes bgc {
+		    0% { background: red;}
+		    50%{ background: blue}
+		    100% {background: yellow;}
+		}
+	</style>
+</head>
+<body>
+	<p>视频正在保存中<i>...</i></p>
+	<br>
+	<div class="div1">div1</div>
+	<br>
+	<div class="div2">div2</div>
+</body>
+<!-- 
+animation-name			
+animation-duration
+animation-delay
+animation-iteration-count:n / infinite
+animation-direction :normal/alternate(轮流反向)
+animation-play-state :paused/running
+animation-fill-mode: :none/forwards/backwards/both
+animation-timing-function:
+
+linear/ease/ease-in/`````steps()/step-start/step-end
+
+iming-function 作用于每两个关键帧之间，而不是整个动画
+
+steps(n)  平分帧
+
+step-start 是去显示下一帧的图像 == steps(1,start)
+
+step-end 是去显示上一帧的图 像  == steps(1,end)
+
+
+
+ -->
+</html>

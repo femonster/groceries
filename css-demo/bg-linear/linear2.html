@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>线性渐变动画2</title>
+	<style type="text/css">
+	
+	.div {
+	    
+	    position: relative;
+	    width: 300px;
+	    height: 150px;
+	    margin: 20px auto;
+	    /* -webkit-不可以乱用 起点在左边，顺时针*/
+	    /* background:-webkit-linear-gradient(0deg,  #ffc700 0%, #e91e1e 50%, #6f27b0 100%); */
+	    
+	    /* 起点在下面*/
+	    background:linear-gradient(90deg,  #ffc700 0%, #e91e1e 50%, #6f27b0 100%);
+	    background-size: 200% 100%;
+	    background-position: 0 0;
+	    animation: bgposition 2s infinite linear alternate;
+
+	}
+
+	/* 这种方法，由于改变了bg-p,bg-s,导致页面不断进行重绘，影响性能 */
+	@keyframes bgposition {
+	    0% {
+	        background-position: 0 0;
+	    }
+	    100% {
+	        background-position: 100% 0;
+	    }
+	}
+	
+
+
+	/* 第2种方法 */
+	/* 思路运用伪元素和overflow,让其在父元素中运动，造成渐变动画的假象 */
+	.div2{
+		position: relative;
+		overflow: hidden;
+		width: 300px;
+		height: 150px;
+		margin: 20px auto;
+	}
+
+
+	.div2:before{
+		content: "";
+		position: absolute;
+		top: -100%;
+		left: -100%;
+		bottom: -100%;
+		right: -100%;
+		background: linear-gradient(45deg,#ffc700 0%, #e91e1e 30%, #6f27b0 60%,#00DAFE 100%);
+		background-size: 100% 100%;
+		animation: bgp 8s infinite linear alternate;
+	}
+
+	@keyframes bgp {
+    0% {
+        transform: translate(30%, 30%);
+    }
+    25% {
+        transform: translate(30%, -30%);
+    }
+    50% {
+        transform: translate(-30%, -30%);
+    }
+    75% {
+        transform: translate(-30%, 30%);
+    }
+    100% {
+        transform: translate(30%, 30%);
+    }
+}
+
+	</style>
+</head>
+<body>
+第一种方法：
+	<div class="div"></div>
+第二种方法：
+	<div class="div2"></div>
+</body>
+</html>

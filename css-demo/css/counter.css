@@ -58,3 +58,17 @@ ol {
   -o-transform: scale(1.5);
   transform: scale(1.5);
 }
+
+/*----------------------------------------------------------*/
+.reset {
+  padding-left: 20px;
+  counter-reset: wangxiaoer;
+  line-height: 1.6;
+  color: #666;
+}
+
+.counter:before {
+  content: counters(wangxiaoer,"-") ". ";
+  counter-increment: wangxiaoer;
+  font-family: arial black;
+}
