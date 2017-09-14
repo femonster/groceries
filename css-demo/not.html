@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<style type="text/css">
+
+/* not */
+
+.nav li {
+   border-right:1 px  solid #666;
+}
+/* ...然后把它从最后一个元素... */
+
+/*  remove border  */
+ .nav  li:last-child {
+   border-right:none ;
+}
+
+/* ...使用:not()伪类只适用于你想要的元素： */
+
+.nav  li :not(:last-child){
+   border-right:1 px  solid  #666; 
+}
+</style>
+</html>

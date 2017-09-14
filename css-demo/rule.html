@@ -6,14 +6,24 @@
 </head>
 <body>
 	<!-- 
+	作为样式的类名和 给js调用的类名不要相同
+
+	日常开发中，复用一套css ,（特别是后台开发），可能会出现以下问题：
+
+	1. 删除某个类名后，样式出现了问题。
+	2. 为了不破坏样式，只能保留该类名，但却不符合当前内容的语义。
+	3. 
+
+
+
 	.g-content .g-content-list li { }
 .g-content .g-content-list .item { }
 基于 CSS 选择器的解析规则（从右向左），建议使用上述第二种 .g-content .g-content-list .item { } ，避免使用通用标签名作为选择器的一环可以提高 CSS 匹配性能。
-
 浏览器的排版引擎解析 CSS 是基于从右向左（right-to-left）的规则，这么做是为了使样式规则能够更快地与渲染树上的节点匹配。 
-	
 
-	命名空间规范
+
+
+命名空间规范
 布局：以 g 为命名空间，例如：.g-wrap 、.g-header、.g-content。
 状态：以 s 为命名空间，表示动态的、具有交互性质的状态，例如：.s-current、s-selected。
 工具：以 u 为命名空间，表示不耦合业务逻辑的、可复用的的工具，例如：u-clearfix、u-ellipsis。

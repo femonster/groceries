@@ -11,7 +11,7 @@
   position: relative;
   margin: 20px;
   background-color: #00DAFE;
-  /* background: -webkit-linear-gradient(left, #00dafe, #3381ff); */
+  background: -webkit-linear-gradient(left, #00dafe, #3381ff);
   background: linear-gradient(left, #00dafe, #3381ff);
 }
 .hot .hot-things:after {
@@ -24,7 +24,7 @@
   left: 0;
   display: block;
   background-color: #00DAFE;
-  /* background: -webkit-linear-gradient(left, #3381ff, #00dafe); */
+  background: -webkit-linear-gradient(left, #3381ff, #00dafe);
   background: linear-gradient(left, #3381ff, #00dafe);
   -webkit-transition: opacity 0.5s ease-out;
   -moz-transition: opacity 0.5s ease-out;
