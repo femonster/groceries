@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" id="aa"/>
+
+<span id="bb"></span>
+
+<script>
+    var obj = {};
+    var node = document.getElementById('aa');
+
+    var otxt = document.getElementById('bb');
+
+    node.addEventListener("input",function() {
+        obj.hello = this.value;
+        otxt.innerHTML = this.value;
+    })
+
+    // 但这样做我们并不是实现view和数据的双向绑定，只是使用了input事件模拟了单向绑定，view -->model  ,而没有model-->view
+
+</script>
+</body>
+</html>

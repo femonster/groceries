@@ -12,6 +12,16 @@ function GetRequest() {
     return theRequest;
 }
 
+    /**
+     * 通过URL获取参数值
+     * @param {String} name 参数的name
+     */
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
 // 补齐： （需要被补的字符，需要到达的长度，补的字符）
 function leftpad (str, len, ch) {
   str = String(str);
@@ -34,6 +44,10 @@ function formatDate(now) {
     var second = now.getSeconds();
     return year + "-" + month + "-" + date + "   " + hour + ":" + minute;
 }
+
+// //使用方法 
+//var now = new Date(); 
+//var nowStr = now.format("yyyy-MM-dd hh:mm:ss"); 
 
 Date.prototype.Format = function(fmt) { //author: meizz 
     var o = {
@@ -287,15 +301,7 @@ function ajaxfun(type, url, data, successFunc) {
     });
 }
 
-    /**
-     * 通过URL获取参数值
-     * @param {String} name 参数的name
-     */
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
+
 
 //是否为移动端
 function isMoblie(){

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" id="aa"/>
+<input type="text" id="cc"/>
+<span id="bb"></span>
+<!-- 
+    1.·通过 Object.defineProperty() 进行数据劫持，来实现监听数据变动的目的
+ -->
+<script>
+    var obj = {};
+    var node = document.getElementById('aa');
+
+    var otxt = document.getElementById('bb');   
+    
+    Object.defineProperty(obj,'hello',{
+        set:function(val){
+        	this._hello = val;
+            node.value = val;
+            otxt.innerHTML = val;
+
+        },
+        get:function() {
+        	return this._hello
+        }
+    });
+
+    node.addEventListener("input",function() {
+        obj.hello = this.value;
+    })
+    
+
+</script>
+</body>
+</html>
