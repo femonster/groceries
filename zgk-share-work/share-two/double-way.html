@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>双向绑定</title>
+	<!-- 
+		1.documentFragment. 劫持DOM，重新编译后再填入DOM中
+		2.Object.defineProperty() 劫持数据，实现view ==> model的绑定
+		3.观察者模式，实现 model ==> view 的数据绑定
+	 -->
+</head>
+<body>
+	<div id="app">
+		<input type="text" id="aa" z-model="myname">
+		{{myname}}
+	</div>
+</body>
+<script>
+	function Watcher(zm,node,name) {
+		Dep.target = this;
+		this.name  = name;
+		this.node  = node;
+		this.zm    = zm;
+		this.update();
+		Dep.target = null;
+	}
+
+	Watcher.prototype = {
+		update:function() {
+			this.get();
+			this.node.nodeValue = this.value;
+		},
+		//获取data中的属性值
+		get:function () {
+			this.value = this.zm[this.name]; //触发相应属性的get
+		}
+	}
+</script>
+</html>
