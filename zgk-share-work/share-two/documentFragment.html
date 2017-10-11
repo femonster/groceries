@@ -11,9 +11,12 @@
 	</div>
 </body>
 <script>
-	// 使用documentFragment处理节点，就是将挂载目标的所有子节点劫持到 DocumentFragment 中（通过appendChild方法，DOM节点会被自动删除）。经过一番处理后，再将 DocumentFragment 整体返回插入挂载目标。
+	// 使用documentFragment处理节点，就是将挂载目标的所有子节点劫持到 DocumentFragment 中（通过appendChild方法，DOM节点会被自动删除,然后重新插入他的新位置）。经过一番处理后，再将 DocumentFragment 整体返回插入挂载目标。
 	function nodeToFragment(node) {
 		var flag = document.createDocumentFragment();
+		var newp = document.createElement("p");
+		newp.innerHTML="重新处理过的DOM元素";
+		flag.appendChild(newp);
 		var child;
 		while(child = node.firstChild){
 			console.log(child);
