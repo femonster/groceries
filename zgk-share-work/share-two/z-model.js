@@ -1,4 +1,4 @@
-// 发布/订阅
+// 发布/订阅 （代码来自 《javascript设计模式》一书）
 var Observer = (function() {
     var _messages = {};
     return {
@@ -51,13 +51,15 @@ var Observer = (function() {
     }
 })();
 
+// 处理中文输入时的“锁”,为true时说明打开了中文输入法
 var cpLock = false;
 
 // 处理被劫持的dom
 function compile(node, zm) {
+    // 获取{{...}}
     var reg = /\{\{(.*)\}\}/;
-    //节点类型为元素
-    if (node.nodeType === 1) {
+    //节点类型为输入框
+    if (node.nodeName === 'INPUT'||node.nodeName === 'TEXTAREA') {
         var attr = node.attributes;  //NamedNodeMap {0: type, 1: id, 2: z-model, length: 3}
         //解析属性
         for (var i = 0; i < attr.length; i++) {
@@ -72,9 +74,7 @@ function compile(node, zm) {
 
                 node.addEventListener('compositionend',function(e) {
                     cpLock = false;
-                    if (!cpLock) {
-                        zm.data[name] = e.target.value;
-                    }
+                    zm.data[name] = e.target.value;
                    
                 })
 
@@ -97,26 +97,31 @@ function compile(node, zm) {
 
             node.value = zm.data[name];
         })
-    }
-    // 节点类型为字符
-    if (node.nodeType === 3) {
+    }else{
 
-        if (reg.test(node.nodeValue)) {
+        if (reg.test(node.textContent)) {
 
             var name = RegExp.$1;
 
             name = name.trim();
 
-            node.nodeValue = zm.data[name];
+            console.log(node.textContent);
 
+            var oldtext = node.textContent;
+
+            // 将 {{...}} 替换
+            node.textContent=oldtext.replace(reg,zm.data[name]);
+
+            // 订阅changed事件，当changed事件被通知时，触发fn
             Observer.regist("changed",function () {
 
-            	node.nodeValue = zm.data[name];
+                node.textContent=oldtext.replace(reg,zm.data[name]);
 
             })
 
         }
     }
+
 }
 
 // 劫持欲处理的DOM
@@ -142,7 +147,7 @@ function nodeToFragment(node, zm) {
 // 劫持数据
 function defineReactive(obj, key, val) {
 
-    observe(val);
+    observe(val); //监控子属性
 
     Object.defineProperty(obj, key, {
 
@@ -159,12 +164,13 @@ function defineReactive(obj, key, val) {
             if (val === newVal) { return; }
 
             val = newVal;
-            // 发布消息，val已经改变
+            // 发布changed消息，val已经改变
             Observer.fire("changed");
         }
     })
 }
 
+// 监控/劫持数据入口
 function observe(data) {
 
     if (!data || typeof data !== 'object') { return; }
@@ -176,15 +182,12 @@ function observe(data) {
     })
 }
 
-
 // Zue主函数
 function Zue(options) {
 
     this.data = options.data;
 
-    var data = this.data;
-
-    observe(data);
+    observe(this.data);
 
     var el = options.el;
 
